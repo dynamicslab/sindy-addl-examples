@@ -1,0 +1,3 @@
+arviz
+scipy
+pysindy[sbr] @ git+https://github.com/dynamicslab/pysindy@a319fbd
