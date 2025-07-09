@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 7 Jupyter notebook – now with stable linear models of arbitrary order! &mdash; pysindy-example 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="In this notebook we address state space models for a plasma physics experiment" href="StateSpaceModel.html" />
+    <link rel="prev" title="StabilizedLinearSR3 optimizer" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            pysindy-example
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example 7 Jupyter notebook – now with stable linear models of arbitrary order!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative">Make sure that eigenvalues of the final model coefficients are all negative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Stability-guarantee-means-we-can-simulate-with-new-initial-conditions-no-problem!">Stability guarantee means we can simulate with new initial conditions no problem!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html">In this notebook we address state space models for a plasma physics experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Finally,-define-the-state-space-matrices">Finally, define the state space matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Load-in-the-voltage-control-inputs">Load in the voltage control inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model">Discover the dx/dt = Ax + Bu part of the state space model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Without-noise,-can-match-A-and-B-matrices-quite-well">Without noise, can match A and B matrices quite well</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Check-if-the-A-matrix-is-negative-definite!">Check if the A matrix is negative definite!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="StateSpaceModel.html#Now-try-resimulating-the-training-data-from-some-new-initial-condition">Now try resimulating the training data from some new initial condition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html">SINDy-POD models for viscoelastic flows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html#Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative">Make sure that eigenvalues of the final model coefficients are all negative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html#Stability-guarantee-means-we-can-simulate-with-new-initial-conditions">Stability guarantee means we can simulate with new initial conditions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pysindy-example</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example 7 Jupyter notebook – now with stable linear models of arbitrary order!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example7_reboot.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Example-7-Jupyter-notebook----now-with-stable-linear-models-of-arbitrary-order!">
+<h1>Example 7 Jupyter notebook – now with stable linear models of arbitrary order!<a class="headerlink" href="#Example-7-Jupyter-notebook----now-with-stable-linear-models-of-arbitrary-order!" title="Link to this heading"></a></h1>
+<p>SINDy can discover linear models <span class="math notranslate nohighlight">\(\dot{\mathbf{x}} = \mathbf{A}\mathbf{x}\)</span> for arbitrary state size, but these models are only long-time stable if the matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is negative definite. The new optimizer StableLinearSR3 is for precisely this case, and allows SINDy to identify much higher-dimensional models that are provably stable.</p>
+<p>Assume we have a linear library in <span class="math notranslate nohighlight">\(\mathbf x\)</span>. The optimization problem we solve is a cross between SR3 and TrappingSR3:</p>
+<div class="math notranslate nohighlight">
+\[min_{\mathbf \xi, \mathbf w} \|\dot{\mathbf{X}} - \mathbf \Theta \mathbf{\xi}\|_2^2 + \frac{1}{2\nu}\|\mathbf{\xi} - \mathbf w \|_2^2,\]</div>
+<p>such that</p>
+<div class="math notranslate nohighlight">
+\[\mathbf C\mathbf\xi = \mathbf d, \quad \mathbf D\mathbf\xi \leq \mathbf e, \quad \lambda_\text{max}(\mathbf w) &lt; 0,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_\text{max}(\mathbf w)\)</span> is the largest eigenvalue of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> and the ConstrainedSR3 and StableLinearSR3 optimizers now allow for a combination of equality and inequality constraints. Since we have a purely linear library, we can reshape <span class="math notranslate nohighlight">\(\mathbf \xi \to \mathbf{A}\)</span> and instead write:</p>
+<div class="math notranslate nohighlight">
+\[min_{\mathbf A,\mathbf W} \|\dot{\mathbf{X}} - \mathbf A\mathbf{X}\|_2^2 + \frac{1}{2\nu}\|\mathbf{A} - \mathbf W \|_2^2,\]</div>
+<p>such that</p>
+<div class="math notranslate nohighlight">
+\[\mathbf C\mathbf A = \mathbf d, \quad \mathbf D\mathbf A \leq \mathbf e, \quad \lambda_\text{max}(\mathbf W) &lt; 0.\]</div>
+<p>This is a convenient optimization problem that can be solved for variable projection. First solve the optimization for <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> at fixed <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> (this part, including with the constraints on <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, is convex, so we can plug it right into CVXPY) and then for <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> at fixed <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and repeat until convergence. For the <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> solve, we use the same trick as the TrappingSR3 optimizer – <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> is a projection of
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> onto the space of negative definite matrices.</p>
+<p>In this example, we revisit the data from the Jupyter notebook Example 7 in order to build a stable 20-dimensional linear model, which performs quite well.</p>
+<p><a class="reference external" href="https://mybinder.org/v2/gh/dynamicslab/pysindy/v1.7.3?filepath=examples/18_linear_stable_models/example7_reboot.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate.odepack</span><span class="w"> </span><span class="kn">import</span> <span class="n">ODEintWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">ODEintWarning</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/tmp/ipykernel_21228/3035715489.py:3: DeprecationWarning: Please import `ODEintWarning` from the `scipy.integrate` namespace; the `scipy.integrate.odepack` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.integrate.odepack import ODEintWarning
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load in temporal POD modes of a plasma simulation (trajectories in time)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;data/plasmaphysics_example_trajectories.txt&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+
+<span class="c1"># Load in the corresponding SVD data and plot it</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;data/plasmaphysics_example_singularValues.txt&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">S</span> <span class="o">/</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;ro&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Scaled singular values&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example7_reboot_2_0.png" src="../_images/examples_example7_reboot_2_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">poly_order</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">tfrac</span> <span class="o">=</span> <span class="mf">0.7</span>  <span class="c1"># Proportion of the data to train on</span>
+
+<span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">M_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">tfrac</span><span class="p">)</span>
+<span class="n">t_train</span> <span class="o">=</span> <span class="n">t</span><span class="p">[:</span><span class="n">M_train</span><span class="p">]</span>
+<span class="n">t_test</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">M_train</span><span class="p">:]</span>
+
+<span class="n">pod_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">A</span>
+
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">M_train</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">x0_train</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">M_train</span><span class="p">:,</span> <span class="p">:]</span>
+<span class="n">x0_test</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">M_train</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># If you reduce nu, you will need more iterations</span>
+<span class="c1"># to make the A matrix negative definite</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">StableLinearSR3</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
+    <span class="n">thresholder</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pure linear library</span>
+<span class="n">sindy_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PolynomialLibrary</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_train</span><span class="p">)</span>
+<span class="c1"># model.print()</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iteration ... |y - Xw|^2 ...  |w-u|^2/v ...       R(u) ... Total Error: |y - Xw|^2 + |w - u|^2 / v + R(u)
+         0 ... 7.6981e-02 ... 2.3925e+01 ... 0.0000e+00 ... 7.6981e-02
+         1 ... 7.6981e-02 ... 9.8866e-16 ... 0.0000e+00 ... 7.6981e-02
+         2 ... 7.6981e-02 ... 9.8870e-16 ... 0.0000e+00 ... 7.6981e-02
+         3 ... 7.6981e-02 ... 9.8866e-16 ... 0.0000e+00 ... 7.6981e-02
+         4 ... 7.6981e-02 ... 9.8868e-16 ... 0.0000e+00 ... 7.6981e-02
+         5 ... 7.6981e-02 ... 9.8869e-16 ... 0.0000e+00 ... 7.6981e-02
+         6 ... 7.6981e-02 ... 9.8869e-16 ... 0.0000e+00 ... 7.6981e-02
+         7 ... 7.6981e-02 ... 9.8870e-16 ... 0.0000e+00 ... 7.6981e-02
+         8 ... 7.6981e-02 ... 9.8868e-16 ... 0.0000e+00 ... 7.6981e-02
+         9 ... 7.6981e-02 ... 9.8868e-16 ... 0.0000e+00 ... 7.6981e-02
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/jake/github/pysindy-example/env18/lib/python3.10/site-packages/pysindy/optimizers/stable_linear_sr3.py:431: ConvergenceWarning: StableLinearSR3._reduce did not converge after 10 iterations.
+  warnings.warn(
+</pre></div></div>
+</div>
+</section>
+<section id="Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative">
+<h1>Make sure that eigenvalues of the final model coefficients are all negative<a class="headerlink" href="#Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative" title="Link to this heading"></a></h1>
+<p>This is the requirement for stability! Moreover, we want to check that the imaginary part of the eigenvalues is relatively unchanged, since this would mean we mangled the fitting!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">sindy_opt</span><span class="o">.</span><span class="n">coef_history</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">T</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">T</span><span class="p">)))</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[-9.50663039e-04+0.j         -2.74113694e-04-0.00848595j
+ -2.74113694e-04+0.00848595j -8.84916666e-05-0.01796237j
+ -8.84916666e-05+0.01796237j -5.32119862e-05-0.50235526j
+ -5.32119862e-05+0.50235526j -2.44997353e-05-0.2698913j
+ -2.44997353e-05+0.2698913j  -1.17096785e-05-0.09098113j
+ -1.17096785e-05+0.09098113j -6.25566513e-06-0.1811554j
+ -6.25566513e-06+0.1811554j   1.27851631e-05-0.35605312j
+  1.27851631e-05+0.35605312j  7.38824281e-05-0.16359833j
+  7.38824281e-05+0.16359833j  1.32998144e-04-0.43957007j
+  1.32998144e-04+0.43957007j  1.95208663e-04-0.09178613j
+  1.95208663e-04+0.09178613j]
+[-9.50663039e-04+0.j         -2.74113694e-04-0.00848595j
+ -2.74113694e-04+0.00848595j -8.84916666e-05-0.01796237j
+ -8.84916666e-05+0.01796237j -5.32119862e-05-0.50235526j
+ -5.32119862e-05+0.50235526j -2.44997353e-05-0.2698913j
+ -2.44997353e-05+0.2698913j  -1.17096785e-05-0.09098113j
+ -1.17096785e-05+0.09098113j -6.25566513e-06-0.1811554j
+ -6.25566513e-06+0.1811554j  -9.99990959e-09-0.35605312j
+ -9.99990959e-09+0.35605312j -9.99952302e-09-0.16359833j
+ -9.99952302e-09+0.16359833j -9.99905922e-09-0.43957007j
+ -9.99905922e-09+0.43957007j -9.99877016e-09-0.09178613j
+ -9.99877016e-09+0.09178613j]
+True
+</pre></div></div>
+</div>
+</section>
+<section id="Stability-guarantee-means-we-can-simulate-with-new-initial-conditions-no-problem!">
+<h1>Stability guarantee means we can simulate with new initial conditions no problem!<a class="headerlink" href="#Stability-guarantee-means-we-can-simulate-with-new-initial-conditions-no-problem!" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_trajectories</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_sim</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare x (the true data), x_train (predictions on the training data),</span>
+<span class="sd">    and x_sim (predictions on the test data).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n_modes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_modes</span> <span class="o">=</span> <span class="n">x_sim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">n_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_modes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                            <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_rows</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span>
+                            <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_modes</span><span class="p">),</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Gray&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_train</span><span class="p">,</span> <span class="n">x_train</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted (train)&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_test</span><span class="p">,</span> <span class="n">x_sim</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted (test)&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">():</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticklabels</span><span class="o">=</span><span class="p">[],</span> <span class="n">yticklabels</span><span class="o">=</span><span class="p">[])</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Forecast the testing data with this identified model</span>
+<span class="n">x_sim</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x0_test</span><span class="p">,</span> <span class="n">t_test</span><span class="p">)</span>
+
+<span class="c1"># Compare true and simulated trajectories</span>
+<span class="n">plot_trajectories</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_sim</span><span class="p">,</span> <span class="n">n_modes</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example7_reboot_8_0.png" src="../_images/examples_example7_reboot_8_0.png" />
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="StabilizedLinearSR3 optimizer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="StateSpaceModel.html" class="btn btn-neutral float-right" title="In this notebook we address state space models for a plasma physics experiment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Alan Kaptanoglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
