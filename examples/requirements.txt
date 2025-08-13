@@ -1,3 +1,3 @@
-pysindy==1.7.5
+pysindy @ git+https://github.com/dynamicslab/pysindy@5f224ab
 numpy<2.0
 ipykernel
