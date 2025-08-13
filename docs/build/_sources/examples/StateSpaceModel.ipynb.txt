@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### In this notebook we address state space models for a plasma physics experiment\n",
+    "# In this notebook we address state space models for a plasma physics experiment\n",
     "The HITSI-U experiment relies on a set of four injectors, each with three circuit variables. The model for the circuit is the following state space model:\n",
     "$$\\dot{\\mathbf x} = \\mathbf A \\mathbf x + \\mathbf B \\mathbf u,$$\n",
     "$$\\mathbf y = \\mathbf C \\mathbf x,$$\n",
@@ -120,7 +120,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Finally, define the state space matrices"
+    "## Finally, define the state space matrices"
    ]
   },
   {
@@ -198,14 +198,14 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "#### Notice the A matrix has all negative eigenvalues, as it must!"
+    "### Notice the A matrix has all negative eigenvalues, as it must!"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Load in the voltage control inputs\n",
+    "## Load in the voltage control inputs\n",
     "These are square waves at some pre-defined injector frequency."
    ]
   },
@@ -293,7 +293,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Discover the dx/dt = Ax + Bu part of the state space model\n",
+    "## Discover the dx/dt = Ax + Bu part of the state space model\n",
     "Try STLSQ instead -- you will likely get an unstable model! Below we use a special optimizer to make sure the linear matrix is stable. $\\nu \\ll 1$ promotes stability."
    ]
   },
@@ -377,7 +377,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Without noise, can match A and B matrices quite well"
+    "## Without noise, can match A and B matrices quite well"
    ]
   },
   {
@@ -440,7 +440,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Check if the A matrix is negative definite!\n",
+    "## Check if the A matrix is negative definite!\n",
     "If not all the eigenvalues are negative, model is eventually unstable. If so, optimize with the StableLinearOptimizer until the eigenvalues are pushed to be all negative. "
    ]
   },
@@ -471,7 +471,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Now try resimulating the training data from some new initial condition\n",
+    "## Now try resimulating the training data from some new initial condition\n",
     "This is a 12D system and the time base is VERY well-sampled so integration might take a while!"
    ]
   },

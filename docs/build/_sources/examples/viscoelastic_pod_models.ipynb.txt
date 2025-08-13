@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### SINDy-POD models for viscoelastic flows\n",
+    "# SINDy-POD models for viscoelastic flows\n",
     "Viscoelastic flows couple Navier-Stokes with a set of more complicated PDEs. Here we demonstrate that SINDy can generate high-dimensional, stable linear models for the evolution of the proper orthogonal modes obtained from fluid data.\n",
     "\n",
     "[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dynamicslab/pysindy/v1.7.3?filepath=examples/18_linear_stable_models/viscoelastic_pod_models.ipynb)"
@@ -118,7 +118,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Make sure that eigenvalues of the final model coefficients are all negative\n",
+    "## Make sure that eigenvalues of the final model coefficients are all negative\n",
     "This is the requirement for stability! Moreover, we want to check that the imaginary part of the eigenvalues is relatively unchanged, since this would mean we mangled the fitting!"
    ]
   },
@@ -147,7 +147,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Stability guarantee means we can simulate with new initial conditions\n",
+    "## Stability guarantee means we can simulate with new initial conditions\n",
     "This is generally a substantial issue for nonlinear models."
    ]
   },

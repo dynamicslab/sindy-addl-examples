@@ -48,21 +48,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="example7_reboot.html">Example 7 Jupyter notebook – now with stable linear models of arbitrary order!</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example7_reboot.html#Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative">Make sure that eigenvalues of the final model coefficients are all negative</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example7_reboot.html#Stability-guarantee-means-we-can-simulate-with-new-initial-conditions-no-problem!">Stability guarantee means we can simulate with new initial conditions no problem!</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">In this notebook we address state space models for a plasma physics experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Finally,-define-the-state-space-matrices">Finally, define the state space matrices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Notice-the-A-matrix-has-all-negative-eigenvalues,-as-it-must!">Notice the A matrix has all negative eigenvalues, as it must!</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">In this notebook we address state space models for a plasma physics experiment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Finally,-define-the-state-space-matrices">Finally, define the state space matrices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Notice-the-A-matrix-has-all-negative-eigenvalues,-as-it-must!">Notice the A matrix has all negative eigenvalues, as it must!</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#Load-in-the-voltage-control-inputs">Load in the voltage control inputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model">Discover the dx/dt = Ax + Bu part of the state space model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Without-noise,-can-match-A-and-B-matrices-quite-well">Without noise, can match A and B matrices quite well</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Check-if-the-A-matrix-is-negative-definite!">Check if the A matrix is negative definite!</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Now-try-resimulating-the-training-data-from-some-new-initial-condition">Now try resimulating the training data from some new initial condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Load-in-the-voltage-control-inputs">Load in the voltage control inputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model">Discover the dx/dt = Ax + Bu part of the state space model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Without-noise,-can-match-A-and-B-matrices-quite-well">Without noise, can match A and B matrices quite well</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Check-if-the-A-matrix-is-negative-definite!">Check if the A matrix is negative definite!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-try-resimulating-the-training-data-from-some-new-initial-condition">Now try resimulating the training data from some new initial condition</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html">SINDy-POD models for viscoelastic flows</a></li>
-<li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html#Make-sure-that-eigenvalues-of-the-final-model-coefficients-are-all-negative">Make sure that eigenvalues of the final model coefficients are all negative</a></li>
-<li class="toctree-l1"><a class="reference internal" href="viscoelastic_pod_models.html#Stability-guarantee-means-we-can-simulate-with-new-initial-conditions">Stability guarantee means we can simulate with new initial conditions</a></li>
 </ul>
 
         </div>
@@ -196,9 +194,8 @@
 </pre></div>
 </div>
 </div>
-</section>
 <section id="Finally,-define-the-state-space-matrices">
-<h1>Finally, define the state space matrices<a class="headerlink" href="#Finally,-define-the-state-space-matrices" title="Link to this heading"></a></h1>
+<h2>Finally, define the state space matrices<a class="headerlink" href="#Finally,-define-the-state-space-matrices" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -270,11 +267,11 @@
 </pre></div></div>
 </div>
 <section id="Notice-the-A-matrix-has-all-negative-eigenvalues,-as-it-must!">
-<h2>Notice the A matrix has all negative eigenvalues, as it must!<a class="headerlink" href="#Notice-the-A-matrix-has-all-negative-eigenvalues,-as-it-must!" title="Link to this heading"></a></h2>
+<h3>Notice the A matrix has all negative eigenvalues, as it must!<a class="headerlink" href="#Notice-the-A-matrix-has-all-negative-eigenvalues,-as-it-must!" title="Link to this heading"></a></h3>
 </section>
 </section>
 <section id="Load-in-the-voltage-control-inputs">
-<h1>Load in the voltage control inputs<a class="headerlink" href="#Load-in-the-voltage-control-inputs" title="Link to this heading"></a></h1>
+<h2>Load in the voltage control inputs<a class="headerlink" href="#Load-in-the-voltage-control-inputs" title="Link to this heading"></a></h2>
 <p>These are square waves at some pre-defined injector frequency.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -347,7 +344,7 @@ Text(0, 0.5, &#39;$x_i(t)$&#39;)
 </div>
 </section>
 <section id="Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model">
-<h1>Discover the dx/dt = Ax + Bu part of the state space model<a class="headerlink" href="#Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model" title="Link to this heading"></a></h1>
+<h2>Discover the dx/dt = Ax + Bu part of the state space model<a class="headerlink" href="#Discover-the-dx/dt-=-Ax-+-Bu-part-of-the-state-space-model" title="Link to this heading"></a></h2>
 <p>Try STLSQ instead – you will likely get an unstable model! Below we use a special optimizer to make sure the linear matrix is stable. <span class="math notranslate nohighlight">\(\nu \ll 1\)</span> promotes stability.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -416,7 +413,7 @@ Text(0, 0.5, &#39;$x_i(t)$&#39;)
 </div>
 </section>
 <section id="Without-noise,-can-match-A-and-B-matrices-quite-well">
-<h1>Without noise, can match A and B matrices quite well<a class="headerlink" href="#Without-noise,-can-match-A-and-B-matrices-quite-well" title="Link to this heading"></a></h1>
+<h2>Without noise, can match A and B matrices quite well<a class="headerlink" href="#Without-noise,-can-match-A-and-B-matrices-quite-well" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -467,7 +464,7 @@ Text(0, 0.5, &#39;$x_i(t)$&#39;)
 </div>
 </section>
 <section id="Check-if-the-A-matrix-is-negative-definite!">
-<h1>Check if the A matrix is negative definite!<a class="headerlink" href="#Check-if-the-A-matrix-is-negative-definite!" title="Link to this heading"></a></h1>
+<h2>Check if the A matrix is negative definite!<a class="headerlink" href="#Check-if-the-A-matrix-is-negative-definite!" title="Link to this heading"></a></h2>
 <p>If not all the eigenvalues are negative, model is eventually unstable. If so, optimize with the StableLinearOptimizer until the eigenvalues are pushed to be all negative.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -493,7 +490,7 @@ Text(0, 0.5, &#39;$x_i(t)$&#39;)
 </div>
 </section>
 <section id="Now-try-resimulating-the-training-data-from-some-new-initial-condition">
-<h1>Now try resimulating the training data from some new initial condition<a class="headerlink" href="#Now-try-resimulating-the-training-data-from-some-new-initial-condition" title="Link to this heading"></a></h1>
+<h2>Now try resimulating the training data from some new initial condition<a class="headerlink" href="#Now-try-resimulating-the-training-data-from-some-new-initial-condition" title="Link to this heading"></a></h2>
 <p>This is a 12D system and the time base is VERY well-sampled so integration might take a while!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -533,6 +530,7 @@ Text(0, 0.5, &#39;$x_i(t)$&#39;)
 <img alt="../_images/examples_StateSpaceModel_18_0.png" src="../_images/examples_StateSpaceModel_18_0.png" />
 </div>
 </div>
+</section>
 </section>
 
 
