@@ -11,9 +11,9 @@ from shutil import copy, rmtree, copytree
 
 from sphinx.application import Sphinx
 
-project = 'pysindy-example'
-copyright = '2024, Jacob Stevens-Haas'
-author = 'Jacob Stevens-Haas'
+project = 'parametrized-patterns'
+copyright = '2024, Zachary Nicolau'
+author = 'Zachary Nicolau'
 release = '0.1'
 
 # -- General configuration ---------------------------------------------------
