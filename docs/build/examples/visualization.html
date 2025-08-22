@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Benchmark Visualization &mdash; Large-scale Benchmarking for System Identification Methods 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Full optimizer comparison" href="optimizer_comparison.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Large-scale Benchmarking for System Identification Methods
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html">Large-scale benchmarking for system identification methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Chaotic-System-Initialization">Chaotic System Initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Calculate-the-true-coefficients">Calculate the true coefficients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Hyperparameter-scans-using-the-AIC-metric">Hyperparameter scans using the AIC metric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Plot-overall-performance-across-dynamical-systems">Plot overall performance across dynamical systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Plot-the-true-and-predicted-\dot{\mathbf-x}-trajectories-for-all-the-chaotic-systems">Plot the true and predicted <span class="math notranslate nohighlight">\(\dot{\mathbf x}\)</span> trajectories for all the chaotic systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Very-stringent-performance-test-for-our-best-SINDy-models">Very stringent performance test for our best SINDy models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html#Plot-the-trajectory-results-for-10-new-initial-conditions">Plot the trajectory results for 10 new initial conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizer_comparison.html">Full optimizer comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizer_comparison.html#Does-symbolic-regression-depend-on-dynamical-properties?">Does symbolic regression depend on dynamical properties?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">General Benchmark Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Load-Model-Performances">Load Model Performances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Load-System-Property-Metrics">Load System Property Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#General-Visualization">General Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Name-Labels">Name Labels</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Coefficient-Error-Plot-by-Noise">Coefficient Error Plot by Noise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#RMSE-Plot-by-Noise">RMSE Plot by Noise</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Large-scale Benchmarking for System Identification Methods</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">General Benchmark Visualization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/visualization.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="General-Benchmark-Visualization">
+<h1>General Benchmark Visualization<a class="headerlink" href="#General-Benchmark-Visualization" title="Link to this heading"></a></h1>
+<p>Written by Lanyue Zhang and Alan Kaptanoglu</p>
+<p>In <em>16_benchmark_paper.ipynb</em>, we demonstrate our benchmark for system identificatino methods. Our benchmark generates a big set of data, covering the Pareto-optimal model performances for 70 selected chaotic systems with respect to 3 levels of noise, 4 dynamic properties, and 4 optimization algorithms. In addition, our benchmark evaluates the model performance via two matrices: RMSE and Normalized Error. For convinience, we store the benchmark results in <code class="docutils literal notranslate"><span class="pre">./data/</span></code> folder in a bunch of text
+files.</p>
+<p>In this notebook, we illustrate how to visualize the complete benchmark results of all systems from the recorded text files.</p>
+<section id="Load-Model-Performances">
+<h2>Load Model Performances<a class="headerlink" href="#Load-Model-Performances" title="Link to this heading"></a></h2>
+<p>All benchmark results are stored under the directory <code class="docutils literal notranslate"><span class="pre">./data/</span></code> in form of text files. In this section, we read all these data files and load the informatino to a dataframe.</p>
+<p>For each system, we record the model performances for 3 levels of noise (0, 0.2%, 2%), 4 dynamic properties (chaos, scale separation, syntactic complexity, amount of nonlinearity), and 4 optimization algorithms (STLSQ (weak), SR3, Lasso, MISOR).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># extract data files</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">pos_json</span> <span class="k">for</span> <span class="n">pos_json</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span>
+
+<span class="n">files_strong</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;weakform&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span> <span class="ow">and</span> <span class="s1">&#39;AIC&#39;</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">files_strong</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">files_strong</span>
+<span class="c1"># sort so that data of the same type are together</span>
+<span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="c1"># preview files</span>
+<span class="n">files</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;avg_coef_error_Lasso_AIC&#39;,
+ &#39;avg_coef_error_Lasso_AIC_noise01&#39;,
+ &#39;avg_coef_error_Lasso_AIC_noise1&#39;,
+ &#39;avg_coef_error_MIOSR_AIC&#39;,
+ &#39;avg_coef_error_MIOSR_AIC_noise01&#39;,
+ &#39;avg_coef_error_MIOSR_AIC_noise1&#39;,
+ &#39;avg_coef_error_SR3_AIC&#39;,
+ &#39;avg_coef_error_SR3_AIC_noise01&#39;,
+ &#39;avg_coef_error_SR3_AIC_noise1&#39;,
+ &#39;avg_coef_error_SR3_nu1e-1_AIC&#39;,
+ &#39;avg_coef_error_SR3_nu1e-1_AIC_noise01&#39;,
+ &#39;avg_coef_error_SR3_nu1e-1_AIC_noise1&#39;,
+ &#39;avg_coef_error_STLSQ_AIC&#39;,
+ &#39;avg_coef_error_STLSQ_AIC_noise01&#39;,
+ &#39;avg_coef_error_STLSQ_AIC_noise1&#39;,
+ &#39;avg_rmse_error_Lasso_AIC&#39;,
+ &#39;avg_rmse_error_Lasso_AIC_noise01&#39;,
+ &#39;avg_rmse_error_Lasso_AIC_noise1&#39;,
+ &#39;avg_rmse_error_MIOSR_AIC&#39;,
+ &#39;avg_rmse_error_MIOSR_AIC_noise01&#39;,
+ &#39;avg_rmse_error_MIOSR_AIC_noise1&#39;,
+ &#39;avg_rmse_error_SR3_AIC&#39;,
+ &#39;avg_rmse_error_SR3_AIC_noise01&#39;,
+ &#39;avg_rmse_error_SR3_AIC_noise1&#39;,
+ &#39;avg_rmse_error_SR3_nu1e-1_AIC&#39;,
+ &#39;avg_rmse_error_SR3_nu1e-1_AIC_noise01&#39;,
+ &#39;avg_rmse_error_SR3_nu1e-1_AIC_noise1&#39;,
+ &#39;avg_rmse_error_STLSQ_AIC&#39;,
+ &#39;avg_rmse_error_STLSQ_AIC_noise01&#39;,
+ &#39;avg_rmse_error_STLSQ_AIC_noise1&#39;,
+ &#39;std_coef_error_Lasso_AIC&#39;,
+ &#39;std_coef_error_Lasso_AIC_noise01&#39;,
+ &#39;std_coef_error_Lasso_AIC_noise1&#39;,
+ &#39;std_coef_error_MIOSR_AIC&#39;,
+ &#39;std_coef_error_MIOSR_AIC_noise01&#39;,
+ &#39;std_coef_error_MIOSR_AIC_noise1&#39;,
+ &#39;std_coef_error_SR3_AIC&#39;,
+ &#39;std_coef_error_SR3_AIC_noise01&#39;,
+ &#39;std_coef_error_SR3_AIC_noise1&#39;,
+ &#39;std_coef_error_SR3_nu1e-1_AIC&#39;,
+ &#39;std_coef_error_SR3_nu1e-1_AIC_noise01&#39;,
+ &#39;std_coef_error_SR3_nu1e-1_AIC_noise1&#39;,
+ &#39;std_coef_error_STLSQ_AIC&#39;,
+ &#39;std_coef_error_STLSQ_AIC_noise01&#39;,
+ &#39;std_coef_error_STLSQ_AIC_noise1&#39;,
+ &#39;std_rmse_error_Lasso_AIC&#39;,
+ &#39;std_rmse_error_Lasso_AIC_noise01&#39;,
+ &#39;std_rmse_error_Lasso_AIC_noise1&#39;,
+ &#39;std_rmse_error_MIOSR_AIC&#39;,
+ &#39;std_rmse_error_MIOSR_AIC_noise01&#39;,
+ &#39;std_rmse_error_MIOSR_AIC_noise1&#39;,
+ &#39;std_rmse_error_SR3_AIC&#39;,
+ &#39;std_rmse_error_SR3_AIC_noise01&#39;,
+ &#39;std_rmse_error_SR3_AIC_noise1&#39;,
+ &#39;std_rmse_error_SR3_nu1e-1_AIC&#39;,
+ &#39;std_rmse_error_SR3_nu1e-1_AIC_noise01&#39;,
+ &#39;std_rmse_error_SR3_nu1e-1_AIC_noise1&#39;,
+ &#39;std_rmse_error_STLSQ_AIC&#39;,
+ &#39;std_rmse_error_STLSQ_AIC_noise01&#39;,
+ &#39;std_rmse_error_STLSQ_AIC_noise1&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1"># we need both the json and an index number so use enumerate()</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="c1"># convert string to float</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+        <span class="c1"># append to dataframe as a column</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">temp</span><span class="p">)</span>
+
+<span class="c1"># preview the dataframe</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>avg_coef_error_Lasso_AIC</th>
+      <th>avg_coef_error_Lasso_AIC_noise01</th>
+      <th>avg_coef_error_Lasso_AIC_noise1</th>
+      <th>avg_coef_error_MIOSR_AIC</th>
+      <th>avg_coef_error_MIOSR_AIC_noise01</th>
+      <th>avg_coef_error_MIOSR_AIC_noise1</th>
+      <th>avg_coef_error_SR3_AIC</th>
+      <th>avg_coef_error_SR3_AIC_noise01</th>
+      <th>avg_coef_error_SR3_AIC_noise1</th>
+      <th>avg_coef_error_SR3_nu1e-1_AIC</th>
+      <th>...</th>
+      <th>std_rmse_error_MIOSR_AIC_noise1</th>
+      <th>std_rmse_error_SR3_AIC</th>
+      <th>std_rmse_error_SR3_AIC_noise01</th>
+      <th>std_rmse_error_SR3_AIC_noise1</th>
+      <th>std_rmse_error_SR3_nu1e-1_AIC</th>
+      <th>std_rmse_error_SR3_nu1e-1_AIC_noise01</th>
+      <th>std_rmse_error_SR3_nu1e-1_AIC_noise1</th>
+      <th>std_rmse_error_STLSQ_AIC</th>
+      <th>std_rmse_error_STLSQ_AIC_noise01</th>
+      <th>std_rmse_error_STLSQ_AIC_noise1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.060063</td>
+      <td>0.055692</td>
+      <td>0.111861</td>
+      <td>0.002106</td>
+      <td>0.002843</td>
+      <td>0.042968</td>
+      <td>0.003671</td>
+      <td>0.062666</td>
+      <td>0.597170</td>
+      <td>0.003887</td>
+      <td>...</td>
+      <td>0.007231</td>
+      <td>0.000010</td>
+      <td>0.000315</td>
+      <td>0.003020</td>
+      <td>0.000013</td>
+      <td>0.000349</td>
+      <td>0.001772</td>
+      <td>0.000018</td>
+      <td>0.000279</td>
+      <td>0.004336</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.213353</td>
+      <td>0.770420</td>
+      <td>0.145259</td>
+      <td>0.107179</td>
+      <td>1.408008</td>
+      <td>0.022234</td>
+      <td>3.915297</td>
+      <td>71.208709</td>
+      <td>547.814459</td>
+      <td>18.125865</td>
+      <td>...</td>
+      <td>0.004463</td>
+      <td>0.004558</td>
+      <td>0.004275</td>
+      <td>0.035211</td>
+      <td>0.001216</td>
+      <td>0.024901</td>
+      <td>0.042349</td>
+      <td>0.000189</td>
+      <td>0.000954</td>
+      <td>0.263283</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.009918</td>
+      <td>0.008211</td>
+      <td>0.036489</td>
+      <td>0.006276</td>
+      <td>0.007712</td>
+      <td>0.009369</td>
+      <td>0.003812</td>
+      <td>0.012464</td>
+      <td>0.145704</td>
+      <td>0.003833</td>
+      <td>...</td>
+      <td>0.001655</td>
+      <td>0.000019</td>
+      <td>0.000222</td>
+      <td>0.016549</td>
+      <td>0.000008</td>
+      <td>0.000548</td>
+      <td>0.021684</td>
+      <td>0.000009</td>
+      <td>0.000289</td>
+      <td>0.000840</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.388712</td>
+      <td>0.354200</td>
+      <td>0.466110</td>
+      <td>0.003739</td>
+      <td>0.002632</td>
+      <td>0.037833</td>
+      <td>0.027214</td>
+      <td>0.394630</td>
+      <td>2.380739</td>
+      <td>0.042656</td>
+      <td>...</td>
+      <td>0.004791</td>
+      <td>0.000720</td>
+      <td>0.006049</td>
+      <td>0.016650</td>
+      <td>0.002349</td>
+      <td>0.000671</td>
+      <td>0.011819</td>
+      <td>0.000045</td>
+      <td>0.000316</td>
+      <td>0.003022</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.768916</td>
+      <td>0.752297</td>
+      <td>0.757177</td>
+      <td>0.065639</td>
+      <td>0.590650</td>
+      <td>0.771426</td>
+      <td>0.065982</td>
+      <td>0.617564</td>
+      <td>4.373603</td>
+      <td>0.122174</td>
+      <td>...</td>
+      <td>0.002138</td>
+      <td>0.000016</td>
+      <td>0.000493</td>
+      <td>0.003674</td>
+      <td>0.000149</td>
+      <td>0.000125</td>
+      <td>0.001714</td>
+      <td>0.000040</td>
+      <td>0.000142</td>
+      <td>0.007912</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>0.007612</td>
+      <td>0.004426</td>
+      <td>0.026079</td>
+      <td>0.000926</td>
+      <td>0.001004</td>
+      <td>0.008699</td>
+      <td>0.015261</td>
+      <td>0.303863</td>
+      <td>2.809066</td>
+      <td>0.013202</td>
+      <td>...</td>
+      <td>0.002737</td>
+      <td>0.000020</td>
+      <td>0.000276</td>
+      <td>0.002018</td>
+      <td>0.000010</td>
+      <td>0.000482</td>
+      <td>0.001904</td>
+      <td>0.000012</td>
+      <td>0.000085</td>
+      <td>0.001825</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>0.169840</td>
+      <td>0.098667</td>
+      <td>0.118591</td>
+      <td>0.085595</td>
+      <td>0.096393</td>
+      <td>0.083928</td>
+      <td>0.081402</td>
+      <td>0.107944</td>
+      <td>0.254545</td>
+      <td>0.088974</td>
+      <td>...</td>
+      <td>0.031282</td>
+      <td>0.009839</td>
+      <td>0.010060</td>
+      <td>0.227047</td>
+      <td>0.004702</td>
+      <td>0.002056</td>
+      <td>0.006893</td>
+      <td>0.006290</td>
+      <td>0.006027</td>
+      <td>0.001609</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>0.310919</td>
+      <td>0.290474</td>
+      <td>0.112393</td>
+      <td>0.035951</td>
+      <td>0.411466</td>
+      <td>0.021878</td>
+      <td>0.028550</td>
+      <td>1.086557</td>
+      <td>5.577049</td>
+      <td>0.027226</td>
+      <td>...</td>
+      <td>0.003168</td>
+      <td>0.000002</td>
+      <td>0.000618</td>
+      <td>0.006604</td>
+      <td>0.000005</td>
+      <td>0.000492</td>
+      <td>0.003969</td>
+      <td>0.000004</td>
+      <td>0.000284</td>
+      <td>0.005838</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>0.044598</td>
+      <td>0.050733</td>
+      <td>0.048320</td>
+      <td>0.058600</td>
+      <td>0.067027</td>
+      <td>0.051752</td>
+      <td>0.049137</td>
+      <td>0.052824</td>
+      <td>0.013279</td>
+      <td>0.049981</td>
+      <td>...</td>
+      <td>0.000884</td>
+      <td>0.000107</td>
+      <td>0.001541</td>
+      <td>0.002465</td>
+      <td>0.000149</td>
+      <td>0.000365</td>
+      <td>0.008258</td>
+      <td>0.000346</td>
+      <td>0.000933</td>
+      <td>0.013505</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>0.038387</td>
+      <td>0.030172</td>
+      <td>0.100991</td>
+      <td>0.020259</td>
+      <td>0.025167</td>
+      <td>0.028931</td>
+      <td>0.001823</td>
+      <td>0.010755</td>
+      <td>0.349996</td>
+      <td>0.001788</td>
+      <td>...</td>
+      <td>0.003512</td>
+      <td>0.000827</td>
+      <td>0.004258</td>
+      <td>0.469416</td>
+      <td>0.017155</td>
+      <td>0.005790</td>
+      <td>0.019599</td>
+      <td>0.000029</td>
+      <td>0.002653</td>
+      <td>0.002386</td>
+    </tr>
+  </tbody>
+</table>
+<p>70 rows × 60 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Load-System-Property-Metrics">
+<h2>Load System Property Metrics<a class="headerlink" href="#Load-System-Property-Metrics" title="Link to this heading"></a></h2>
+<p>Dynamic properties are important factors in our benchmark in considering the potential correlation. The dynamical properties are usualy used as the x-axis in our visualization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># description length</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;description_lengths&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="c1"># convert string to float</span>
+    <span class="n">desc_lengths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+
+<span class="c1"># lyapunov exponents</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lyapunov_exponents&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="c1"># convert string to float</span>
+    <span class="n">lyap_expos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+
+<span class="c1"># nonlinearity metric</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;nonlinearity_metric&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="c1"># convert string to float</span>
+    <span class="n">nonlins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+
+<span class="c1"># scale separation</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;scale_separation_metric&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="c1"># convert string to float</span>
+    <span class="n">scales</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort the properties</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># description length</span>
+<span class="n">descrip_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">desc_lengths</span><span class="p">)</span>
+<span class="n">descrip_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">desc_lengths</span><span class="p">)</span>
+
+<span class="c1"># lyapunov exponents</span>
+<span class="n">chaos_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">lyap_expos</span><span class="p">)</span>
+<span class="n">chaos_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">lyap_expos</span><span class="p">)</span>
+
+<span class="c1"># nonlinearity metric</span>
+<span class="n">nonlin_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">nonlins</span><span class="p">)</span>
+<span class="n">nonlin_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">nonlins</span><span class="p">)</span>
+
+<span class="c1"># scale separation</span>
+<span class="n">scale_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+<span class="n">scale_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="General-Visualization">
+<h2>General Visualization<a class="headerlink" href="#General-Visualization" title="Link to this heading"></a></h2>
+<p>This section presents two good looking graphs that shows the benchmark visualization in RMSE and Normalized Error.</p>
+<p>Note that the benchmark data are ploted in log-log scale to magnify any potential correlation between model’s performances and dynamic properties. The x-axis is the dynamic property, and the y-axis is the model performance. The color of the data points represents the noise level. The shape of the data points represents the optimization algorithm. However, it is hard for one to observe any clear trend from the performance curve.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">linregress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
+</pre></div>
+</div>
+</div>
+<section id="Name-Labels">
+<h3>Name Labels<a class="headerlink" href="#Name-Labels" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Lasso&quot;</span><span class="p">,</span> <span class="s2">&quot;MIOSR&quot;</span><span class="p">,</span> <span class="s2">&quot;SR3&quot;</span><span class="p">,</span> <span class="s2">&quot;SR3 (nu = 0.1)&quot;</span><span class="p">,</span> <span class="s2">&quot;STLSQ&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Coefficient-Error-Plot-by-Noise">
+<h2>Coefficient Error Plot by Noise<a class="headerlink" href="#Coefficient-Error-Plot-by-Noise" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">scale_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;o&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">scale_sort</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_std</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">scale_sort</span><span class="p">],</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sorted by scale separation&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">scale_list_sorted</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="c1"># description length</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">descrip_list_sorted</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">descrip_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;o&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+        <span class="n">descrip_list_sorted</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">descrip_sort</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_std</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">descrip_sort</span><span class="p">],</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sorted by syntactic complexity&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">descrip_list_sorted</span><span class="p">,</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">descrip_list_sorted</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">chaos_list_sorted</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">chaos_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;o&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+        <span class="n">chaos_list_sorted</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">chaos_sort</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_std</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">chaos_sort</span><span class="p">],</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sorted by chaos&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chaos_list_sorted</span><span class="p">,</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">chaos_list_sorted</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">nonlin_list_sorted</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">nonlin_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;o&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_ave</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">nonlin_sort</span><span class="p">],</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">curr_std</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">nonlin_sort</span><span class="p">],</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sorted by nonlinearity&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="n">l</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">nonlin_list_sorted</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">1.6</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">1e3</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">15</span>
+
+
+    <span class="n">curr_ave</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">i</span>
+    <span class="n">curr_std</span> <span class="o">=</span> <span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">30</span>
+
+    <span class="c1"># scale separation</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                    <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+                           <span class="n">ec</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+                           <span class="n">fc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
+                           <span class="p">))</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">set_bbox</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$E_</span><span class="si">{coef}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by scale separation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Degree of scale separation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="n">custom_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+                    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+                    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">custom_lines</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0 noise&#39;</span><span class="p">,</span> <span class="s1">&#39;1% noise&#39;</span><span class="p">,</span> <span class="s1">&#39;10% noise&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower left&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># description length</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by syntactic complexity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Syntactic Comlexity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="c1"># chaotic level</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by chaos&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Chaotic level&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="c1"># nonlinearity</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by amount of nonlinearity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Amount of nonlinearity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;Pictures/coefficient.pdf&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualization_13_0.png" src="../_images/examples_visualization_13_0.png" />
+</div>
+</div>
+</section>
+<section id="RMSE-Plot-by-Noise">
+<h2>RMSE Plot by Noise<a class="headerlink" href="#RMSE-Plot-by-Noise" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+
+    <span class="n">curr_ave</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">i</span>
+    <span class="n">curr_std</span> <span class="o">=</span> <span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">30</span>
+
+    <span class="c1"># scale separation</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_scale_separation</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                    <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">,</span>
+                           <span class="n">ec</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+                           <span class="n">fc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
+                           <span class="p">))</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">set_bbox</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$E_</span><span class="si">{RMSE}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by scale separation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Degree of scale separation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="n">custom_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+                    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+                    <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">custom_lines</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;0 noise&#39;</span><span class="p">,</span> <span class="s1">&#39;1% noise&#39;</span><span class="p">,</span> <span class="s1">&#39;10% noise&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower left&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># description length</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_description_length</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by syntactic complexity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Syntactic Comlexity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="c1"># chaotic level</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_chaotic_level</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by chaos&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Chaotic level&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+    <span class="c1"># nonlinearity</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span><span class="p">,</span> <span class="n">curr_std</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">plot_nonlinearity</span><span class="p">(</span><span class="n">curr_ave</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">curr_std</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sorted by amount of nonlinearity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Amount of nonlinearity&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;Pictures/RMSE.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualization_15_0.png" src="../_images/examples_visualization_15_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimizer_comparison.html" class="btn btn-neutral float-left" title="Full optimizer comparison" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lanyue Zhang and Alan Kaptanoglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

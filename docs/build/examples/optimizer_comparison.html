@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full optimizer comparison &mdash; Large-scale Benchmarking for System Identification Methods 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="General Benchmark Visualization" href="visualization.html" />
+    <link rel="prev" title="Large-scale benchmarking for system identification methods" href="16_benchmark_paper.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Large-scale Benchmarking for System Identification Methods
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="16_benchmark_paper.html">Large-scale benchmarking for system identification methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Full optimizer comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Import-normalized-X_dot-RMSE-errors-and-normalized-model-coefficient-errors">Import normalized X_dot RMSE errors and normalized model coefficient errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Plot-all-the-errors-for-all-the-optimizers-and-all-the-systems,-on-a-single-figure!">Plot all the errors for all the optimizers and all the systems, on a single figure!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Summarize-the-mean-and-median-errors,-now-computed-across-all-the-dynamical-systems">Summarize the mean and median errors, now computed across all the dynamical systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Does-symbolic-regression-depend-on-dynamical-properties?">Does symbolic regression depend on dynamical properties?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Take-errors-from-one-of-the-optimizer-results,-and-plot-how-the-performance-depends-on-the-dynamical-properties">Take errors from one of the optimizer results, and plot how the performance depends on the dynamical properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Summarize-the-R^2-values-for-all-the-fits-of-all-the-optimizers,-at-each-noise-level">Summarize the <span class="math notranslate nohighlight">\(R^2\)</span> values for all the fits of all the optimizers, at each noise level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#We-find-to-leading-order-that-optimizer-performance-is-independent-of-the-dynamical-properties,-although-there-are-significant-differences-between-optimizers">We find to leading order that optimizer performance is independent of the dynamical properties, although there are significant differences between optimizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-we-repeat-with-the-coefficient-errors-instead-of-the-RMSE-errors">Now we repeat with the coefficient errors instead of the RMSE errors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">General Benchmark Visualization</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Large-scale Benchmarking for System Identification Methods</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Full optimizer comparison</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/optimizer_comparison.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Full-optimizer-comparison">
+<h1>Full optimizer comparison<a class="headerlink" href="#Full-optimizer-comparison" title="Link to this heading"></a></h1>
+<p>Notebook written by Lanyue Zhang and Alan Kaptanoglu</p>
+<p>This post-processing file takes the results from Pareto-optimal scans of the dysts database with different optimizers and varying amounts of noise, as in the example Jupyter notebook 16_benchmark_paper.ipynb. The primary goal of this notebook is to fully reproduce the results shown in our new system identification benchmark paper.</p>
+<p>An interactive version of this notebook is available on binder <a class="reference external" href="https://mybinder.org/v2/gh/dynamicslab/pysindy/v1.7.3?filepath=examples/16_noise_robustness/optimizer_comparison.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">odeint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dysts.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_trajectory_ensemble</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dysts.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_attractor_list</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dysts.flows</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">flows</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dysts.datasets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dysts.equation_utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import list of the dynamical properties, sorted alphabetically by the system names</span>
+<span class="n">medl_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;description_lengths&#39;</span><span class="p">)</span>
+<span class="n">lyap_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;lyapunov_exponents&#39;</span><span class="p">)</span>
+<span class="n">nonlinear_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;nonlinearity_metric&#39;</span><span class="p">)</span>
+<span class="n">scale_list_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;scale_separation_metric&#39;</span><span class="p">)</span>
+<span class="n">systems_list_cleaned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;systems_list_cleaned&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">num_attractors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">medl_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Import-normalized-X_dot-RMSE-errors-and-normalized-model-coefficient-errors">
+<h2>Import normalized X_dot RMSE errors and normalized model coefficient errors<a class="headerlink" href="#Import-normalized-X_dot-RMSE-errors-and-normalized-model-coefficient-errors" title="Link to this heading"></a></h2>
+<p>This is done for the STLSQ, SR3 (nu = 1 and nu = 0.1), Lasso, and MIOSR optimizers AND the STLSQ optimizer using the weak form!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;avg&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">]</span>
+<span class="n">error_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="s1">&#39;rmse&#39;</span><span class="p">]</span>
+<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;STLSQ&#39;</span><span class="p">,</span> <span class="s1">&#39;SR3&#39;</span><span class="p">,</span> <span class="s1">&#39;SR3_nu01&#39;</span><span class="p">,</span> <span class="s1">&#39;Lasso&#39;</span><span class="p">,</span> <span class="s1">&#39;MIOSR&#39;</span><span class="p">]</span>
+<span class="n">noise_levels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;noise0.00&#39;</span><span class="p">,</span> <span class="s1">&#39;noise0.10&#39;</span><span class="p">,</span> <span class="s1">&#39;noise1.00&#39;</span><span class="p">]</span>
+<span class="n">weak_forms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;False&#39;</span><span class="p">,</span> <span class="s1">&#39;True&#39;</span><span class="p">]</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">weak_form</span> <span class="ow">in</span> <span class="n">weak_forms</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">optimizer</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">noise_level</span> <span class="ow">in</span> <span class="n">noise_levels</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;errors_&#39;</span> <span class="o">+</span> <span class="n">optimizer</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">noise_level</span> <span class="o">+</span> <span class="s1">&#39;_weakform&#39;</span> <span class="o">+</span> <span class="n">weak_form</span>
+            <span class="k">if</span> <span class="n">weak_form</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">optimizer</span> <span class="o">!=</span> <span class="s1">&#39;MIOSR&#39;</span><span class="p">:</span>
+                    <span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">,</span> <span class="n">std_rmse_error</span><span class="p">,</span>
+                     <span class="n">avg_coef_error</span><span class="p">,</span> <span class="n">std_coef_error</span><span class="p">,</span>
+                     <span class="n">avg_rmse_error_strong</span><span class="p">,</span> <span class="n">std_rmse_error_strong</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span>
+                        <span class="n">file_path</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_coef_error</span><span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_coef_error</span><span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_rmse_error_strong</span><span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_rmse_error_strong</span><span class="p">)</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">avg_rmse_error</span><span class="p">,</span> <span class="n">std_rmse_error</span><span class="p">,</span> <span class="n">avg_coef_error</span><span class="p">,</span> <span class="n">std_coef_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span>
+                    <span class="n">file_path</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_coef_error</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_coef_error</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">std_rmse_error</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Plot-all-the-errors-for-all-the-optimizers-and-all-the-systems,-on-a-single-figure!">
+<h2>Plot all the errors for all the optimizers and all the systems, on a single figure!<a class="headerlink" href="#Plot-all-the-errors-for-all-the-optimizers-and-all-the-systems,-on-a-single-figure!" title="Link to this heading"></a></h2>
+<p>First plot will be all the results when the data is clean – no added noise.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
+<span class="n">ms</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">fmts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;co&#39;</span><span class="p">,</span> <span class="s1">&#39;yD&#39;</span><span class="p">,</span> <span class="s1">&#39;r*&#39;</span><span class="p">,</span> <span class="s1">&#39;mX&#39;</span><span class="p">,</span> <span class="s1">&#39;g^&#39;</span><span class="p">,</span> <span class="s1">&#39;bP&#39;</span><span class="p">,</span> <span class="s1">&#39;yv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;m&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;gd&#39;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;STLSQ&quot;</span><span class="p">,</span> <span class="s2">&quot;SR3&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;SR3 $\nu = 0.1$&quot;</span><span class="p">,</span> <span class="s2">&quot;Lasso&quot;</span><span class="p">,</span> <span class="s2">&quot;MIOSR&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;STLSQ (weak)&quot;</span><span class="p">,</span> <span class="s2">&quot;SR3 (weak)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;SR3 $\nu = 0.1$ (weak)&quot;</span><span class="p">,</span> <span class="s2">&quot;Lasso (weak)&quot;</span><span class="p">]</span>
+<span class="n">title_append</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;for clean data&#39;</span><span class="p">,</span> <span class="s1">&#39;for data with 0.1% noise&#39;</span><span class="p">,</span> <span class="s1">&#39;for data with 1% noise&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">j</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_attractors</span><span class="p">),</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_attractors</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_attractors</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$E_</span><span class="si">{coef}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimizer performance &#39;</span> <span class="o">+</span> <span class="n">title_append</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="n">framealpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">ncol</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_attractors</span><span class="p">),</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$E_</span><span class="si">{RMSE}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_attractors</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_attractors</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">systems_list_cleaned</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.0002, 15)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_6_1.png" src="../_images/examples_optimizer_comparison_6_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_6_2.png" src="../_images/examples_optimizer_comparison_6_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_6_3.png" src="../_images/examples_optimizer_comparison_6_3.png" />
+</div>
+</div>
+</section>
+<section id="Summarize-the-mean-and-median-errors,-now-computed-across-all-the-dynamical-systems">
+<h2>Summarize the mean and median errors, now computed across all the dynamical systems<a class="headerlink" href="#Summarize-the-mean-and-median-errors,-now-computed-across-all-the-dynamical-systems" title="Link to this heading"></a></h2>
+<p>This gives an overall error performance for each optimizer, for each noise level, which can be plotted against the computational time used by the optimization algorithm.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run times in hours for each of the optimizers, at each of noise levels of 0, 0.2, 2%</span>
+<span class="n">run_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">641</span><span class="p">,</span> <span class="mi">1812</span><span class="p">,</span> <span class="mi">1820</span><span class="p">,</span> <span class="mi">3321</span><span class="p">,</span> <span class="mi">20194</span><span class="p">,</span> <span class="mi">1317</span><span class="p">,</span>
+     <span class="mi">676</span><span class="p">,</span> <span class="mi">2027</span><span class="p">,</span> <span class="mi">2035</span><span class="p">,</span> <span class="mi">3535</span><span class="p">,</span> <span class="mi">23175</span><span class="p">,</span> <span class="mi">1353</span><span class="p">,</span>
+     <span class="mi">706</span><span class="p">,</span> <span class="mi">1990</span><span class="p">,</span> <span class="mi">1993</span><span class="p">,</span> <span class="mi">3687</span><span class="p">,</span> <span class="mi">124694</span><span class="p">,</span> <span class="mi">1381</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span> <span class="o">/</span> <span class="mi">3600</span>
+<span class="n">ms</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">fmts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_error_plots</span><span class="p">(</span><span class="n">start_index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">start_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fmt1</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span>
+        <span class="n">fmt2</span> <span class="o">=</span> <span class="s1">&#39;s&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fmt1</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+        <span class="n">fmt2</span> <span class="o">=</span> <span class="s1">&#39;v&#39;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">q</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt1</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt2</span><span class="p">,</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">6</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt1</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">6</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt2</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">q</span><span class="p">],</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span> <span class="o">+</span> <span class="n">start_index</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Avg. $E_</span><span class="si">{RMSE}</span><span class="s1">$&#39;</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Avg. $E_</span><span class="si">{coef}</span><span class="s1">$&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">12</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt1</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Median $E_</span><span class="si">{RMSE}</span><span class="s1">$&#39;</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;Median $E_</span><span class="si">{coef}</span><span class="s1">$&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">run_times</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">12</span><span class="p">],</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">fmt2</span><span class="p">,</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+            <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+        <span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">make_error_plots</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">make_error_plots</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">noise_levels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Clean&#39;</span><span class="p">,</span> <span class="s1">&#39;0.2% noise&#39;</span><span class="p">,</span> <span class="s1">&#39;2% noise&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">noise_levels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; data&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">framealpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+<span class="c1">#             [r&#39;Avg. $E_{RMSE}$&#39;, r&#39;Avg. $E_{coef}$&#39;],</span>
+            <span class="n">framealpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span>
+        <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;CPU time (hours)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Errors&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Pictures/optimizer_error_summary.pdf&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_8_0.png" src="../_images/examples_optimizer_comparison_8_0.png" />
+</div>
+</div>
+<section id="Does-symbolic-regression-depend-on-dynamical-properties?">
+<h3>Does symbolic regression depend on dynamical properties?<a class="headerlink" href="#Does-symbolic-regression-depend-on-dynamical-properties?" title="Link to this heading"></a></h3>
+<p>Dynamical properties of interest include:</p>
+<ol class="arabic simple">
+<li><p>Level of chaos, as measured by the largest Lyapunov exponent,</p></li>
+<li><p>Scale separation, as measured by the ratio of the “dominant” timescale to the “minimum significant” time scale (see William Gilpin’s dysts paper),</p></li>
+<li><p>Syntactical complexity, as measured by the description length metric,</p></li>
+<li><p>Degree of nonlinearity, measured as the highest polynomially nonlinearity appearing in the governing equations.</p></li>
+</ol>
+</section>
+</section>
+<section id="Take-errors-from-one-of-the-optimizer-results,-and-plot-how-the-performance-depends-on-the-dynamical-properties">
+<h2>Take errors from one of the optimizer results, and plot how the performance depends on the dynamical properties<a class="headerlink" href="#Take-errors-from-one-of-the-optimizer-results,-and-plot-how-the-performance-depends-on-the-dynamical-properties" title="Link to this heading"></a></h2>
+<p>We try simple linear, log-linear, and log-log plots with each property, and plot the best fit.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">linregress</span>
+
+<span class="c1"># get the errors from the MIOSR optimizer results</span>
+<span class="n">cerrs</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span>
+<span class="n">avg_rmse_error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="mi">66</span><span class="p">]</span>
+<span class="n">std_rmse_error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="mi">67</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># reorder things by the amount of scale separation and then plot performance + fits</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_fit</span><span class="p">(</span><span class="n">list_avg</span><span class="p">,</span> <span class="n">property_type</span><span class="o">=</span><span class="s1">&#39;scale&#39;</span><span class="p">):</span>
+    <span class="n">scale_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">list_avg</span><span class="p">)</span>
+    <span class="n">scale_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">list_avg</span><span class="p">)</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">slope1</span><span class="p">,</span> <span class="n">intercept1</span><span class="p">,</span> <span class="n">r_value1</span><span class="p">,</span> <span class="n">p_value1</span><span class="p">,</span> <span class="n">std_err1</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">slope2</span><span class="p">,</span> <span class="n">intercept2</span><span class="p">,</span> <span class="n">r_value2</span><span class="p">,</span> <span class="n">p_value2</span><span class="p">,</span> <span class="n">std_err2</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">scale_list_sorted</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">slope_coef</span><span class="p">,</span> <span class="n">intercept_coef</span><span class="p">,</span> <span class="n">r_value_coef</span><span class="p">,</span> <span class="n">p_value_coef</span><span class="p">,</span> <span class="n">std_err_coef</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+        <span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">cerrs</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">property_type</span> <span class="o">==</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;grey&#39;</span>
+    <span class="k">elif</span> <span class="n">property_type</span> <span class="o">==</span> <span class="s1">&#39;chaos&#39;</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;hotpink&#39;</span>
+    <span class="k">elif</span> <span class="n">property_type</span> <span class="o">==</span> <span class="s1">&#39;syntactic complexity&#39;</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;saddlebrown&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span>
+
+    <span class="k">if</span> <span class="n">property_type</span> <span class="o">==</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;grey&#39;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">slope1</span> <span class="o">*</span> <span class="n">scale_list_sorted</span> <span class="o">+</span> <span class="n">intercept1</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">scale_list_sorted</span><span class="p">,</span>
+            <span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">],</span>
+            <span class="n">std_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">],</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Avg. $E_</span><span class="si">{RMSE}</span><span class="s2">$ sorted by &quot;</span> <span class="o">+</span> <span class="n">property_type</span> <span class="o">+</span> <span class="s2">&quot;, $R^2$ = &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r_value1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">intercept2</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale_list_sorted</span> <span class="o">**</span> <span class="n">slope2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">scale_list_sorted</span><span class="p">,</span>
+            <span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">],</span>
+            <span class="n">std_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">],</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Avg. $E_</span><span class="si">{RMSE}</span><span class="s2">$ sorted by &quot;</span> <span class="o">+</span> <span class="n">property_type</span> <span class="o">+</span> <span class="s2">&quot;, $R^2$ = &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r_value2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<span class="n">make_fit</span><span class="p">(</span><span class="n">scale_list_avg</span><span class="p">)</span>
+<span class="n">make_fit</span><span class="p">(</span><span class="n">lyap_list</span><span class="p">,</span> <span class="s1">&#39;chaos&#39;</span><span class="p">)</span>
+<span class="n">make_fit</span><span class="p">(</span><span class="n">medl_list</span><span class="p">,</span> <span class="s1">&#39;syntactic complexity&#39;</span><span class="p">)</span>
+<span class="n">make_fit</span><span class="p">(</span><span class="n">nonlinear_sum</span><span class="p">,</span> <span class="s1">&#39;nonlinearity&#39;</span><span class="p">)</span>
+
+<span class="c1"># polish the figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span>
+    <span class="n">framealpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Dynamical property values&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$E_</span><span class="si">{RMSE}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.8e-3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_11_0.png" src="../_images/examples_optimizer_comparison_11_0.png" />
+</div>
+</div>
+</section>
+<section id="Summarize-the-R^2-values-for-all-the-fits-of-all-the-optimizers,-at-each-noise-level">
+<h2>Summarize the <span class="math notranslate nohighlight">\(R^2\)</span> values for all the fits of all the optimizers, at each noise level<a class="headerlink" href="#Summarize-the-R^2-values-for-all-the-fits-of-all-the-optimizers,-at-each-noise-level" title="Link to this heading"></a></h2>
+<p>Rather than producing the rather complicated plot above over and over, here we record the <span class="math notranslate nohighlight">\(R^2\)</span> coefficients of determination for each fit of (dynamical property, RMSE error), and plot the results.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scale_list_avg</span><span class="p">)</span>
+<span class="n">scale_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">scale_list_avg</span><span class="p">)</span>
+<span class="n">chaos_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">lyap_list</span><span class="p">)</span>
+<span class="n">chaos_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">lyap_list</span><span class="p">)</span>
+<span class="n">syntax_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">medl_list</span><span class="p">)</span>
+<span class="n">syntax_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">medl_list</span><span class="p">)</span>
+<span class="n">nonlinear_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">nonlinear_sum</span><span class="p">)</span>
+<span class="n">nonlinear_list_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">nonlinear_sum</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_r2s</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">start_index</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">r_values_scale</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">r_values_chaos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">r_values_syntax</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">r_values_nonlinear</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">avg_rmse_error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">std_rmse_error</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">slope1</span><span class="p">,</span> <span class="n">intercept1</span><span class="p">,</span> <span class="n">r_value1</span><span class="p">,</span> <span class="n">p_value1</span><span class="p">,</span> <span class="n">std_err1</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+            <span class="n">scale_list_sorted</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">scale_sort</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">r_values_scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_value1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">slope2</span><span class="p">,</span> <span class="n">intercept2</span><span class="p">,</span> <span class="n">r_value2</span><span class="p">,</span> <span class="n">p_value2</span><span class="p">,</span> <span class="n">std_err2</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">chaos_list_sorted</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">chaos_sort</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">r_values_chaos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_value2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">slope2</span><span class="p">,</span> <span class="n">intercept2</span><span class="p">,</span> <span class="n">r_value2</span><span class="p">,</span> <span class="n">p_value2</span><span class="p">,</span> <span class="n">std_err2</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">syntax_list_sorted</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">syntax_sort</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">r_values_syntax</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_value2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">slope2</span><span class="p">,</span> <span class="n">intercept2</span><span class="p">,</span> <span class="n">r_value2</span><span class="p">,</span> <span class="n">p_value2</span><span class="p">,</span> <span class="n">std_err2</span> <span class="o">=</span> <span class="n">linregress</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">nonlinear_list_sorted</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">avg_rmse_error</span><span class="p">[</span><span class="n">nonlinear_sort</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">r_values_nonlinear</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_value2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r_values_scale</span><span class="p">,</span> <span class="n">r_values_chaos</span><span class="p">,</span> <span class="n">r_values_syntax</span><span class="p">,</span> <span class="n">r_values_nonlinear</span>
+
+<span class="n">r_values_scale</span><span class="p">,</span> <span class="n">r_values_chaos</span><span class="p">,</span> <span class="n">r_values_syntax</span><span class="p">,</span> <span class="n">r_values_nonlinear</span> <span class="o">=</span> <span class="n">compute_r2s</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_dynamical_properties</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">chaos</span><span class="p">,</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">nonlinear</span><span class="p">):</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">opt_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;STLSQ&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;SR3 ($\nu = 1$)&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;SR3 ($\nu = 0.1$)&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;Lasso&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;MIOSR&#39;</span><span class="p">,</span> <span class="s1">&#39;STLSQ (weak)&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+                 <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$log(E_</span><span class="si">{RMSE}</span><span class="s1">)$ = a * (scale separation) + b&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chaos</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;hotpink&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+                 <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$log(E_</span><span class="si">{RMSE}</span><span class="s1">)$ = a * log(chaos) + b&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">syntax</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;saddlebrown&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+                 <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$log(E_</span><span class="si">{RMSe}</span><span class="s1">)$ = a * log(syn. complexity) + b&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nonlinear</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+                 <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$log(E_</span><span class="si">{RMSE}</span><span class="s1">)$ = a * log(nonlinearity) + b&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="n">opt_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 0%&#39;</span><span class="p">,</span> <span class="n">opt_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 0.1%&#39;</span><span class="p">,</span> <span class="n">opt_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 1%&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$R^2$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plot_dynamical_properties</span><span class="p">(</span><span class="n">r_values_scale</span><span class="p">,</span> <span class="n">r_values_chaos</span><span class="p">,</span> <span class="n">r_values_syntax</span><span class="p">,</span> <span class="n">r_values_nonlinear</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Pictures/best_r2_values_rmse_error.pdf&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span> <span class="o">=</span> <span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_14_0.png" src="../_images/examples_optimizer_comparison_14_0.png" />
+</div>
+</div>
+</section>
+<section id="We-find-to-leading-order-that-optimizer-performance-is-independent-of-the-dynamical-properties,-although-there-are-significant-differences-between-optimizers">
+<h2>We find to leading order that optimizer performance is independent of the dynamical properties, although there are significant differences between optimizers<a class="headerlink" href="#We-find-to-leading-order-that-optimizer-performance-is-independent-of-the-dynamical-properties,-although-there-are-significant-differences-between-optimizers" title="Link to this heading"></a></h2>
+</section>
+<section id="Now-we-repeat-with-the-coefficient-errors-instead-of-the-RMSE-errors">
+<h2>Now we repeat with the coefficient errors instead of the RMSE errors<a class="headerlink" href="#Now-we-repeat-with-the-coefficient-errors-instead-of-the-RMSE-errors" title="Link to this heading"></a></h2>
+<p>We find that the correlations with the coefficient errors are very weak.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_values_scale</span><span class="p">,</span> <span class="n">r_values_chaos</span><span class="p">,</span> <span class="n">r_values_syntax</span><span class="p">,</span> <span class="n">r_values_nonlinear</span> <span class="o">=</span> <span class="n">compute_r2s</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">start_index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plot_dynamical_properties</span><span class="p">(</span><span class="n">r_values_scale</span><span class="p">,</span> <span class="n">r_values_chaos</span><span class="p">,</span> <span class="n">r_values_syntax</span><span class="p">,</span> <span class="n">r_values_nonlinear</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Pictures/best_r2_values_coef_error.pdf&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_optimizer_comparison_17_0.png" src="../_images/examples_optimizer_comparison_17_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="16_benchmark_paper.html" class="btn btn-neutral float-left" title="Large-scale benchmarking for system identification methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="visualization.html" class="btn btn-neutral float-right" title="General Benchmark Visualization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lanyue Zhang and Alan Kaptanoglu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

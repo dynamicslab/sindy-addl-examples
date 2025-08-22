@@ -11,7 +11,9 @@ Perhaps list important version information here (python, pysindy?)
 .. toctree::
     :maxdepth: 1
     
-    /examples/sample-sindy.ipynb
+    /examples/16_benchmark_paper.ipynb
+    /examples/optimizer_comparison.ipynb
+    /examples/visualization.ipynb
 
 
 .. Note that "/" is relative to docs/source, and examples/ gets copied into
