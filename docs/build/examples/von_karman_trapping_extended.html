@@ -1,0 +1,1138 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variations of the Trapping theorem – different Lyapunov functions &mdash; Trapping SINDy 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lorenz model" href="trapping_extended.html" />
+    <link rel="prev" title="Trapping SINDy" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Trapping SINDy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="example_dysts.html">More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Trapping SINDy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Mean-field-model">Mean field model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Atmospheric-oscillator-model">Atmospheric oscillator model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Lorenz-model">Lorenz model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Visualizing-the-trapping-region-for-Lorenz">Visualizing the trapping region for Lorenz</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#MHD-model">MHD model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Forced-Burger's-Equation">Forced Burger’s Equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Von-Karman-shedding-behind-circular-cylinder,-Re-=-100">Von Karman shedding behind circular cylinder, Re = 100</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#Energy-plot-illustrating-the-transient-and-long-time-energy-conservation">Energy plot illustrating the transient and long-time energy conservation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Variations of the Trapping theorem – different Lyapunov functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#We-have-pre-loaded-some-useful-functions,-and-now-we-can-load-in-the-von-Karman-DNS-data.-For-simplicity-(and-speed-of-the-code),-we-will-limit-ourselves-to-5D-models,-using-the-first-4-POD-modes-+-the-shift-mode.">We have pre-loaded some useful functions, and now we can load in the von Karman DNS data. For simplicity (and speed of the code), we will limit ourselves to 5D models, using the first 4 POD modes + the shift mode.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Compute-the-velocity,-vorticity,-and-enstrophy">Compute the velocity, vorticity, and enstrophy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Check-global-stability-of-the-POD-Galerkin-models">Check global stability of the POD-Galerkin models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#We-have-proven-that-both-the-models,-with-totally-symmetric-quadratic-tensors,-are-globally-stable.">We have proven that both the models, with totally symmetric quadratic tensors, are globally stable.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Data-driven-5D-models-for-the-von-Karman-street-using-Trapping-SINDy">Data-driven 5D models for the von Karman street using Trapping SINDy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Compare-the-models">Compare the models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Rerun-with-enstrophy-using-local-trapping-method">Rerun with enstrophy using local trapping method</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trapping_extended.html">Lorenz model</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Trapping SINDy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Variations of the Trapping theorem – different Lyapunov functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/von_karman_trapping_extended.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Variations-of-the-Trapping-theorem----different-Lyapunov-functions">
+<h1>Variations of the Trapping theorem – different Lyapunov functions<a class="headerlink" href="#Variations-of-the-Trapping-theorem----different-Lyapunov-functions" title="Link to this heading"></a></h1>
+<p>This example will be used to demonstrate that both the energy and enstrophy can be used as Lyapunov functions for promoting local and global stability with the trapping theorems used for quadratically nonlinear systems of ODEs.</p>
+<p>We will demonstrate this using a canonical 2D fluid flow (2D so that the enstrophy is conserved). In many cases, the wake behind a bluff body is characterized by a periodic vortex shedding phenomenon known as a von Karman street. The two-dimensional incompressible flow past a cylinder is a stereotypical example of such behavior. The transient energy growth and saturation amplitude of this instability mode is of particular interest and has historically posed a significant modeling challenge.
+Noack et al. (2003) used an 8-mode POD basis that was augmented with a ninth “shift mode” parameterizing a mean flow deformation. The 9-mode quadratic Galerkin model does resolve the transient dynamics, nonlinear stability mechanism, and post-transient oscillation, accurately reproducing all of the key physical features of the vortex street. In general, the totally symmetric structure in the quadratic coefficients <span class="math notranslate nohighlight">\(Q_{ijk}\)</span> is weakly <em>broken</em> in models for the von Karman street, but it can
+be enforced to hold exactly.</p>
+<p>This is precisely what is done in Schlegel and Noack (2015), and in this perfectly-skew-symmetric case, the global stability of the quadratic model was proven with <span class="math notranslate nohighlight">\(m_9 = m_\text{shift} = \epsilon\)</span>, <span class="math notranslate nohighlight">\(\epsilon &gt; 1\)</span>, and <span class="math notranslate nohighlight">\(m_i = 0\)</span> for <span class="math notranslate nohighlight">\(i = \{1,...,8\}\)</span>. Indeed, we do similarly for data-driven models obtained with the SINDy method in the trapping_sindy_paper_examples.ipynb Jupyter notebook corresponding to the Trapping SINDy paper
+(<a class="reference external" href="https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.6.094401">https://journals.aps.org/prfluids/abstract/10.1103/PhysRevFluids.6.094401</a>).</p>
+<p>### This notebook will show that both the energy and enstrophy can be used with the trapping theorem to promote global stability.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+
+<span class="c1"># ignore warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pymech.neksuite</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nek</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trapping_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">galerkin_model</span><span class="p">,</span>
+    <span class="n">integrator_keywords</span><span class="p">,</span>
+    <span class="n">nel</span><span class="p">,</span>
+    <span class="n">nGLL</span><span class="p">,</span>
+    <span class="n">interp</span><span class="p">,</span>
+    <span class="n">get_velocity</span><span class="p">,</span>
+    <span class="n">get_vorticity</span><span class="p">,</span>
+    <span class="n">obj_function</span><span class="p">,</span>
+    <span class="n">sindy_library_no_bias</span><span class="p">,</span>
+    <span class="n">check_local_stability</span><span class="p">,</span>
+    <span class="n">make_trap_progress_plots</span><span class="p">,</span>
+    <span class="n">make_bar</span><span class="p">,</span>
+    <span class="n">nx</span><span class="p">,</span>
+    <span class="n">ny</span><span class="p">,</span>
+    <span class="n">plot_field</span><span class="p">,</span>
+    <span class="n">make_progress_plots</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="We-have-pre-loaded-some-useful-functions,-and-now-we-can-load-in-the-von-Karman-DNS-data.-For-simplicity-(and-speed-of-the-code),-we-will-limit-ourselves-to-5D-models,-using-the-first-4-POD-modes-+-the-shift-mode.">
+<h2>We have pre-loaded some useful functions, and now we can load in the von Karman DNS data. For simplicity (and speed of the code), we will limit ourselves to 5D models, using the first 4 POD modes + the shift mode.<a class="headerlink" href="#We-have-pre-loaded-some-useful-functions,-and-now-we-can-load-in-the-von-Karman-DNS-data.-For-simplicity-(and-speed-of-the-code),-we-will-limit-ourselves-to-5D-models,-using-the-first-4-POD-modes-+-the-shift-mode." title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters and load in POD modes obtained from DNS</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/vonKarman_a.dat&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">r</span><span class="p">]</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">a_temp</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a_temp</span>
+
+<span class="c1"># optionally reduce the resolution slightly for more algorithm speed later</span>
+<span class="n">tbegin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tend</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># define the POD-Galerkin models from Noack (2003)</span>
+<span class="n">galerkin9</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/galerkin9.mat&quot;</span><span class="p">)</span>
+
+<span class="c1"># Build two Galerkin models, one in which the nonlinearity is as</span>
+<span class="c1"># calculated, and the other enforced to be exactly skew-symmetric.</span>
+<span class="n">gQ</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gQ</span>
+    <span class="o">-</span> <span class="p">(</span>
+        <span class="n">gQ</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="o">/</span> <span class="mf">6.0</span>
+<span class="p">)</span>
+<span class="n">model9</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">galerkin_model</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">])</span>  <span class="c1"># noqa: E731</span>
+<span class="n">model9_ep</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">galerkin_model</span><span class="p">(</span>  <span class="c1"># noqa: E731</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Generate initial condition from unstable eigenvectors</span>
+<span class="c1"># lamb, Phi = np.linalg.eig(galerkin9[&#39;L&#39;])</span>
+<span class="c1"># idx = np.argsort(-np.real(lamb))</span>
+<span class="c1"># lamb, Phi = lamb[idx], Phi[:, idx]</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">a0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="c1"># get the 5D POD-Galerkin coefficients</span>
+<span class="n">inds5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">galerkin5</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">][</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">inds5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">][</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">][</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">model5</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">galerkin_model</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">])</span>  <span class="c1"># noqa: E731</span>
+
+<span class="c1"># make the 5D POD-Galerkin model trajectories</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">a_galerkin5</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">model5</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">adot_galerkin5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">a_galerkin5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># plot the first 4 POD modes + the shift mode</span>
+<span class="n">mode_numbers</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+            <span class="s2">&quot;DNS and POD-Galerkin models on first 4 POD modes + shift mode&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+        <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD from DNS&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">a_galerkin5</span><span class="p">[:,</span> <span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD-5 model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$a_{&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_3_0.png" src="../_images/examples_von_karman_trapping_extended_3_0.png" />
+</div>
+</div>
+<section id="Compute-the-velocity,-vorticity,-and-enstrophy">
+<h3>Compute the velocity, vorticity, and enstrophy<a class="headerlink" href="#Compute-the-velocity,-vorticity,-and-enstrophy" title="Link to this heading"></a></h3>
+<p>The first thing we will do is promote globally stable models via the trapping SINDy algorithm, as in the trapping_sindy_paper_examples.ipynb notebook. We can actually do this by calculating a stability matrix <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> with <em>either</em> the energy or the enstrophy (or any other positive definite, quadratic quantity that plays an important role in the dynamics). So we begin by constructing globally stable trapping models of the von Karman street in these two ways.</p>
+<p>First, we load in the data and compute the energy and enstrophy.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># path to POD mode files</span>
+<span class="n">field_path</span> <span class="o">=</span> <span class="s2">&quot;../data/vonKarman_pod/cyl0.snapshot&quot;</span>
+<span class="n">mode_path</span> <span class="o">=</span> <span class="s2">&quot;../data/vonKarman_pod/pod_modes/&quot;</span>
+
+<span class="c1"># Read limit cycle flow field for grid points</span>
+<span class="n">field</span> <span class="o">=</span> <span class="n">nek</span><span class="o">.</span><span class="n">readnek</span><span class="p">(</span><span class="n">field_path</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">nel</span> <span class="o">*</span> <span class="n">nGLL</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># define cell values needed for the vorticity interpolation</span>
+<span class="n">Cx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">field</span><span class="o">.</span><span class="n">elem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nGLL</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nGLL</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">Cy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">field</span><span class="o">.</span><span class="n">elem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nGLL</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nGLL</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t_idx</span><span class="p">:</span> <span class="s2">&quot;cyl0.f</span><span class="si">{0:05d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span>  <span class="c1"># noqa: E731</span>
+
+<span class="c1"># plot mean + leading POD modes</span>
+<span class="n">clim</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">file_order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">file_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Mean field&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode 3&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode 4&quot;</span><span class="p">,</span> <span class="s2">&quot;Shift mode&quot;</span><span class="p">]</span>
+
+<span class="c1"># Plot the vorticity fields as we load them in</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">u_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">v_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">vorticities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">vorticities_flat</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_order</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">get_velocity</span><span class="p">(</span><span class="n">mode_path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">(</span><span class="n">file_order</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">u_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">v_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">vort</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">get_vorticity</span><span class="p">(</span><span class="n">mode_path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">(</span><span class="n">file_order</span><span class="p">[</span><span class="n">i</span><span class="p">])),</span> <span class="n">Cx</span><span class="p">,</span> <span class="n">Cy</span><span class="p">)</span>
+    <span class="n">vorticities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vort</span><span class="p">,</span> <span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">vorticities_flat</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_vorticity</span><span class="p">(</span><span class="n">mode_path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">(</span><span class="n">file_order</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+
+    <span class="n">plot_field</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">vort</span><span class="p">,</span> <span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">file_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">file_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_5_0.png" src="../_images/examples_von_karman_trapping_extended_5_0.png" />
+</div>
+</div>
+<p>We have loaded in the vorticity fields of each POD mode, now need to calculate the energy and the enstrophy.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mass_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/pod_modes/mass_matrix.dat&quot;</span><span class="p">)</span>
+<span class="n">ip1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">mass_matrix</span> <span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># noqa: E731</span>
+<span class="n">ip2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">mass_matrix</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>  <span class="c1"># noqa: E731</span>
+    <span class="n">b</span> <span class="o">*</span> <span class="n">mass_matrix</span><span class="p">,</span> <span class="n">d</span>
+<span class="p">)</span>
+<span class="n">energy_integrals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">enstrophy_integrals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">wi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vorticities_flat</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">wj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vorticities_flat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip2</span><span class="p">(</span><span class="n">u_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">wj</span><span class="p">,</span> <span class="n">wj</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip1</span><span class="p">(</span><span class="n">wi</span><span class="p">,</span> <span class="n">wj</span><span class="p">)</span>
+        <span class="n">energy_integrals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip2</span><span class="p">(</span><span class="n">u_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">u_list</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">v_list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Do some checks to make sure energy eigenvalues and enstrophy eigenvalues make sense (energy eigenvalues should be identitity because we are using the eigenbasis of energy, and enstrophy eigenvalues should be positive since enstrophy is by construction a positive definite quantity).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the energy eigenvalues</span>
+<span class="n">P_energy</span> <span class="o">=</span> <span class="n">energy_integrals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">eigs_energy</span><span class="p">,</span> <span class="n">eigvecs_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">P_energy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigs_energy</span><span class="p">)</span>
+
+<span class="c1"># Compute the enstrophy eigenvalues</span>
+<span class="n">P_enstrophy</span> <span class="o">=</span> <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">eigs_enstrophy</span><span class="p">,</span> <span class="n">eigvecs_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">P_enstrophy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigs_enstrophy</span><span class="p">)</span>
+
+<span class="c1"># Define the linear part of the model,</span>
+<span class="c1"># rotated into the eigenbasis of enstrophy</span>
+<span class="n">L_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P_enstrophy</span><span class="p">,</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[1. 1. 1. 1. 1.]
+[ 2.67263208  2.77593793  2.99681091 10.56822815 10.72500109]
+</pre></div></div>
+</div>
+</section>
+<section id="Check-global-stability-of-the-POD-Galerkin-models">
+<h3>Check global stability of the POD-Galerkin models<a class="headerlink" href="#Check-global-stability-of-the-POD-Galerkin-models" title="Link to this heading"></a></h3>
+<p>Okay, so we have loaded in some DNS data from the von Karman Street and generated (analytic) 5D POD-Galerkin models for this system. The skew-symmetric models below are globally stable <em>if and only if</em> there exists a vector <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> such that following matrix is negative definite:</p>
+<div class="math notranslate nohighlight">
+\[A^S_{ij} = L^S_{ij} + (Q_{ijk} + Q_{jik})m_k.\]</div>
+<p>Note that if the quadratic term <span class="math notranslate nohighlight">\(Q_{ijk}\)</span> has no totally-symmetric part this is equal to</p>
+<div class="math notranslate nohighlight">
+\[A^S_{ij} = L^S_{ij} - Q_{kij}m_k.\]</div>
+<p>A negative definite <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> turns out to also be necessary when <span class="math notranslate nohighlight">\(Q_{ijk}\)</span> does have nontrivial totally symmetric component, but in this case is not sufficient for global boundedness and we can promote local stability as in the trapping_extended.ipynb notebook.</p>
+<p>Next we check with a simple nonlinear algorithm (simulated annealing) that our analytic models can be shown to be globally stable (there is an <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> is negative definite) using both the energy or the enstrophy to construct <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import simulated annealing algorithm from scipy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">dual_annealing</span> <span class="k">as</span> <span class="n">anneal_algo</span>
+
+<span class="c1"># Search between -5000, 5000 for each component of m</span>
+<span class="n">boundvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">boundmax</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">boundmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+<span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmin</span>
+<span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmax</span>
+
+<span class="n">Ls_enstrophy</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">L_enstrophy</span> <span class="o">+</span> <span class="n">L_enstrophy</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">Ls</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="c1"># Run simulated annealing for the enstrophy eigenbasis</span>
+<span class="n">algo_sol</span> <span class="o">=</span> <span class="n">anneal_algo</span><span class="p">(</span>
+    <span class="n">obj_function</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">boundvals</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">P_enstrophy</span><span class="p">),</span> <span class="c1"># Factors of P_enstrophy taken care of in obj_func</span>
+    <span class="n">maxiter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">opt_m</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">x</span>
+<span class="n">opt_energy</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">fun</span>
+<span class="n">opt_result</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">message</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enstrophy model result:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal m = &quot;</span><span class="p">,</span> <span class="n">opt_m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Algorithm managed to reduce the largest eigenvalue of A^S to eig1 = &quot;</span><span class="p">,</span>
+    <span class="n">opt_energy</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Repeat using the energy</span>
+<span class="n">algo_sol</span> <span class="o">=</span> <span class="n">anneal_algo</span><span class="p">(</span>
+    <span class="n">obj_function</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">boundvals</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">P_energy</span><span class="p">),</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+<span class="n">opt_m</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">x</span>
+<span class="n">opt_energy</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">fun</span>
+<span class="n">opt_result</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">message</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy model result:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal m = &quot;</span><span class="p">,</span> <span class="n">opt_m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Algorithm managed to reduce the largest eigenvalue of A^S to eig1 = &quot;</span><span class="p">,</span>
+    <span class="n">opt_energy</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Enstrophy model result:
+Optimal m =  [3.52215579e-04 3.02271286e-04 1.16831772e-01 2.96243060e-02
+ 7.79084155e+00]
+Algorithm managed to reduce the largest eigenvalue of A^S to eig1 =  -0.04389666571454352
+
+Energy model result:
+Optimal m =  [ 6.29713134e-04 -1.29718141e-04  1.18528961e-01  1.97190841e-02
+  8.28766982e+00]
+Algorithm managed to reduce the largest eigenvalue of A^S to eig1 =  -0.04388638908485432
+
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="We-have-proven-that-both-the-models,-with-totally-symmetric-quadratic-tensors,-are-globally-stable.">
+<h2>We have proven that both the models, with totally symmetric quadratic tensors, are globally stable.<a class="headerlink" href="#We-have-proven-that-both-the-models,-with-totally-symmetric-quadratic-tensors,-are-globally-stable." title="Link to this heading"></a></h2>
+<p>We now fix the coefficients of <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> except for the direction of the shift-mode, and scan this value to see how the largest eigenvalue of <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> (and corresponding trapping region radius) varies.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="c1"># m[:-1] = [4.40596938e-04, 2.68248063e-04, 1.44130186e-01, 4.11438479e-02]</span>
+<span class="n">m_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="c1"># m_enstrophy[:-1] = [5.99535702e-04, -1.32512857e-04,  1.15691624e-01,  1.80317529e-02]</span>
+
+<span class="n">obj_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">obj_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">Rm_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">Rm_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># Extract maximum and minimum eigenvalues,</span>
+<span class="c1"># and compute radius of the trapping region</span>
+<span class="n">max_eig_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">eigs_energy</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">max_eig_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">eigs_enstrophy</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">alphas</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">m_enstrophy</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+    <span class="n">obj_energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_function</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Ls</span><span class="p">,</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">P_energy</span><span class="p">)</span>
+    <span class="n">obj_enstrophy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_function</span><span class="p">(</span>
+        <span class="n">m_enstrophy</span><span class="p">,</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">P_enstrophy</span>
+    <span class="p">)</span>
+    <span class="n">d_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">m</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">m</span>
+    <span class="p">)</span>
+    <span class="n">lsv</span><span class="p">,</span> <span class="n">sing_vals</span><span class="p">,</span> <span class="n">rsv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">P_enstrophy</span><span class="p">)</span>
+    <span class="n">P_rt</span> <span class="o">=</span> <span class="n">lsv</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sing_vals</span><span class="p">))</span> <span class="o">@</span> <span class="n">rsv</span>
+    <span class="n">d_enstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ls</span><span class="p">,</span> <span class="n">m_enstrophy</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q_ep&quot;</span><span class="p">],</span> <span class="n">m_enstrophy</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">m_enstrophy</span>
+    <span class="p">)</span>
+    <span class="n">d_enstrophy</span> <span class="o">=</span> <span class="n">P_rt</span> <span class="o">@</span> <span class="n">d_enstrophy</span>
+    <span class="n">Rm_energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">d_energy</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">obj_energy</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">Rm_enstrophy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">d_enstrophy</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">obj_enstrophy</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">obj_energy</span> <span class="o">*</span> <span class="mf">1e2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\lambda_1^</span><span class="si">{energy}</span><span class="s2">$ x $10^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">alphas</span><span class="p">[</span><span class="n">obj_energy</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">Rm_energy</span><span class="p">[</span><span class="n">obj_energy</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$R_m^</span><span class="si">{energy}</span><span class="s2">$&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">obj_enstrophy</span> <span class="o">*</span> <span class="mf">1e2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\lambda_1^</span><span class="si">{enstrophy}</span><span class="s2">$ x $10^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">alphas</span><span class="p">[</span><span class="n">obj_enstrophy</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">Rm_enstrophy</span><span class="p">[</span><span class="n">obj_enstrophy</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$R_m^</span><span class="si">{enstrophy}</span><span class="s2">$&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="c1"># plt.xlim(0, 10000)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$m_</span><span class="si">{shift}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_13_0.png" src="../_images/examples_von_karman_trapping_extended_13_0.png" />
+</div>
+</div>
+<section id="Data-driven-5D-models-for-the-von-Karman-street-using-Trapping-SINDy">
+<h3>Data-driven 5D models for the von Karman street using Trapping SINDy<a class="headerlink" href="#Data-driven-5D-models-for-the-von-Karman-street-using-Trapping-SINDy" title="Link to this heading"></a></h3>
+<p>We have investigated a number of 5D (analytic) POD-Galerkin models and shown that the analytic, constrained models are globally stable. Now we show that trapping SINDy can be used with the energy or enstrophy to build data-driven models that are also globally stable.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">galerkin_ep</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gQ</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">galerkin_ep</span><span class="p">)))</span>
+<span class="n">gQ_enstrophy</span> <span class="o">=</span> <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">@</span> <span class="n">gQ</span><span class="p">[</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">galerkin_ep</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gQ_enstrophy</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ_enstrophy</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ_enstrophy</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ_enstrophy</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ_enstrophy</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ_enstrophy</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">galerkin_ep</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.0003931843531373586
+0.04179936940675318
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define hyperparameters</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c1"># don&#39;t need a reg_weight_lam if eta is sufficiently small</span>
+<span class="c1"># which is good news because CVXPY is much slower</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">1e-1</span> <span class="o">*</span> <span class="n">eta</span>
+
+<span class="c1"># run trapping SINDy</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library_no_bias</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The previous model finds an <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> is negative definite, while also fitting the data. Now we can repeat but in the eigenbasis of enstrophy. If the enstrophy is <span class="math notranslate nohighlight">\(H = \mathbf{y}^T\mathcal{P}\mathbf{A}^S \mathbf{y}\)</span>, now we are searching for an <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> such that <span class="math notranslate nohighlight">\(\mathcal{P}\mathbf{A}^S\)</span> is negative definite.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_iter</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">1e-2</span> <span class="o">*</span> <span class="n">eta</span>
+
+<span class="n">mod_matrix</span> <span class="o">=</span> <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">mod_matrix</span><span class="o">=</span><span class="n">mod_matrix</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library_no_bias</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Lenstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Qenstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+<span class="n">enstrophy_model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="c1"># Q = np.tensordot(sindy_opt.PQ_, Xi, axes=([4, 3], [0, 1]))</span>
+<span class="c1"># Q_sum = np.max(np.abs((Q + np.transpose(Q, [1, 2, 0]) + np.transpose(Q, [2, 0, 1]))))</span>
+<span class="c1"># print(&quot;Maximum deviation from the constraints = &quot;, Q_sum)</span>
+<span class="n">make_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Enstrophy model was successful! #### We have built two data-driven models, one using the energy as a Lyapunov function for trapping SINDy, and the other using the enstrophy. Now we compare the distribution of coefficients in each model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_bar</span><span class="p">(</span><span class="n">galerkin5</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Lenstrophy</span><span class="p">,</span> <span class="n">Qenstrophy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Compare-the-models">
+<h3>Compare the models<a class="headerlink" href="#Compare-the-models" title="Link to this heading"></a></h3>
+<p>Below, we compare the 5D POD-Galerkin with trapping SINDy models obtained by considering the energy or by the enstrophy. Both trapping models outperform the POD-Galerkin model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Interpolate onto better time base</span>
+<span class="n">t_traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># simulate trapping SINDy results</span>
+<span class="n">xtraj_energy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_traj</span><span class="p">)</span>
+<span class="n">xtraj_enstrophy</span> <span class="o">=</span> <span class="n">enstrophy_model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_traj</span><span class="p">)</span>
+
+<span class="c1"># simulate and plot 5D von Karman trajectory results</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_traj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_traj</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">xtraj_pod9</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">model5</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_traj</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Make awesome plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">},</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+<span class="p">]</span>
+<span class="n">data_labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_1$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_</span><span class="si">{shift}</span><span class="s2">$&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_1$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_3$&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_3$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_</span><span class="si">{shift}</span><span class="s2">$&quot;</span><span class="p">],</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapping SINDy model (energy)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;(analytic) POD-Galerkin model&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapping SINDy model (enstrophy)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Rerun-with-enstrophy-using-local-trapping-method">
+<h3>Rerun with enstrophy using local trapping method<a class="headerlink" href="#Rerun-with-enstrophy-using-local-trapping-method" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e4</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">1e-1</span> <span class="o">*</span> <span class="n">eta</span>
+<span class="c1"># alpha = 1e10</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1e-10</span>
+
+<span class="n">mod_matrix</span> <span class="o">=</span> <span class="n">enstrophy_integrals</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="c1"># alpha=alpha,</span>
+    <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">mod_matrix</span><span class="o">=</span><span class="n">mod_matrix</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library_no_bias</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">Lenstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Qenstrophy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+<span class="n">enstrophy_model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">mod_matrix</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+<span class="n">rhos_minus</span><span class="p">,</span> <span class="n">rhos_plus</span> <span class="o">=</span> <span class="n">make_trap_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 4.375e+00 ... 4.454e-04 ... 0.00e+00 ... 3.82e-19 ... 6.97e-09 ... 4.38e+00
+  500 ... 4.375e+00 ... 1.998e-04 ... 0.00e+00 ... 3.82e-19 ... 6.97e-09 ... 4.38e+00
+ 1000 ... 4.375e+00 ... 1.387e-04 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 1500 ... 4.375e+00 ... 1.108e-04 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 2000 ... 4.375e+00 ... 9.291e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 2500 ... 4.375e+00 ... 8.194e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 3000 ... 4.375e+00 ... 7.462e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 3500 ... 4.375e+00 ... 6.917e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.38e+00
+ 4000 ... 4.375e+00 ... 6.510e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.37e+00
+ 4500 ... 4.375e+00 ... 6.207e-05 ... 0.00e+00 ... 3.82e-19 ... 6.98e-09 ... 4.37e+00
+optimal m:  [ 2.12560595 -1.82937938  0.76799457  2.45305516 47.61642396]
+As eigvals:  [-3.15773393 -1.5835335  -0.92314318 -0.36068861 -0.1157516 ]
+0.5 * |tilde{H}_0|_F =  5.906654037631929e-10
+0.5 * |tilde{H}_0|_F^2 / beta =  6.977712384054714e-09
+Estimate of trapping region size, Rm =  4005.17475735993
+Normalized trapping region size, Reff =  2382.67546579448
+Local stability size, R_ls=  293948204.118023
+Maximum deviation from the constraints =  3.811306881207344e-09
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_24_1.png" src="../_images/examples_von_karman_trapping_extended_24_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_25_0.png" src="../_images/examples_von_karman_trapping_extended_25_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_von_karman_trapping_extended_25_1.png" src="../_images/examples_von_karman_trapping_extended_25_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">t_traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>  <span class="c1"># * 2)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">},</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">a0s</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">a0</span> <span class="ow">in</span> <span class="n">a0s</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a0</span><span class="p">)</span>
+
+    <span class="c1"># simulate trapping SINDy results</span>
+    <span class="n">xtraj_energy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_traj</span><span class="p">)</span>
+    <span class="n">xtraj_enstrophy</span> <span class="o">=</span> <span class="n">enstrophy_model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_traj</span><span class="p">)</span>
+
+    <span class="c1"># simulate and plot 5D von Karman trajectory results</span>
+    <span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_traj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_traj</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">xtraj_pod9</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">model5</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_traj</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Make awesome plot</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_energy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_pod9</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">a</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="n">xtraj_enstrophy</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="p">]</span>
+    <span class="n">data_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_1$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_</span><span class="si">{shift}</span><span class="s2">$&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_1$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_3$&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$a_2$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_3$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$a_</span><span class="si">{shift}</span><span class="s2">$&quot;</span><span class="p">],</span>
+    <span class="p">]</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Global Trapping SINDy, energy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;POD-Galerkin model&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Local Trapping SINDy, enstrophy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="s2">&quot;k--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapping SINDy model (energy)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="s2">&quot;k--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;(analytic) POD-Galerkin model&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">4</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="s2">&quot;k--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD trajectory from DNS&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">5</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapping SINDy model (enstrophy)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">xlim</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">ylim</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xlim</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">ylim</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">zlim</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="n">zlim_minus</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">zlim</span> <span class="o">=</span> <span class="mf">2.5</span>
+            <span class="n">zlim_minus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># ax[i, 0].legend(fontsize=10)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">xlim</span><span class="p">,</span> <span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">ylim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="n">zlim_minus</span><span class="p">,</span> <span class="n">zlim</span><span class="p">)</span>
+        <span class="c1"># ax[i, 1].legend(fontsize=10)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">xlim</span><span class="p">,</span> <span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">ylim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="n">zlim_minus</span><span class="p">,</span> <span class="n">zlim</span><span class="p">)</span>
+        <span class="c1"># ax[i, 2].legend(fontsize=10)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_zticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="n">data_labels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">xlim</span><span class="p">,</span> <span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">ylim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="n">zlim_minus</span><span class="p">,</span> <span class="n">zlim</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;enstrophy_results.pdf&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 3.4093502  -1.65390395  1.17379657 -7.19226123 -6.03797022]
+[ 6.01489137  9.36523151 -3.73151644  3.84645231  7.52778305]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+capi_return is NULL
+Call-back cb_f_in_lsoda__user__routines failed.
+Traceback (most recent call last):
+  File &#34;/Users/akaptanoglu/anaconda3/envs/pysindy_trapping/lib/python3.11/site-packages/scipy/integrate/_ivp/base.py&#34;, line 154, in fun
+Fatal Python error: F2PySwapThreadLocalCallbackPtr: F2PySwapThreadLocalCallbackPtr: PyLong_AsVoidPtr failed
+Python runtime state: initialized
+    return self.fun_single(t, y)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/anaconda3/envs/pysindy_trapping/lib/python3.11/site-packages/scipy/integrate/_ivp/base.py&#34;, line 23, in fun_wrapped
+    return np.asarray(fun(t, y), dtype=dtype)
+                      ^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/pysindy.py&#34;, line 684, in rhs
+    return self.predict(x[np.newaxis, :])[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/pysindy.py&#34;, line 316, in predict
+    result = [self.model.predict([xi]) for xi in x]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/pysindy.py&#34;, line 316, in &lt;listcomp&gt;
+    result = [self.model.predict([xi]) for xi in x]
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/anaconda3/envs/pysindy_trapping/lib/python3.11/site-packages/sklearn/pipeline.py&#34;, line 602, in predict
+    Xt = transform.transform(Xt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/anaconda3/envs/pysindy_trapping/lib/python3.11/site-packages/sklearn/utils/_set_output.py&#34;, line 295, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/feature_library/base.py&#34;, line 148, in func
+    result = wrapped_func(self, xs, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/feature_library/polynomial_library.py&#34;, line 253, in transform
+    xp[..., i] = x[..., combo].prod(-1)
+                 ~^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/utils/axes.py&#34;, line 316, in __getitem__
+    key, adv_inds = _standardize_indexer(self, key)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/Users/akaptanoglu/pysindy/pysindy/utils/axes.py&#34;, line 700, in _standardize_indexer
+    ax_key = np.array(ax_key)
+             ^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+Extension modules: zmq.backend.cython._zmq
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define energies of the DNS, and both the 5D and 9D models</span>
+<span class="c1"># for POD-Galerkin and the trapping SINDy models</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_galerkin5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xtraj_pod9</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_sindy5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xtraj_energy</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_sindy5_local</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xtraj_enstrophy</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot the energies</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;DNS&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_traj</span><span class="p">,</span> <span class="n">E_galerkin5</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD-5&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_traj</span><span class="p">,</span> <span class="n">E_sindy5</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;SINDy-energy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_traj</span><span class="p">,</span> <span class="n">E_sindy5_local</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;SINDy-enstrophy&quot;</span><span class="p">)</span>
+
+<span class="c1"># do some formatting and save</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Total energy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example.html" class="btn btn-neutral float-left" title="Trapping SINDy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="trapping_extended.html" class="btn btn-neutral float-right" title="Lorenz model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mai Peng, Alan Kaptanoglu, Jacob Stevens-Haas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

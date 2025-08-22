@@ -1,0 +1,1349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trapping SINDy &mdash; Trapping SINDy 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow" href="example_dysts.html" />
+    <link rel="prev" title="Trapping Examples" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Trapping SINDy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Trapping SINDy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Mean-field-model">Mean field model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Atmospheric-oscillator-model">Atmospheric oscillator model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#We-identified-a-very-accurate-and-provably-stable-model-but-the-trapping-region-looks-way-too-big...-what's-going-on-here?">We identified a very accurate and provably stable model but the trapping region looks way too big… what’s going on here?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Lorenz-model">Lorenz model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualizing-the-trapping-region-for-Lorenz">Visualizing the trapping region for Lorenz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Some-of-these-plots-are-different-looking-than-in-the-Trapping-SINDy-paper">Some of these plots are different looking than in the Trapping SINDy paper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#MHD-model">MHD model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Forced-Burger's-Equation">Forced Burger’s Equation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Forced-Burgers'-system-is-not-effectively-nonlinear">Forced Burgers’ system is not effectively nonlinear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Von-Karman-shedding-behind-circular-cylinder,-Re-=-100">Von Karman shedding behind circular cylinder, Re = 100</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Energy-plot-illustrating-the-transient-and-long-time-energy-conservation">Energy plot illustrating the transient and long-time energy conservation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Key-result:-the-5D-SINDy-model-is-globally-stable-and-improves-the-prediction-of-the-transient-timing-compared-with-the-POD-Galerkin-model.">Key result: the 5D SINDy model is globally stable and improves the prediction of the transient timing compared with the POD-Galerkin model.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example_dysts.html">More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="von_karman_trapping_extended.html">Variations of the Trapping theorem – different Lyapunov functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trapping_extended.html">Extended Trapping SINDy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Trapping SINDy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Trapping SINDy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Trapping-SINDy">
+<h1>Trapping SINDy<a class="headerlink" href="#Trapping-SINDy" title="Link to this heading"></a></h1>
+<p>By Alan Kaptanoglu and Jared Callaham</p>
+<p>A very common issue is that models identified by system identification methods typically have no guarantees that the models are numerically or physically stable. This can be addressed with heuristic, data-driven, or analytic closure models, but we have recently directly promoted globally stable models into the system identification itself. This is really nice but two caveats, (1) the regression is nonconvex and there a number of hyperparameters, so this method can be difficult to learn, and (2)
+in order to promote global stability, one needs an analytic result from stability theory, and the one we use applies only for fluid and plasma flows with energy-preserving, quadratic, nonlinearities. This energy-preserving structure is quite common for fluid flows.</p>
+<p>This example illustrates the use of a new “trapping SINDy” extension on a number of canonical fluid systems. The algorithm searches for globally stable systems with energy-preserving quadratic nonlinearities. The full description can be found in our recent paper: Kaptanoglu, Alan A., et al. “Promoting global stability in data-driven models of quadratic nonlinear dynamics.” Physical Review Fluids 6.9 (2021): 094401. This builds off of the new constrained SINDy algorithm based on SR3. The trapping
+theorem for stability utilized in this SINDy algorithm can be found in Schlegel, M., &amp; Noack, B. R. (2015). On long-term boundedness of Galerkin models. Journal of Fluid Mechanics, 765, 325-352.</p>
+<p>Note, important fix made in latest PySINDy version for systems with dimension &gt; 3 for stability promotion.</p>
+<p>Note, most of these examples are run at lower resolution than in the paper, so that the notebook executes much faster.</p>
+<p><a class="reference external" href="https://mybinder.org/v2/gh/dynamicslab/pysindy/v1.7?filepath=examples/8_trapping_sindy_paper_examples.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.io</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">burgers_galerkin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">lorenz</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">meanfield</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">mhd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">oscillator</span>
+
+<span class="c1"># ignore user warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>The trapping algorithm only applies to fluid and plasma flows with energy-preserving, quadratic nonlinear structure, so we need to explicitly constrain the coefficients to conform to this structure.</strong> Below we import some utility functions that pre-calculate the things we need.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">trapping_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">integrator_keywords</span><span class="p">,</span>
+    <span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">sindy_library_no_bias</span><span class="p">,</span>
+    <span class="n">make_fits</span><span class="p">,</span>
+    <span class="n">make_lissajou</span><span class="p">,</span>
+    <span class="n">check_local_stability</span><span class="p">,</span>
+    <span class="n">trapping_region</span><span class="p">,</span>
+    <span class="n">make_progress_plots</span><span class="p">,</span>
+    <span class="n">galerkin_model</span><span class="p">,</span>
+    <span class="n">obj_function</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Mean-field-model">
+<h2>Mean field model<a class="headerlink" href="#Mean-field-model" title="Link to this heading"></a></h2>
+<p>Often the trajectories of nonlinear dynamical systems whose linear parts have some stable directions will approach slow manifolds of reduced dimension with respect to the full state space. As an example of this behavior, consider the following linear-quadratic system originally proposed by Noack et al. (2003) as a simplified model of the von Karman vortex shedding problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{d}{dt}\begin{bmatrix}x \\ y \\z \end{bmatrix}
+= \begin{bmatrix} \mu &amp; -1 &amp; 0 \\1 &amp; \mu &amp; 0 \\ 0 &amp; 0 &amp; -1 \\ \end{bmatrix}
+\begin{bmatrix} x \\ y \\z \end{bmatrix}
++ \begin{bmatrix}- xz \\ - yz \\ x^2 + y^2\end{bmatrix} = \mathbf{L}\mathbf{x} + \mathbf{Q}\mathbf{xx},\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> denote the linear and quadratic parts of the model, respectively.</p>
+<p>Systems of this form commonly arise in PDEs with a pair of unstable eigenmodes represented by <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>. The third variable <span class="math notranslate nohighlight">\(z\)</span> models the effects of mean-field deformations due to nonlinear self-interactions of the instability modes. The linear component is the generic linear part of a system undergoing a supercritical Hopf bifurcation at <span class="math notranslate nohighlight">\(\mu = 0\)</span>; for <span class="math notranslate nohighlight">\(\mu \ll 1\)</span> trajectories quickly approach the parabolic manifold defined by <span class="math notranslate nohighlight">\(z = x^2 + y^2\)</span>. All
+solutions asymptotically approach a stable limit cycle on which <span class="math notranslate nohighlight">\(z = x^2 + y^2 = \mu\)</span>. It can be shown that <span class="math notranslate nohighlight">\(\mathbf{m} = [0, 0, \mu+\epsilon]\)</span>, <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span> produces a negative definite matrix defined through</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \mathbf{A}^S = \mathbf{L}^S - \mathbf{m}\mathbf{Q} = \begin{bmatrix}
+    -\epsilon &amp; 0 &amp; 0 \\
+    0 &amp; -\epsilon &amp; 0 \\
+    0 &amp; 0 &amp; -1
+    \end{bmatrix},
+\end{align}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{L}^S = \mathbf{L} + \mathbf{L}^T\)</span> is the symmetrized linear part of the model. From the Schlegel and Noack trapping theorem (and our trapping SINDy paper), this negative definite matrix allows us to conclude that this system exhibits a trapping region. We can show this analytically, and illustrate below our algorithm can discover it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">meanfield</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">,),</span> <span class="o">**</span><span class="n">integrator_keywords</span>
+<span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">meanfield</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">mu</span><span class="p">,),</span> <span class="o">**</span><span class="n">integrator_keywords</span>
+<span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1e5</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+
+
+<span class="c1"># run trapping SINDy algorithm</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+<span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+<span class="c1"># plotting and analysis</span>
+<span class="n">make_fits</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">xdot_test</span><span class="p">,</span> <span class="n">xdot_test_pred</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;meanfield&quot;</span><span class="p">)</span>
+<span class="n">make_lissajou</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_train_pred</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;meanfield&quot;</span><span class="p">)</span>
+<span class="n">E_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span> <span class="o">-</span> <span class="n">x_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius Error = &quot;</span><span class="p">,</span> <span class="n">E_pred</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+
+<span class="c1"># compute relative Frobenius error in the model coefficients</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">Xi_meanfield</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Xi_meanfield</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Xi_meanfield</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0 x2&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">Xi_meanfield</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x1 x2&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">Xi_meanfield</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0^2&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">Xi_meanfield</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x1^2&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">coef_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_meanfield</span> <span class="o">-</span> <span class="n">Xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_meanfield</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius coefficient error = &quot;</span><span class="p">,</span> <span class="n">coef_pred</span><span class="p">)</span>
+
+<span class="c1"># Compute time-averaged dX/dt error</span>
+<span class="n">deriv_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">deriv_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time-averaged derivative error = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">deriv_error</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 5.203e-09 ... 9.468e-05 ... 0.00e+00 ... 1.50e-20 ... 1.54e-48 ... 9.47e-05
+  500 ... 4.015e-09 ... 3.025e-07 ... 0.00e+00 ... 1.50e-20 ... 4.31e-49 ... 3.07e-07
+ 1000 ... 4.015e-09 ... 5.788e-08 ... 0.00e+00 ... 1.50e-20 ... 1.65e-48 ... 6.19e-08
+ 1500 ... 4.015e-09 ... 2.077e-08 ... 0.00e+00 ... 1.50e-20 ... 2.51e-48 ... 2.48e-08
+ 2000 ... 4.015e-09 ... 1.013e-08 ... 0.00e+00 ... 1.50e-20 ... 9.80e-49 ... 1.41e-08
+ 2500 ... 4.015e-09 ... 5.867e-09 ... 0.00e+00 ... 1.50e-20 ... 2.76e-48 ... 9.88e-09
+ 3000 ... 4.015e-09 ... 3.786e-09 ... 0.00e+00 ... 1.50e-20 ... 3.08e-49 ... 7.80e-09
+ 3500 ... 4.015e-09 ... 2.630e-09 ... 0.00e+00 ... 1.50e-20 ... 1.08e-48 ... 6.64e-09
+ 4000 ... 4.015e-09 ... 1.927e-09 ... 0.00e+00 ... 1.50e-20 ... 1.59e-48 ... 5.94e-09
+ 4500 ... 4.015e-09 ... 1.468e-09 ... 0.00e+00 ... 1.50e-20 ... 4.36e-49 ... 5.48e-09
+(x0)&#39; = 0.010 x0 + -1.000 x1 + -1.000 x0 x2
+(x1)&#39; = 1.000 x0 + 0.010 x1 + -1.000 x1 x2
+(x2)&#39; = -1.000 x2 + 1.000 x0^2 + 1.000 x1^2
+Frobenius Error =  0.005915059546690636
+optimal m:  [-0.1254261  -0.06016724  1.31318278]
+As eigvals:  [-1.31837551 -1.30318407 -0.98480456]
+0.5 * |tilde{H}_0|_F =  1.4938306382013248e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  4.463059951257955e-48
+Estimate of trapping region size, Rm =  1.22071489987813
+Normalized trapping region size, Reff =  200.285704898953
+Local stability size, R_ls=  98887169889671.1
+Frobenius coefficient error =  1.9181496031000266e-05
+Time-averaged derivative error =  6.066077925488403e-12
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_7_1.png" src="../_images/examples_example_7_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_7_2.png" src="../_images/examples_example_7_2.png" />
+</div>
+</div>
+</section>
+<section id="Atmospheric-oscillator-model">
+<h2>Atmospheric oscillator model<a class="headerlink" href="#Atmospheric-oscillator-model" title="Link to this heading"></a></h2>
+<p>Here we briefly look at a more complicated Lorenz-like system of coupled oscillators that is motivated from atmospheric dynamics. The model is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \frac{d}{dt}\begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    \end{bmatrix} = \begin{bmatrix}
+    \mu_1 &amp; 0 &amp; 0 \\
+    0 &amp; \mu_2 &amp; \omega \\
+    0 &amp; -\omega &amp; \mu_2
+    \end{bmatrix}\begin{bmatrix}
+    x \\
+    y \\
+    z
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+    \sigma xy \\
+    \kappa yz + \beta z^2 - \sigma x^2 \\
+    - \kappa y^2 - \beta yz
+    \end{bmatrix}.
+\end{align}\end{split}\]</div>
+<p>For comparison, we assume the parameter choices in Tuwankotta et al. (2006), <span class="math notranslate nohighlight">\(\mu_1 = 0.05\)</span>, <span class="math notranslate nohighlight">\(\mu_2 = -0.01\)</span>, <span class="math notranslate nohighlight">\(\omega = 3\)</span>, <span class="math notranslate nohighlight">\(\sigma = 1.1\)</span>, <span class="math notranslate nohighlight">\(\kappa = -2\)</span>, and <span class="math notranslate nohighlight">\(\beta = -6\)</span>, for which a limit cycle is known to exist. Again, the algorithm shows straightforward success finding a model with a trapping region, for a range of hyperparameter values.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.1</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span>
+<span class="n">eps</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">k1</span>
+<span class="n">mu2</span> <span class="o">=</span> <span class="o">-</span><span class="n">eps</span> <span class="o">*</span> <span class="n">k2</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="mf">3.0</span>
+
+<span class="c1"># Make training and testing data</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">oscillator</span><span class="p">,</span>
+    <span class="n">t_span</span><span class="p">,</span>
+    <span class="n">x0</span><span class="p">,</span>
+    <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
+    <span class="o">**</span><span class="n">integrator_keywords</span>
+<span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">oscillator</span><span class="p">,</span>
+    <span class="n">t_span</span><span class="p">,</span>
+    <span class="n">x0</span><span class="p">,</span>
+    <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
+    <span class="o">**</span><span class="n">integrator_keywords</span>
+<span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e8</span>
+
+<span class="c1"># run trapping SINDy, reusing previous reg_weight_lam, max_iter and constraints</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+<span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+
+<span class="c1"># plotting and analysis</span>
+<span class="n">make_fits</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">xdot_test</span><span class="p">,</span> <span class="n">xdot_test_pred</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;oscillator&quot;</span><span class="p">)</span>
+<span class="n">make_lissajou</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_train_pred</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;oscillator&quot;</span><span class="p">)</span>
+<span class="n">E_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span> <span class="o">-</span> <span class="n">x_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius error = &quot;</span><span class="p">,</span> <span class="n">E_pred</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+
+<span class="c1"># compute relative Frobenius error in the model coefficients</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">Xi_oscillator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+    <span class="p">[[</span><span class="n">mu1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">omega</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">omega</span><span class="p">,</span> <span class="n">mu2</span><span class="p">]]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0 x1&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x1 x2&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0^2&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sigma</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x2^2&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x1 x2&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">beta</span>
+<span class="n">Xi_oscillator</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x1^2&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">alpha</span>
+<span class="n">coef_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_oscillator</span> <span class="o">-</span> <span class="n">Xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_oscillator</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius coefficient error = &quot;</span><span class="p">,</span> <span class="n">coef_pred</span><span class="p">)</span>
+
+<span class="c1"># Compute time-averaged dX/dt error</span>
+<span class="n">deriv_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">deriv_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time-averaged derivative error = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">deriv_error</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.080e-04 ... 2.001e-07 ... 0.00e+00 ... 2.26e-19 ... 7.71e-50 ... 2.08e-04
+  500 ... 2.080e-04 ... 2.947e-10 ... 0.00e+00 ... 2.26e-19 ... 2.80e-49 ... 2.08e-04
+ 1000 ... 2.080e-04 ... 1.632e-10 ... 0.00e+00 ... 2.26e-19 ... 4.53e-50 ... 2.08e-04
+ 1500 ... 2.080e-04 ... 1.147e-10 ... 0.00e+00 ... 2.26e-19 ... 9.04e-49 ... 2.08e-04
+ 2000 ... 2.080e-04 ... 8.962e-11 ... 0.00e+00 ... 2.26e-19 ... 5.17e-49 ... 2.08e-04
+ 2500 ... 2.080e-04 ... 7.477e-11 ... 0.00e+00 ... 2.26e-19 ... 2.04e-49 ... 2.08e-04
+ 3000 ... 2.080e-04 ... 6.526e-11 ... 0.00e+00 ... 2.26e-19 ... 1.32e-49 ... 2.08e-04
+ 3500 ... 2.080e-04 ... 5.882e-11 ... 0.00e+00 ... 2.26e-19 ... 6.36e-50 ... 2.08e-04
+ 4000 ... 2.080e-04 ... 5.430e-11 ... 0.00e+00 ... 2.26e-19 ... 3.40e-49 ... 2.08e-04
+ 4500 ... 2.080e-04 ... 5.103e-11 ... 0.00e+00 ... 2.26e-19 ... 1.83e-49 ... 2.08e-04
+(x0)&#39; = 0.050 x0 + 1.100 x0 x1
+(x1)&#39; = 0.001 x0 + -0.010 x1 + 2.999 x2 + -1.100 x0^2 + -1.998 x1 x2 + -4.998 x2^2
+(x2)&#39; = -2.999 x1 + -0.010 x2 + 1.998 x1^2 + 4.998 x1 x2
+Max deviation from the constraints =  2.2693435672294093e-15
+Frobenius error =  0.0664282208845891
+optimal m:  [-0.18651656 -0.99701715  0.39842863]
+As eigvals:  [-5.78928194e+00 -1.05543550e+00 -1.40712551e-03]
+0.5 * |tilde{H}_0|_F =  3.4667284016201907e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  2.4036411621200164e-49
+Estimate of trapping region size, Rm =  2283.19477453083
+Normalized trapping region size, Reff =  4958.76569356197
+Local stability size, R_ls=  608841537993.607
+Frobenius coefficient error =  0.0005373058299791525
+Time-averaged derivative error =  5.467638269496836e-06
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_9_1.png" src="../_images/examples_example_9_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_9_2.png" src="../_images/examples_example_9_2.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make 3D illustration of the trapping region</span>
+<span class="n">trapping_region</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="s2">&quot;Atmospheric Oscillator&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+optimal m:  [-0.18651656 -0.99701715  0.39842863]
+As eigvals:  [-5.78928194e+00 -1.05543550e+00 -1.40712551e-03]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_10_1.png" src="../_images/examples_example_10_1.png" />
+</div>
+</div>
+</section>
+<section id="We-identified-a-very-accurate-and-provably-stable-model-but-the-trapping-region-looks-way-too-big...-what's-going-on-here?">
+<h2>We identified a very accurate and provably stable model but the trapping region looks way too big… what’s going on here?<a class="headerlink" href="#We-identified-a-very-accurate-and-provably-stable-model-but-the-trapping-region-looks-way-too-big...-what's-going-on-here?" title="Link to this heading"></a></h2>
+<p>The estimate for the size of the trapping region is based on the smallest eigenvalue of <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span>. But this system has a big scale-separation, leading to <span class="math notranslate nohighlight">\(\lambda_1 = -0.01\)</span> (while <span class="math notranslate nohighlight">\(\lambda_3 = -5.4\)</span>) and an estimate of the trapping region of <span class="math notranslate nohighlight">\(R_m = d/\lambda_1 \approx 300\)</span>. This is because our estimate of the trapping region comes from the worst case scenario.</p>
+</section>
+<section id="Lorenz-model">
+<h2>Lorenz model<a class="headerlink" href="#Lorenz-model" title="Link to this heading"></a></h2>
+<p>The Lorenz system originates from a simple fluid model of atmospheric dynamics from Lorenz et al. (1963). This system is likely the most famous example of chaotic, nonlinear behavior despite the somewhat innocuous system of equations,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \frac{d}{dt}\begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    \end{bmatrix} &amp;= \begin{bmatrix}
+    -\sigma &amp; \sigma &amp; 0 \\
+    \rho &amp; -1 &amp; 0 \\
+    0 &amp; 0 &amp; -\beta
+    \end{bmatrix}
+    \begin{bmatrix}
+    x \\
+    y \\
+    z
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+    0 \\
+    -xz \\
+    xy
+    \end{bmatrix}, \qquad
+    \mathbf{A}^S = \begin{bmatrix}
+    -\sigma &amp; \frac{1}{2}(\rho+\sigma - m_3) &amp; \frac{1}{2}m_2 \\
+    \frac{1}{2}(\rho+\sigma - m_3) &amp; -1 &amp; 0 \\
+    \frac{1}{2}m_2 &amp; 0 &amp; -\beta
+    \end{bmatrix}.
+\end{align}\end{split}\]</div>
+<p>For Lorenz’s choice of parameters, <span class="math notranslate nohighlight">\(\sigma = 10\)</span>, <span class="math notranslate nohighlight">\(\rho = 28\)</span>, <span class="math notranslate nohighlight">\(\beta = 8/3\)</span>, this system is known to exhibit a stable attractor. For <span class="math notranslate nohighlight">\(\mathbf{m} = [0,m_2,\rho+\sigma]\)</span> (<span class="math notranslate nohighlight">\(m_1\)</span> does not contribute to <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> so we set it to zero),</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \mathbf{A}^S &amp;= \begin{bmatrix}
+    -\sigma &amp; 0 &amp; \frac{1}{2}m_2 \\
+    0 &amp; -1 &amp; 0 \\
+    \frac{1}{2}m_2 &amp; 0 &amp; -\beta
+    \end{bmatrix}, \qquad
+    \lambda_1 = -1, \qquad \lambda_{\pm} = -\frac{1}{2}\left[\beta+\sigma \mp \sqrt{m_2^2 + (\beta-\sigma)^2}\right],
+\end{align}\end{split}\]</div>
+<p>so that if <span class="math notranslate nohighlight">\(\lambda_{\pm} &lt; 0\)</span>, then <span class="math notranslate nohighlight">\(-2\sqrt{\sigma\beta} &lt; m_2 &lt; 2\sqrt{\sigma\beta}\)</span>. Our algorithm can successfully identify the optimal <span class="math notranslate nohighlight">\(\mathbf{m}\)</span>, and can be used to identify the inequality bounds on <span class="math notranslate nohighlight">\(m_2\)</span> for stability.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># make training and testing data</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">lorenz</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">30</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">lorenz</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e3</span>
+
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">8e-1</span> <span class="o">*</span> <span class="n">eta</span>  <span class="c1"># default is 1e-2 * eta so this speeds up the code here</span>
+
+<span class="c1"># run trapping SINDy</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+<span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+<span class="c1"># plotting and analysis</span>
+<span class="n">make_fits</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">xdot_test</span><span class="p">,</span> <span class="n">xdot_test_pred</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;lorenz&quot;</span><span class="p">)</span>
+<span class="n">make_lissajou</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_train_pred</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;lorenz&quot;</span><span class="p">)</span>
+<span class="n">make_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+<span class="n">E_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span> <span class="o">-</span> <span class="n">x_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius error = &quot;</span><span class="p">,</span> <span class="n">E_pred</span><span class="p">)</span>
+
+<span class="c1"># compute relative Frobenius error in the model coefficients</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">Xi_lorenz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Xi_lorenz</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+    <span class="p">[[</span><span class="o">-</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">rho</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">beta</span><span class="p">]]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Xi_lorenz</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0 x2&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">Xi_lorenz</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;x0 x1&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">coef_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_lorenz</span> <span class="o">-</span> <span class="n">Xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_lorenz</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius coefficient error = &quot;</span><span class="p">,</span> <span class="n">coef_pred</span><span class="p">)</span>
+
+<span class="c1"># Compute time-averaged dX/dt error</span>
+<span class="n">deriv_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">deriv_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time-averaged derivative error = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">deriv_error</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.475e+02 ... 1.272e-01 ... 0.00e+00 ... 4.93e-21 ... 1.66e-46 ... 2.48e+02
+  500 ... 2.475e+02 ... 2.420e-06 ... 0.00e+00 ... 4.93e-21 ... 7.80e-48 ... 2.47e+02
+ 1000 ... 2.475e+02 ... 7.829e-07 ... 0.00e+00 ... 4.93e-21 ... 3.00e-47 ... 2.47e+02
+ 1500 ... 2.475e+02 ... 4.622e-07 ... 0.00e+00 ... 4.93e-21 ... 1.11e-47 ... 2.47e+02
+ 2000 ... 2.475e+02 ... 3.427e-07 ... 0.00e+00 ... 4.93e-21 ... 2.06e-47 ... 2.47e+02
+ 2500 ... 2.475e+02 ... 2.849e-07 ... 0.00e+00 ... 4.93e-21 ... 4.68e-48 ... 2.47e+02
+ 3000 ... 2.475e+02 ... 2.528e-07 ... 0.00e+00 ... 4.93e-21 ... 1.09e-47 ... 2.47e+02
+ 3500 ... 2.475e+02 ... 2.336e-07 ... 0.00e+00 ... 4.93e-21 ... 2.81e-47 ... 2.47e+02
+ 4000 ... 2.475e+02 ... 2.215e-07 ... 0.00e+00 ... 4.93e-21 ... 3.92e-48 ... 2.47e+02
+ 4500 ... 2.475e+02 ... 2.136e-07 ... 0.00e+00 ... 4.93e-21 ... 2.71e-47 ... 2.47e+02
+(x0)&#39; = 0.090 1 + -9.861 x0 + 9.937 x1 + -0.013 x2 + -0.001 x0 x1 + -0.003 x0 x2 + 0.001 x1^2
+(x1)&#39; = -0.341 1 + 27.751 x0 + -0.914 x1 + 0.041 x2 + 0.001 x0^2 + -0.001 x0 x1 + -0.993 x0 x2 + -0.002 x1 x2 + -0.001 x2^2
+(x2)&#39; = 0.086 1 + 0.002 x0 + -0.015 x1 + -2.664 x2 + 0.003 x0^2 + 0.992 x0 x1 + 0.002 x1^2 + 0.001 x1 x2
+Max deviation from the constraints =  2.761679773755077e-14
+optimal m:  [-1.07188213 -0.11754436 37.86515422]
+As eigvals:  [-9.97039848 -2.66340876 -0.9795892 ]
+0.5 * |tilde{H}_0|_F =  2.6149378149666363e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  1.3675799552284973e-47
+Estimate of trapping region size, Rm =  103.718100343866
+Normalized trapping region size, Reff =  4.13798971688560
+Local stability size, R_ls=  56191921314719.0
+Frobenius error =  0.5528540831430481
+Frobenius coefficient error =  0.015099589869550933
+Time-averaged derivative error =  1.2372728274442115e-05
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_13_1.png" src="../_images/examples_example_13_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_13_2.png" src="../_images/examples_example_13_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_13_3.png" src="../_images/examples_example_13_3.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_13_4.png" src="../_images/examples_example_13_4.png" />
+</div>
+</div>
+</section>
+<section id="Visualizing-the-trapping-region-for-Lorenz">
+<h2>Visualizing the trapping region for Lorenz<a class="headerlink" href="#Visualizing-the-trapping-region-for-Lorenz" title="Link to this heading"></a></h2>
+<p>Below, we plot the SINDy-identified trapping region (red) and the analytic trapping region (cyan) for the Lorenz system. The estimate for the trapping region (blue) correctly encloses the Lorenz attractor, and the red ellipsoid of positive energy growth. We can see that trajectories starting outside of this region monotonically fall into this region and remain forever, and the red and cyan ellipsoids agree well.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make 3D illustration of the trapping region</span>
+<span class="n">trapping_region</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="s2">&quot;Lorenz Attractor&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+optimal m:  [-1.07188213 -0.11754436 37.86515422]
+As eigvals:  [-9.97039848 -2.66340876 -0.9795892 ]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_15_1.png" src="../_images/examples_example_15_1.png" />
+</div>
+</div>
+</section>
+<section id="Some-of-these-plots-are-different-looking-than-in-the-Trapping-SINDy-paper">
+<h2>Some of these plots are different looking than in the Trapping SINDy paper<a class="headerlink" href="#Some-of-these-plots-are-different-looking-than-in-the-Trapping-SINDy-paper" title="Link to this heading"></a></h2>
+<p>This is because (1) there were a few small errors in the original code and (2) we are now plotting the trapping regions not in the <span class="math notranslate nohighlight">\(\mathbf{a}(t)\)</span> or <span class="math notranslate nohighlight">\(\mathbf{y}(t) = \mathbf{a}(t) - \mathbf{m}\)</span> spaces, but instead in the <span class="math notranslate nohighlight">\(\mathbf{z}(t)\)</span> eigenvector coordinates of <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span>, where the definition of the ellipsoid makes the most sense, and (3) the paper examples are typically generated from fully converged solutions run for many additional iterations. See the paper for
+a review of this notation.</p>
+</section>
+<section id="MHD-model">
+<h2>MHD model<a class="headerlink" href="#MHD-model" title="Link to this heading"></a></h2>
+<p>Magnetohydrodynamics exhibit quadratic nonlinearities that are often energy-preserving with typical boundary conditions. We consider a simple model of the nonlinearity in 2D incompressible MHD, which can be obtained from Fourier-Galerkin projection onto a single triad of wave vectors. For the wave vectors <span class="math notranslate nohighlight">\((1,1)\)</span>, <span class="math notranslate nohighlight">\((2,-1)\)</span>, and <span class="math notranslate nohighlight">\((3,0)\)</span> and no background magnetic field, the Carbone and Veltri (1992) system is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \begin{bmatrix}
+    \dot{V}_1 \\
+    \dot{V}_2 \\
+    \dot{V}_3 \\
+    \dot{B}_1 \\
+    \dot{B}_2 \\
+    \dot{B}_3 \\
+    \end{bmatrix} = \begin{bmatrix}
+    -2 \nu &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; -5 \nu &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; -9 \nu &amp; 0 &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; -2 \mu &amp; 0 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; -5 \mu &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -9 \mu \\
+    \end{bmatrix}\begin{bmatrix}
+    V_1 \\
+    V_2 \\
+    V_3 \\
+    B_1 \\
+    B_2 \\
+    B_3
+    \end{bmatrix} + \begin{bmatrix}
+    4(V_2V_3 - B_2B_3) \\
+    -7(V_1V_3 - B_1B_3) \\
+    3(V_1V_2 - B_1B_2) \\
+    2(B_3V_2 - V_3B_2) \\
+    5(V_3B_1 - B_3V_1) \\
+    9(V_1B_2 - B_1V_2) \\
+    \end{bmatrix},
+\end{align}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu \geq 0\)</span> is the viscosity and <span class="math notranslate nohighlight">\(\mu \geq 0\)</span> is the resistivity. Without external forcing, this system is trivially stable (it dissipates to zero), so we consider the inviscid limit <span class="math notranslate nohighlight">\(\nu = \mu = 0\)</span>. The system is then Hamiltonian and our algorithm correctly converges to <span class="math notranslate nohighlight">\(\mathbf{m} = 0\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}^S = 0\)</span>. The reason our algorithm converges to the correct behavior is because it is still minimizing <span class="math notranslate nohighlight">\(\dot{K}\)</span>; in this case trapping SINDy minimizes to
+<span class="math notranslate nohighlight">\(\dot{K} \approx 0\)</span> and can make no further improvement.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># viscosity</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># resistivity</span>
+
+<span class="c1"># define training and testing data (low resolution)</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">6</span><span class="p">,))</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">mhd</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">6</span><span class="p">,))</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">mhd</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e10</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">9.0e-1</span> <span class="o">*</span> <span class="n">eta</span>
+
+
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># eps_solver=1e-3)  # reduce the solver tolerance for speed</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+<span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+
+<span class="c1"># plotting and analysis</span>
+<span class="n">make_lissajou</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_train_pred</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;mhd&quot;</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+<span class="n">E_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span> <span class="o">-</span> <span class="n">x_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">E_pred</span><span class="p">)</span>
+
+<span class="c1"># compute relative Frobenius error in the model coefficients</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span>
+    <span class="n">input_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;V1&quot;</span><span class="p">,</span> <span class="s2">&quot;V2&quot;</span><span class="p">,</span> <span class="s2">&quot;V3&quot;</span><span class="p">,</span> <span class="s2">&quot;B1&quot;</span><span class="p">,</span> <span class="s2">&quot;B2&quot;</span><span class="p">,</span> <span class="s2">&quot;B3&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">Xi_mhd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Xi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V2 V3&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;B2 B3&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V1 V3&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;B1 B3&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">7.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V1 V2&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;B1 B2&quot;</span><span class="p">),</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V2 B3&quot;</span><span class="p">),</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V3 B2&quot;</span><span class="p">),</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V1 B3&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V3 B1&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V1 B2&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.0</span>
+<span class="n">Xi_mhd</span><span class="p">[</span><span class="n">terms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;V2 B1&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">9.0</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">coef_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_mhd</span> <span class="o">-</span> <span class="n">Xi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Xi_mhd</span><span class="p">)</span>
+
+<span class="c1"># Compute time-averaged dX/dt error</span>
+<span class="n">deriv_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">deriv_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time-averaged derivative error = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">deriv_error</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 1.216e-04 ... 1.068e-08 ... 0.00e+00 ... 9.14e-19 ... 4.48e-44 ... 1.22e-04
+  100 ... 1.216e-04 ... 4.185e-11 ... 0.00e+00 ... 9.14e-19 ... 2.77e-43 ... 1.22e-04
+  200 ... 1.216e-04 ... 5.575e-12 ... 0.00e+00 ... 9.14e-19 ... 2.26e-44 ... 1.22e-04
+  300 ... 1.216e-04 ... 3.044e-12 ... 0.00e+00 ... 9.14e-19 ... 2.29e-43 ... 1.22e-04
+  400 ... 1.216e-04 ... 2.998e-12 ... 0.00e+00 ... 9.14e-19 ... 3.65e-44 ... 1.22e-04
+(x0)&#39; = 4.002 x1 x2 + -0.002 x1 x5 + -0.004 x2 x4 + -0.001 x2 x5 + -3.994 x4 x5
+(x1)&#39; = -0.002 x2 + 0.014 x5 + -6.991 x0 x2 + -0.001 x0 x4 + -0.013 x0 x5 + -0.001 x1 x3 + 0.009 x2 x3 + 0.001 x3 x4 + 6.959 x3 x5
+(x2)&#39; = 0.007 x1 + -0.007 x4 + 0.001 x5 + 2.988 x0 x1 + 0.010 x0 x4 + -0.001 x0 x5 + -0.012 x1 x3 + -2.988 x3 x4 + -0.003 x3 x5
+(x3)&#39; = 0.001 x1^2 + 0.003 x1 x2 + 1.990 x1 x5 + -2.000 x2 x4 + 0.003 x4 x5
+(x4)&#39; = 0.001 x1 + 0.006 x2 + -0.005 x5 + -0.006 x0 x2 + -4.981 x0 x5 + -0.001 x1 x3 + 4.989 x2 x3 + 0.008 x3 x5
+(x5)&#39; = -0.019 x1 + -0.001 x2 + 0.006 x4 + 0.015 x0 x1 + 0.001 x0 x2 + 8.975 x0 x4 + -8.949 x1 x3 + 0.002 x2 x3 + -0.010 x3 x4
+Max deviation from the constraints =  2.7498003873915877e-12
+optimal m:  [ 3.21679047e-04  8.28318584e-06 -6.38279005e-06 -1.77840949e-03
+ -2.96212872e-06 -9.51704477e-06]
+As eigvals:  [-3.18979925e-03 -3.94994617e-04 -7.69816688e-05  4.92252189e-06
+  2.08867820e-04  3.09362678e-03]
+0.5 * |tilde{H}_0|_F =  3.89305279321273e-12
+0.5 * |tilde{H}_0|_F^2 / beta =  3.0311720101482877e-43
+Estimate of trapping region size, Rm =  -1191979768.28214
+Normalized trapping region size, Reff =  -2685179915.75110
+Local stability size, R_ls=  -0.0392666912754283
+0.10863468891484956
+(x0)&#39; = 4.00 x1 x2 + -3.99 x4 x5
+(x1)&#39; = 0.01 x5 + -6.99 x0 x2 + -0.01 x0 x5 + 0.01 x2 x3 + 6.96 x3 x5
+(x2)&#39; = 0.01 x1 + -0.01 x4 + 2.99 x0 x1 + 0.01 x0 x4 + -0.01 x1 x3 + -2.99 x3 x4
+(x3)&#39; = 1.99 x1 x5 + -2.00 x2 x4
+(x4)&#39; = 0.01 x2 + -0.01 x0 x2 + -4.98 x0 x5 + 4.99 x2 x3 + 0.01 x3 x5
+(x5)&#39; = -0.02 x1 + 0.01 x4 + 0.02 x0 x1 + 8.98 x0 x4 + -8.95 x1 x3 + -0.01 x3 x4
+Time-averaged derivative error =  2.18308749438043e-06
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_18_1.png" src="../_images/examples_example_18_1.png" />
+</div>
+</div>
+</section>
+<section id="Forced-Burger's-Equation">
+<h2>Forced Burger’s Equation<a class="headerlink" href="#Forced-Burger's-Equation" title="Link to this heading"></a></h2>
+<p>The viscous Burgers’ equation has long served as a simplified one-dimensional turbulence analogue (Burgers/Hopf 1948). The forced, viscous Burgers’ equation on a periodic domain <span class="math notranslate nohighlight">\(x \in [0,2\pi)\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{align}
+    \dot{u} &amp;= -(U + u)\partial_x u + \nu \partial_{xx}^2u + g(x,t),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu\)</span> is viscosity and the constant <span class="math notranslate nohighlight">\(U\)</span> models mean-flow advection. We project this system onto a Fourier basis and assume constant forcing acting on the largest scale, i.e. <span class="math notranslate nohighlight">\(g(x, t) = \sigma \left( a_1(t) e^{ix} + a_{-1}(t) e^{-ix} \right)\)</span> as in Noack and Schlegel et al. (2008). After Fourier projection, the evolution of the coefficients <span class="math notranslate nohighlight">\(a_k(t)\)</span> is given by the Galerkin dynamics</p>
+<div class="math notranslate nohighlight">
+\[\begin{equation}
+    \dot{a}_k = \left( \delta_{|k|1} \sigma - \nu k^2  - ikU \right) a_k - \sum_{\ell=-r}^{r} i \ell a_{\ell} a_{k - \ell}.
+\end{equation}\]</div>
+<p>In the subcritical case <span class="math notranslate nohighlight">\(\sigma &lt; \nu\)</span> the origin of this system is stable to all perturbations and all solutions decay on long times. However, in the supercritical case <span class="math notranslate nohighlight">\(\sigma &gt; \nu\)</span> the excess energy input from the forcing cascades to the smaller dissipative scales. The absolute equilibrium limit <span class="math notranslate nohighlight">\(\sigma = \nu = 0\)</span> has a Hamiltonian structure; at long times the coefficients approach thermodynamic equilibrium and equipartition of energy. For the supercritical condition
+<span class="math notranslate nohighlight">\(\sigma &gt; \nu\)</span>, the trapping SINDy algorithm does not converge to a negative definite <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> because this system does not exhibit effective nonlinearity.</p>
+<p>We do not make a trapping SINDy model here because it takes a while to run. Instead, we show below that it does not fit the criteria of being effectively nonlinear.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters and load in training DNS data</span>
+<span class="n">tstart</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tend</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">Burgers</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s2">&quot;../data/burgers_highres2.mat&quot;</span><span class="p">)</span>
+<span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;nu&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;sigma&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;U&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())[</span><span class="n">tstart</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">]</span>
+<span class="n">u_train</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">][:,</span> <span class="n">tstart</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">spatial_modes_train</span> <span class="o">=</span> <span class="n">Burgers</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[:</span><span class="n">r</span><span class="p">,</span> <span class="n">tstart</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Forced-Burgers'-system-is-not-effectively-nonlinear">
+<h2>Forced Burgers’ system is not effectively nonlinear<a class="headerlink" href="#Forced-Burgers'-system-is-not-effectively-nonlinear" title="Link to this heading"></a></h2>
+<p>The last bit of information we will get from this system is checking if the analytic model exhibits effective nonlinearity, a requirement for the Schlegel and Noack trapping theorem to hold.</p>
+<p>Using a simulated annealing algorithm, we can show that even the analytic 10D Galerkin Noack and Schlegel et al. (2008) model does not exhibit a <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>^S is negative definite. This is because the nonlinearity is not ‘effective’.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">dual_annealing</span> <span class="k">as</span> <span class="n">anneal_algo</span>
+
+<span class="c1"># get analytic L and Q operators and galerkin model</span>
+<span class="n">L</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">burgers_galerkin</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">galerkin_model</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>  <span class="c1"># noqa: E731</span>
+
+<span class="c1"># Generate initial condition from unstable eigenvectors</span>
+<span class="n">lamb</span><span class="p">,</span> <span class="n">Phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">lamb</span><span class="p">))</span>
+<span class="n">lamb</span><span class="p">,</span> <span class="n">Phi</span> <span class="o">=</span> <span class="n">lamb</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">Phi</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="mf">1e-4</span> <span class="o">*</span> <span class="n">Phi</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">@</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># define parameters</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">t_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_sim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_sim</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_sim</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Search between -500, 500 for each component of m</span>
+<span class="n">boundvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">boundmax</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">boundmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
+<span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmin</span>
+<span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmax</span>
+
+<span class="c1"># run simulated annealing and display optimal m and</span>
+<span class="c1"># the corresponding objective function value</span>
+<span class="n">Ls</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span> <span class="o">+</span> <span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># obj_function defined in the utils python file</span>
+<span class="n">algo_sol</span> <span class="o">=</span> <span class="n">anneal_algo</span><span class="p">(</span>
+    <span class="n">obj_function</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">boundvals</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">Ls</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">r</span><span class="p">)),</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">2000</span>
+<span class="p">)</span>
+<span class="n">opt_m</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">x</span>
+<span class="n">opt_energy</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">fun</span>
+<span class="n">opt_result</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">message</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simulated annealing ended because &quot;</span> <span class="o">+</span> <span class="n">opt_result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal m = &quot;</span><span class="p">,</span> <span class="n">opt_m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Algorithm managed to reduce the largest eigenvalue of A^S to eig1 = &quot;</span><span class="p">,</span> <span class="n">opt_energy</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Since the largest eigenvalue cannot be made negative, &quot;</span>
+    <span class="s2">&quot;we conclude that effective nonlinearity does not hold for this system.&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Simulated annealing ended because Maximum number of iteration reached
+Optimal m =  [ 2.31048743e-03 -2.58898539e-03 -4.92962205e-06 -3.96749078e-06
+  3.37881574e-04 -4.38205503e-06  2.71145255e-04 -1.29874660e-04
+  3.58953385e-04 -9.35742513e-05]
+Algorithm managed to reduce the largest eigenvalue of A^S to eig1 =  0.07500725791262655
+Since the largest eigenvalue cannot be made negative, we conclude that effective nonlinearity does not hold for this system.
+</pre></div></div>
+</div>
+</section>
+<section id="Von-Karman-shedding-behind-circular-cylinder,-Re-=-100">
+<h2>Von Karman shedding behind circular cylinder, Re = 100<a class="headerlink" href="#Von-Karman-shedding-behind-circular-cylinder,-Re-=-100" title="Link to this heading"></a></h2>
+<p>In many cases, the wake behind a bluff body is characterized by a periodic vortex shedding phenomenon known as a von Karman street. The two-dimensional incompressible flow past a cylinder is a stereotypical example of such behavior.</p>
+<p>The transient energy growth and saturation amplitude of this instability mode is of particular interest and has historically posed a significant modeling challenge. Noack et al. (2003) used an 8-mode POD basis that was augmented with a ninth “shift mode” parameterizing a mean flow deformation. The 9-mode quadratic Galerkin model does resolve the transient dynamics, nonlinear stability mechanism, and post-transient oscillation, accurately reproducing all of the key physical features of the vortex
+street. Moreover, in Schlegel and Noack (2015) stability of the quadratic model was proven with <span class="math notranslate nohighlight">\(m_9 = m_\text{shift} = \epsilon\)</span>, <span class="math notranslate nohighlight">\(\epsilon &gt; 1\)</span>, and <span class="math notranslate nohighlight">\(m_i = 0\)</span> for <span class="math notranslate nohighlight">\(i = \{1,...,8\}\)</span>. Note that POD-Galerkin models will generally weakly satisfy the effective nonlinearity criteria, although the addition of the shift-mode is a complication.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters and load in POD modes obtained from DNS</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/vonKarman_a.dat&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">r</span><span class="p">]</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">a_temp</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a_temp</span>
+<span class="n">tbegin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tend</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># define the POD-Galerkin models from Noack (2003)</span>
+<span class="n">galerkin9</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/galerkin9.mat&quot;</span><span class="p">)</span>
+
+<span class="c1"># make the Galerkin model nonlinearity exactly energy-preserving</span>
+<span class="c1"># rather than just approximately energy-preserving</span>
+<span class="n">gQ</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gQ</span>
+    <span class="o">-</span> <span class="p">(</span>
+        <span class="n">gQ</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">gQ</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="o">/</span> <span class="mf">6.0</span>
+<span class="p">)</span>
+
+<span class="c1"># time base for simulating Galerkin models</span>
+<span class="n">t_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+
+<span class="c1"># Generate initial condition from unstable eigenvectors</span>
+<span class="n">lamb</span><span class="p">,</span> <span class="n">Phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">])</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">lamb</span><span class="p">))</span>
+<span class="n">lamb</span><span class="p">,</span> <span class="n">Phi</span> <span class="o">=</span> <span class="n">lamb</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">Phi</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">a0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="c1"># np.real( 1e-3 * Phi[:, :2] @ rng.random((2)) )</span>
+
+<span class="c1"># get the 5D POD-Galerkin coefficients</span>
+<span class="n">inds5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">galerkin5</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">][</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">inds5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">galerkin9</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">][</span><span class="n">inds5</span><span class="p">]</span>
+<span class="n">model5</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">galerkin_model</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">],</span> <span class="n">galerkin5</span><span class="p">[</span><span class="s2">&quot;Q&quot;</span><span class="p">])</span>  <span class="c1"># noqa: E731</span>
+
+<span class="c1"># make the 3D, 5D, and 9D POD-Galerkin trajectories</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">a_galerkin5</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">model5</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">a0</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">adot_galerkin5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">a_galerkin5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># plot the first 4 POD modes + the shift mode</span>
+<span class="n">mode_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+            <span class="s2">&quot;DNS and POD-Galerkin models on first 4 POD modes + shift mode&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+        <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD from DNS&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">a_galerkin5</span><span class="p">[:,</span> <span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD-5 model&quot;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$a_{&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">a0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-3</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_24_0.png" src="../_images/examples_example_24_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># same test and train trajectory for simplicity here</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;../data/vonKarman_pod/vonKarman_a.dat&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">r</span><span class="p">]</span>
+<span class="n">a_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">a_temp</span><span class="p">,</span> <span class="n">a</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a_temp</span>
+<span class="n">tbegin</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">tend</span> <span class="o">=</span> <span class="mi">3000</span>
+<span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">tbegin</span><span class="p">:</span><span class="n">tend</span><span class="p">:</span><span class="n">skip</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c1"># don&#39;t need a reg_weight_lam if eta is sufficiently small</span>
+<span class="c1"># which is good news because CVXPY is much slower</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">1e-1</span> <span class="o">*</span> <span class="n">eta</span>
+
+<span class="c1"># run trapping SINDy</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library_no_bias</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+<span class="n">PQ_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PQ_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">Q_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Q</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max deviation from the constraints = &quot;</span><span class="p">,</span> <span class="n">Q_sum</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+    <span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+    <span class="n">make_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+
+    <span class="c1"># plotting and analysis</span>
+    <span class="n">make_fits</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">xdot_test</span><span class="p">,</span> <span class="n">xdot_test_pred</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;vonKarman&quot;</span><span class="p">)</span>
+    <span class="n">make_lissajou</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">x_train_pred</span><span class="p">,</span> <span class="n">x_test_pred</span><span class="p">,</span> <span class="s2">&quot;VonKarman&quot;</span><span class="p">)</span>
+    <span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">mean_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mean_val</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+    <span class="n">A_guess</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">A_history_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">m_guess</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">m_history_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">E_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span> <span class="o">-</span> <span class="n">x_test_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Frobenius Error = &quot;</span><span class="p">,</span> <span class="n">E_pred</span><span class="p">)</span>
+<span class="n">make_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+
+<span class="c1"># Compute time-averaged dX/dt error</span>
+<span class="n">deriv_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xdot_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">deriv_error</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xdot_test_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">xdot_test</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time-averaged derivative error = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">deriv_error</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 8.894e-01 ... 7.929e-02 ... 0.00e+00 ... 4.06e-22 ... 5.00e-45 ... 9.69e-01
+ 1000 ... 8.785e-01 ... 5.941e-02 ... 0.00e+00 ... 5.97e-22 ... 3.24e-45 ... 9.38e-01
+ 2000 ... 8.763e-01 ... 5.426e-02 ... 0.00e+00 ... 6.35e-22 ... 5.42e-45 ... 9.31e-01
+ 3000 ... 8.753e-01 ... 5.104e-02 ... 0.00e+00 ... 6.67e-22 ... 8.45e-45 ... 9.26e-01
+ 4000 ... 8.747e-01 ... 4.874e-02 ... 0.00e+00 ... 6.93e-22 ... 2.03e-45 ... 9.23e-01
+ 5000 ... 8.742e-01 ... 4.688e-02 ... 0.00e+00 ... 7.16e-22 ... 6.48e-45 ... 9.21e-01
+ 6000 ... 8.738e-01 ... 4.503e-02 ... 0.00e+00 ... 7.37e-22 ... 2.85e-45 ... 9.19e-01
+ 7000 ... 8.731e-01 ... 4.269e-02 ... 0.00e+00 ... 7.57e-22 ... 6.19e-45 ... 9.16e-01
+ 8000 ... 8.719e-01 ... 3.837e-02 ... 0.00e+00 ... 7.77e-22 ... 5.94e-45 ... 9.10e-01
+ 9000 ... 8.681e-01 ... 2.328e-02 ... 0.00e+00 ... 8.15e-22 ... 1.15e-44 ... 8.91e-01
+Max deviation from the constraints =  1.3642420526593924e-12
+optimal m:  [-0.0104195  -0.01689565 -0.11558045 -0.74053773  2.57118063]
+As eigvals:  [-0.18423098 -0.09651067 -0.07401776 -0.01759789 -0.01134589]
+0.5 * |tilde{H}_0|_F =  1.3043281760792713e-12
+0.5 * |tilde{H}_0|_F^2 / beta =  3.402543981828557e-44
+Estimate of trapping region size, Rm =  131.619706082290
+Local stability size, R_ls=  13047975120.9099
+optimal m:  [-0.0104195  -0.01689565 -0.11558045 -0.74053773  2.57118063]
+As eigvals:  [-0.18423098 -0.09651067 -0.07401776 -0.01759789 -0.01134589]
+0.5 * |tilde{H}_0|_F =  1.3043281760792713e-12
+0.5 * |tilde{H}_0|_F^2 / beta =  3.402543981828557e-44
+Estimate of trapping region size, Rm =  131.619706082290
+Normalized trapping region size, Reff =  75.9754280467269
+Local stability size, R_ls=  13047975120.9099
+Frobenius Error =  0.6535742642113395
+Time-averaged derivative error =  0.00236849161203658
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_1.png" src="../_images/examples_example_25_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_2.png" src="../_images/examples_example_25_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_3.png" src="../_images/examples_example_25_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_4.png" src="../_images/examples_example_25_4.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_5.png" src="../_images/examples_example_25_5.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_25_6.png" src="../_images/examples_example_25_6.png" />
+</div>
+</div>
+</section>
+<section id="Energy-plot-illustrating-the-transient-and-long-time-energy-conservation">
+<h2>Energy plot illustrating the transient and long-time energy conservation<a class="headerlink" href="#Energy-plot-illustrating-the-transient-and-long-time-energy-conservation" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define energies of the DNS, and both the 5D and 9D models</span>
+<span class="c1"># for POD-Galerkin and the trapping SINDy models</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_galerkin5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_galerkin5</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E_sindy5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x_test_pred</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot the energies</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;DNS&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">E_galerkin5</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;POD-5&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">E_sindy5</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;SINDy-5&quot;</span><span class="p">)</span>
+
+<span class="c1"># do some formatting and save</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Total energy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_27_0.png" src="../_images/examples_example_27_0.png" />
+</div>
+</div>
+</section>
+<section id="Key-result:-the-5D-SINDy-model-is-globally-stable-and-improves-the-prediction-of-the-transient-timing-compared-with-the-POD-Galerkin-model.">
+<h2>Key result: the 5D SINDy model is globally stable and improves the prediction of the transient timing compared with the POD-Galerkin model.<a class="headerlink" href="#Key-result:-the-5D-SINDy-model-is-globally-stable-and-improves-the-prediction-of-the-transient-timing-compared-with-the-POD-Galerkin-model." title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Trapping Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_dysts.html" class="btn btn-neutral float-right" title="More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mai Peng, Alan Kaptanoglu, Jacob Stevens-Haas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

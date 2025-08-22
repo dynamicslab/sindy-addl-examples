@@ -1,0 +1,1215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow &mdash; Trapping SINDy 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Variations of the Trapping theorem – different Lyapunov functions" href="von_karman_trapping_extended.html" />
+    <link rel="prev" title="Trapping SINDy" href="example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Trapping SINDy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="example.html">Trapping SINDy</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Dysts-database-contains-a-number-of-quadratically-nonlinear-chaotic-systems-with-the-special-energy-preserving-nonlinear-symmetry.">Dysts database contains a number of quadratically nonlinear chaotic systems with the special energy-preserving nonlinear symmetry.</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Get-some-more-information-about-the-dynamical-systems-and-their-true-equation-coefficients">Get some more information about the dynamical systems and their true equation coefficients</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Issues-with-using-the-trapping-theorem-with-some-of-the-dysts-systems">Issues with using the trapping theorem with some of the dysts systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Verify-explicitly-that-some-of-the-systems-have-unstable-invariant-linear-or-constant-subspaces">Verify explicitly that some of the systems have unstable invariant linear or constant subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-repeat-for-locally-stable-models!">Now repeat for locally stable models!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Last-demonstration:-building-locally-stable-reduced-order-models-for-the-lid-cavity-flow">Last demonstration: building locally stable reduced-order models for the lid-cavity flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-try-building-a-locally-stable-trapping-SINDy-model-now">Now try building a locally stable trapping SINDy model now</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-we-plot-the-trajectories-and-energy-as-function-of-time">Now we plot the trajectories and energy as function of time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Last-check:-Trapping-SINDy-model-reproduces-the-power-spectral-density-of-the-data">Last check: Trapping SINDy model reproduces the power spectral density of the data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="von_karman_trapping_extended.html">Variations of the Trapping theorem – different Lyapunov functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trapping_extended.html">Extended Trapping SINDy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Trapping SINDy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example_dysts.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="More-locally-stable-models-on-examples-pulled-from-the-dysts-database-of-chaotic-systems-+-bonus:-best-reduced-order-models-to-date-for-the-lid-cavity-flow">
+<h1>More locally stable models on examples pulled from the dysts database of chaotic systems + bonus: best reduced-order models to-date for the lid-cavity flow<a class="headerlink" href="#More-locally-stable-models-on-examples-pulled-from-the-dysts-database-of-chaotic-systems-+-bonus:-best-reduced-order-models-to-date-for-the-lid-cavity-flow" title="Link to this heading"></a></h1>
+<p>Here we test the locally stable trapping theorem on additional systems from the dysts database, <a class="reference external" href="https://github.com/williamgilpin/dysts">https://github.com/williamgilpin/dysts</a>, that (in principle) satisfy the totally-symmetric quadratic coefficient constraint. The locally stable trapping method allows the quadratic models to deviate from being totally symmetric by a small amount. These deviations are caused by finite data, noise, or imperfect optimization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trapping_utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># ignore warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The local stability version of Trapping SINDy reduces to the following unconstrained optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\text{argmin}_{\mathbf{\xi},\mathbf m}\|\dot{\mathbf a} - \mathbf \Theta(\mathbf a) \mathbf{\xi}\|^2 + \gamma R(\mathbf \xi)  + \eta^{-1} \lambda_1(\mathbf A) + \alpha^{-1}\|Q_{ijk}\| + \beta^{-1}\|Q_{ijk} + Q_{jki} + Q_{kij}\|.\]</div>
+<p>We now solve this problem for <span class="math notranslate nohighlight">\(\beta \ll \alpha\)</span>.</p>
+<p>A conservative estimate of the local stability is:</p>
+<div class="math notranslate nohighlight">
+\[\rho_+ = \frac{3|\lambda_{\text{max}}|}{2\epsilon_Q} \left( 1 + \sqrt{1 - \frac{4\epsilon_Q}{3\lambda^2_{\text{max}}(\textbf{A}_S)\|\mathbf{d}\|_2}} \right).\]</div>
+<p>And the radius of the trapping region is given by:</p>
+<div class="math notranslate nohighlight">
+\[\rho_- = \frac{3|\lambda_{\text{max}}|}{2\epsilon_Q} \left( 1 - \sqrt{1 - \frac{4\epsilon_Q}{3\lambda^2_{\text{max}}(\textbf{A}_S)\|\mathbf{d}\|_2}} \right).\]</div>
+<section id="Dysts-database-contains-a-number-of-quadratically-nonlinear-chaotic-systems-with-the-special-energy-preserving-nonlinear-symmetry.">
+<h2>Dysts database contains a number of quadratically nonlinear chaotic systems with the special energy-preserving nonlinear symmetry.<a class="headerlink" href="#Dysts-database-contains-a-number-of-quadratically-nonlinear-chaotic-systems-with-the-special-energy-preserving-nonlinear-symmetry." title="Link to this heading"></a></h2>
+<p>You will need to install the dysts database with ‘pip install dysts’ or similar command (see <a class="reference external" href="https://github.com/williamgilpin/dysts">https://github.com/williamgilpin/dysts</a>) in order to load in the data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">dysts.flows</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">flows</span>
+
+<span class="c1"># List below picks out the polynomially nonlinear systems that are quadratic and</span>
+<span class="c1"># exhibit the special structure in the quadratic coefficients.</span>
+<span class="n">trapping_system_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">67</span><span class="p">])</span>
+<span class="n">systems_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;Aizawa&quot;</span><span class="p">,</span> <span class="s2">&quot;Bouali2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;GenesioTesi&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperBao&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperCai&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperJha&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;HyperLorenz&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperLu&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperPang&quot;</span><span class="p">,</span> <span class="s2">&quot;Laser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Lorenz&quot;</span><span class="p">,</span> <span class="s2">&quot;LorenzBounded&quot;</span><span class="p">,</span> <span class="s2">&quot;MooreSpiegel&quot;</span><span class="p">,</span> <span class="s2">&quot;Rossler&quot;</span><span class="p">,</span> <span class="s2">&quot;ShimizuMorioka&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;HenonHeiles&quot;</span><span class="p">,</span> <span class="s2">&quot;GuckenheimerHolmes&quot;</span><span class="p">,</span> <span class="s2">&quot;Halvorsen&quot;</span><span class="p">,</span> <span class="s2">&quot;KawczynskiStrizhak&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;VallisElNino&quot;</span><span class="p">,</span> <span class="s2">&quot;RabinovichFabrikant&quot;</span><span class="p">,</span> <span class="s2">&quot;NoseHoover&quot;</span><span class="p">,</span> <span class="s2">&quot;Dadras&quot;</span><span class="p">,</span> <span class="s2">&quot;RikitakeDynamo&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;NuclearQuadrupole&quot;</span><span class="p">,</span> <span class="s2">&quot;PehlivanWei&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottTorus&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottJerk&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottA&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottB&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SprottC&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottD&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottE&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottF&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottG&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottH&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottI&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottJ&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SprottK&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottL&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottM&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottN&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottO&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottP&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottQ&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottR&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SprottS&quot;</span><span class="p">,</span> <span class="s2">&quot;Rucklidge&quot;</span><span class="p">,</span> <span class="s2">&quot;Sakarya&quot;</span><span class="p">,</span> <span class="s2">&quot;RayleighBenard&quot;</span><span class="p">,</span> <span class="s2">&quot;Finance&quot;</span><span class="p">,</span> <span class="s2">&quot;LuChenCheng&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LuChen&quot;</span><span class="p">,</span> <span class="s2">&quot;QiChen&quot;</span><span class="p">,</span> <span class="s2">&quot;ZhouChen&quot;</span><span class="p">,</span> <span class="s2">&quot;BurkeShaw&quot;</span><span class="p">,</span> <span class="s2">&quot;Chen&quot;</span><span class="p">,</span> <span class="s2">&quot;ChenLee&quot;</span><span class="p">,</span> <span class="s2">&quot;WangSun&quot;</span><span class="p">,</span> <span class="s2">&quot;DequanLi&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;NewtonLiepnik&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperRossler&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperQi&quot;</span><span class="p">,</span> <span class="s2">&quot;Qi&quot;</span><span class="p">,</span> <span class="s2">&quot;LorenzStenflo&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperYangChen&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;HyperYan&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperXu&quot;</span><span class="p">,</span> <span class="s2">&quot;HyperWang&quot;</span><span class="p">,</span> <span class="s2">&quot;Hadley&quot;</span><span class="p">,</span>
+               <span class="p">]</span>
+<span class="n">alphabetical_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">systems_list</span><span class="p">)</span>
+<span class="n">systems_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">systems_list</span><span class="p">)[</span><span class="n">alphabetical_sort</span><span class="p">])[</span><span class="n">trapping_system_list</span><span class="p">]</span>
+
+<span class="c1"># attributes list</span>
+<span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;maximum_lyapunov_estimated&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lyapunov_spectrum_estimated&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;embedding_dimension&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parameters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hamiltonian&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;period&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unbounded_indices&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># Get attributes</span>
+<span class="n">all_properties</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">equation_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">systems_list</span><span class="p">):</span>
+    <span class="n">eq</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">flows</span><span class="p">,</span> <span class="n">equation_name</span><span class="p">)()</span>
+    <span class="n">attr_vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">]</span>
+    <span class="n">all_properties</span><span class="p">[</span><span class="n">equation_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">attr_vals</span><span class="p">))</span>
+
+<span class="c1"># Get training and testing trajectories for all the experimental systems</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Trajectories with 1000 points</span>
+<span class="n">pts_per_period</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># sampling with 100 points per period</span>
+<span class="n">n_trajectories</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># generate n_trajectories starting from different initial conditions on the attractor</span>
+<span class="n">all_sols_train</span><span class="p">,</span> <span class="n">all_t_train</span><span class="p">,</span> <span class="n">all_sols_test</span><span class="p">,</span> <span class="n">all_t_test</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+    <span class="n">systems_list</span><span class="p">,</span> <span class="n">all_properties</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">pts_per_period</span><span class="o">=</span><span class="n">pts_per_period</span><span class="p">,</span>
+    <span class="n">random_bump</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># optionally start with initial conditions pushed slightly off the attractor</span>
+    <span class="n">include_transients</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># optionally do high-resolution sampling at rate proportional to the dt parameter</span>
+    <span class="n">n_trajectories</span><span class="o">=</span><span class="n">n_trajectories</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 BurkeShaw(name=&#39;BurkeShaw&#39;, params={&#39;e&#39;: 13, &#39;n&#39;: 10}, random_state=None)
+1 Chen(name=&#39;Chen&#39;, params={&#39;a&#39;: 35, &#39;b&#39;: 3, &#39;c&#39;: 28}, random_state=None)
+2 Finance(name=&#39;Finance&#39;, params={&#39;a&#39;: 0.001, &#39;b&#39;: 0.2, &#39;c&#39;: 1.1}, random_state=None)
+3 Hadley(name=&#39;Hadley&#39;, params={&#39;a&#39;: 0.2, &#39;b&#39;: 4, &#39;f&#39;: 9, &#39;g&#39;: 1}, random_state=None)
+4 HyperPang(name=&#39;HyperPang&#39;, params={&#39;a&#39;: 36, &#39;b&#39;: 3, &#39;c&#39;: 20, &#39;d&#39;: 2}, random_state=None)
+5 HyperYangChen(name=&#39;HyperYangChen&#39;, params={&#39;a&#39;: 30, &#39;b&#39;: 3, &#39;c&#39;: 35, &#39;d&#39;: 8}, random_state=None)
+6 Lorenz(name=&#39;Lorenz&#39;, params={&#39;beta&#39;: 2.667, &#39;rho&#39;: 28, &#39;sigma&#39;: 10}, random_state=None)
+7 LorenzStenflo(name=&#39;LorenzStenflo&#39;, params={&#39;a&#39;: 2, &#39;b&#39;: 0.7, &#39;c&#39;: 26, &#39;d&#39;: 1.5}, random_state=None)
+8 LuChen(name=&#39;LuChen&#39;, params={&#39;a&#39;: 36, &#39;b&#39;: 3, &#39;c&#39;: 18}, random_state=None)
+9 NoseHoover(name=&#39;NoseHoover&#39;, params={&#39;a&#39;: 1.5}, random_state=None)
+10 RayleighBenard(name=&#39;RayleighBenard&#39;, params={&#39;a&#39;: 30, &#39;b&#39;: 5, &#39;r&#39;: 18}, random_state=None)
+11 SprottA(name=&#39;SprottA&#39;, params={}, random_state=None)
+12 SprottB(name=&#39;SprottB&#39;, params={}, random_state=None)
+13 SprottTorus(name=&#39;SprottTorus&#39;, params={}, random_state=None)
+14 VallisElNino(name=&#39;VallisElNino&#39;, params={&#39;b&#39;: 102, &#39;c&#39;: 3, &#39;p&#39;: 0}, random_state=None)
+</pre></div></div>
+</div>
+<section id="Get-some-more-information-about-the-dynamical-systems-and-their-true-equation-coefficients">
+<h3>Get some more information about the dynamical systems and their true equation coefficients<a class="headerlink" href="#Get-some-more-information-about-the-dynamical-systems-and-their-true-equation-coefficients" title="Link to this heading"></a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dysts.equation_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_dysts_true_coefficients</span>
+
+<span class="n">num_attractors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">systems_list</span><span class="p">)</span>
+
+<span class="c1"># Calculate some dynamical properties</span>
+<span class="n">lyap_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dimension_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">param_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Calculate various definitions of scale separation</span>
+<span class="n">scale_list_avg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">scale_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">linear_scale_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="n">systems_list</span><span class="p">:</span>
+    <span class="n">lyap_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_properties</span><span class="p">[</span><span class="n">system</span><span class="p">][</span><span class="s1">&#39;maximum_lyapunov_estimated&#39;</span><span class="p">])</span>
+    <span class="n">dimension_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_properties</span><span class="p">[</span><span class="n">system</span><span class="p">][</span><span class="s1">&#39;embedding_dimension&#39;</span><span class="p">])</span>
+    <span class="n">param_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_properties</span><span class="p">[</span><span class="n">system</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Ratio of dominant (average) to smallest timescales</span>
+    <span class="n">scale_list_avg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_properties</span><span class="p">[</span><span class="n">system</span><span class="p">][</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">all_properties</span><span class="p">[</span><span class="n">system</span><span class="p">][</span><span class="s1">&#39;dt&#39;</span><span class="p">])</span>
+
+
+<span class="c1"># Get the true coefficients for each system</span>
+<span class="n">true_coefficients</span> <span class="o">=</span> <span class="n">make_dysts_true_coefficients</span><span class="p">(</span><span class="n">systems_list</span><span class="p">,</span>
+                                                 <span class="n">all_sols_train</span><span class="p">,</span>
+                                                 <span class="n">dimension_list</span><span class="p">,</span>
+                                                 <span class="n">param_list</span><span class="p">)</span>
+
+<span class="c1"># Need to reorder the calculated dysts equation coefficients to be</span>
+<span class="c1"># consistent with the SINDy library used below</span>
+<span class="n">reorder1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span> <span class="c1"># x^2 -&gt; xy</span>
+    <span class="mi">6</span><span class="p">,</span> <span class="c1"># xy -&gt; xz</span>
+    <span class="mi">8</span><span class="p">,</span> <span class="c1"># xz -&gt; yz</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="c1"># y^2 -&gt; x^2</span>
+    <span class="mi">7</span><span class="p">,</span> <span class="c1"># yz -&gt; y^2</span>
+    <span class="mi">9</span><span class="p">,</span> <span class="c1"># z^2 -&gt; z^2</span>
+<span class="p">])</span>
+<span class="n">reorder2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">,</span> <span class="c1"># x^2 -&gt; xy</span>
+    <span class="mi">7</span><span class="p">,</span> <span class="c1"># xy -&gt; xz</span>
+    <span class="mi">8</span><span class="p">,</span> <span class="c1"># xz -&gt; xw</span>
+    <span class="mi">10</span><span class="p">,</span> <span class="c1"># xw -&gt; yz</span>
+    <span class="mi">11</span><span class="p">,</span> <span class="c1"># y^2 -&gt; yw</span>
+    <span class="mi">13</span><span class="p">,</span> <span class="c1"># yz -&gt; zw</span>
+    <span class="mi">5</span><span class="p">,</span> <span class="c1"># yw -&gt; x^2</span>
+    <span class="mi">9</span><span class="p">,</span> <span class="c1"># z^2 -&gt; y^2</span>
+    <span class="mi">12</span><span class="p">,</span> <span class="c1"># zw -&gt; z^2</span>
+    <span class="mi">14</span><span class="p">,</span> <span class="c1"># w^2 -&gt; w^2</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Issues-with-using-the-trapping-theorem-with-some-of-the-dysts-systems">
+<h2>Issues with using the trapping theorem with some of the dysts systems<a class="headerlink" href="#Issues-with-using-the-trapping-theorem-with-some-of-the-dysts-systems" title="Link to this heading"></a></h2>
+<p>The trapping theorem and its variants require that systems are “effectively nonlinear”, meaning there are no <em>invariant</em> linear subspaces where the system trajectories can escape to infinity.</p>
+<p>It turns out that Burke-Shaw, NoseHoover, SprottTorus, SprottA and SprottB are all not effectively nonlinear and exhibit subspaces where one of the coordinates can grow indefinitely! This is a good thing that the trapping theorem doesn’t work for them – these systems are <em>not</em> globally stable after all.</p>
+<p>Actually, SprottTorus has no cubic terms in the energy at all (so the trapping theorem is thwarted), and is very challenging to evaluate the boundedness. However, numerical results seem to point to it being bounded for all practical purposes (<a class="reference external" href="https://sprott.physics.wisc.edu/pubs/paper423.pdf">https://sprott.physics.wisc.edu/pubs/paper423.pdf</a>).</p>
+<p>HyperPang, Chen, HyperYangChen, RayleighBernard, LuChen also not effectively nonlinear, but have stable linear (invariant) subspaces, usually (x=0, y=0, z, …). Extending the trapping theorem to address these cases of global stability is work in progress.</p>
+<p>Finally, the systems that do work with the trapping theorem: Finance, Hadley, Lorenz, LorenzStenFlo, VallisElNino.</p>
+<p>We will illustrate how each of these systems produces a negative definite <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> matrix or “gets stuck” before this happens, which indicates a lack of effective nonlinearity and potential for unboundedness.</p>
+<p><em>We use simulated annealing to show this with the analytic systems below, and we also fit Trapping SINDy models for each.</em></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">dual_annealing</span> <span class="k">as</span> <span class="n">anneal_algo</span>
+
+<span class="c1"># define hyperparameters</span>
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e3</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">4e-2</span> <span class="o">*</span> <span class="n">eta</span>  <span class="c1"># default is 1e-2 * eta so this speeds up the code here</span>
+
+<span class="c1"># Bounds for simulated annealing</span>
+<span class="n">boundmax</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">boundmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">systems_list</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dimension_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># make training and testing data</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">all_t_train</span><span class="p">[</span><span class="n">systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">all_sols_train</span><span class="p">[</span><span class="n">systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">all_sols_test</span><span class="p">[</span><span class="n">systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># run trapping SINDy</span>
+    <span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
+        <span class="n">_n_tgts</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+        <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+        <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+        <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+        <span class="n">gamma</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+        <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="c1"># Check the model coefficients and integrate it</span>
+    <span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+    <span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+    <span class="c1"># Plot the integrated trajectories from the model</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_test_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">Xi_true</span> <span class="o">=</span> <span class="p">(</span><span class="n">true_coefficients</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)[:</span> <span class="n">Xi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+
+    <span class="c1"># run simulated annealing on the true system to make sure the system is amenable to trapping theorem</span>
+    <span class="n">boundvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmin</span>
+    <span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmax</span>
+    <span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+    <span class="n">PM_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PM_</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi_true</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PM_tensor</span><span class="p">,</span> <span class="n">Xi_true</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">algo_sol</span> <span class="o">=</span> <span class="n">anneal_algo</span><span class="p">(</span>
+        <span class="n">obj_function</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">boundvals</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">r</span><span class="p">)),</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span>
+    <span class="p">)</span>
+    <span class="n">opt_m</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">opt_energy</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">fun</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 = &quot;</span><span class="p">,</span>
+        <span class="n">opt_energy</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 BurkeShaw
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 4.452e+01 ... 5.896e-03 ... 0.00e+00 ... 4.88e-19 ... 1.99e-48 ... 4.45e+01
+  500 ... 4.452e+01 ... 6.789e-04 ... 0.00e+00 ... 4.88e-19 ... 1.58e-48 ... 4.45e+01
+ 1000 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 1.25e-48 ... 4.45e+01
+ 1500 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 9.20e-48 ... 4.45e+01
+ 2000 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 2.34e-48 ... 4.45e+01
+ 2500 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 7.96e-49 ... 4.45e+01
+ 3000 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 2.00e-48 ... 4.45e+01
+ 3500 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 2.11e-48 ... 4.45e+01
+ 4000 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 1.52e-48 ... 4.45e+01
+ 4500 ... 4.452e+01 ... 6.788e-04 ... 0.00e+00 ... 4.88e-19 ... 5.37e-48 ... 4.45e+01
+optimal m:  [-1.26088372 -0.0041027  -0.98796376]
+As eigvals:  [-9.90126722 -0.01865824  1.06227222]
+0.5 * |tilde{H}_0|_F =  9.903245912177569e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  1.9614855919412343e-48
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  1.0000000000000002
+1 Chen
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.309e+02 ... 4.954e-01 ... 0.00e+00 ... 4.87e-21 ... 2.99e-48 ... 3.31e+02
+  500 ... 3.309e+02 ... 3.951e-01 ... 0.00e+00 ... 4.87e-21 ... 5.16e-48 ... 3.31e+02
+ 1000 ... 3.309e+02 ... 3.938e-01 ... 0.00e+00 ... 4.87e-21 ... 3.67e-48 ... 3.31e+02
+ 1500 ... 3.309e+02 ... 3.938e-01 ... 0.00e+00 ... 4.87e-21 ... 2.44e-47 ... 3.31e+02
+ 2000 ... 3.309e+02 ... 3.938e-01 ... 0.00e+00 ... 4.87e-21 ... 2.34e-47 ... 3.31e+02
+ 2500 ... 3.309e+02 ... 3.937e-01 ... 0.00e+00 ... 4.87e-21 ... 1.70e-47 ... 3.31e+02
+ 3000 ... 3.309e+02 ... 3.937e-01 ... 0.00e+00 ... 4.87e-21 ... 1.16e-47 ... 3.31e+02
+ 3500 ... 3.309e+02 ... 3.937e-01 ... 0.00e+00 ... 4.87e-21 ... 1.57e-47 ... 3.31e+02
+ 4000 ... 3.309e+02 ... 3.937e-01 ... 0.00e+00 ... 4.87e-21 ... 1.83e-47 ... 3.31e+02
+ 4500 ... 3.309e+02 ... 3.937e-01 ... 0.00e+00 ... 4.87e-21 ... 1.34e-47 ... 3.31e+02
+optimal m:  [-3.48723054 -0.5241763  28.46158507]
+As eigvals:  [-34.86296293  -2.98802856  27.96138237]
+0.5 * |tilde{H}_0|_F =  1.3690760117257443e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  3.748738251765741e-48
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  28.000000001008157
+2 Finance
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 8.341e-02 ... 1.037e-02 ... 0.00e+00 ... 7.28e-21 ... 1.66e-47 ... 9.38e-02
+  500 ... 8.341e-02 ... 4.508e-09 ... 0.00e+00 ... 7.28e-21 ... 2.71e-48 ... 8.34e-02
+optimal m:  [-0.17950208 -5.18211815 -2.00065016]
+As eigvals:  [-1.09369068 -0.26944528 -0.09953835]
+0.5 * |tilde{H}_0|_F =  1.733884164658389e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  6.012708592906237e-48
+Estimate of trapping region size, Rm =  32.6744088603509
+Local stability size, R_ls=  8611158737495.20
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.1999999999999159
+3 Hadley
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.005e-02 ... 5.442e-03 ... 0.00e+00 ... 9.46e-20 ... 1.39e-49 ... 2.55e-02
+optimal m:  [-1.33755821 -0.06325066 -0.22164933]
+As eigvals:  [-2.43672835 -2.33538512 -0.09947413]
+0.5 * |tilde{H}_0|_F =  5.014325940197073e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  5.028692926906652e-49
+Estimate of trapping region size, Rm =  21.9943380274891
+Local stability size, R_ls=  29756979249238.7
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.19999999999999532
+4 HyperPang
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.033e+02 ... 3.383e-01 ... 0.00e+00 ... 4.81e-21 ... 2.31e-46 ... 2.04e+02
+  500 ... 2.033e+02 ... 2.041e-01 ... 0.00e+00 ... 4.81e-21 ... 1.08e-45 ... 2.03e+02
+ 1000 ... 2.033e+02 ... 2.003e-01 ... 0.00e+00 ... 4.81e-21 ... 9.60e-46 ... 2.03e+02
+ 1500 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 2.53e-46 ... 2.03e+02
+ 2000 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 1.49e-45 ... 2.03e+02
+ 2500 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 3.63e-46 ... 2.03e+02
+ 3000 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 2.80e-46 ... 2.03e+02
+ 3500 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 5.51e-46 ... 2.03e+02
+ 4000 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 1.77e-46 ... 2.03e+02
+ 4500 ... 2.033e+02 ... 2.002e-01 ... 0.00e+00 ... 4.81e-21 ... 6.87e-46 ... 2.03e+02
+optimal m:  [ 1.07374937 -0.49814823 37.12648561 -0.4631685 ]
+As eigvals:  [-3.58827634e+01 -2.98714580e+00  1.52297880e-02  1.99076600e+01]
+0.5 * |tilde{H}_0|_F =  7.048690911647082e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  9.936808713587236e-47
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  20.01249219728018
+5 HyperYangChen
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 8.659e+02 ... 2.383e-01 ... 0.00e+00 ... 4.80e-21 ... 6.27e-47 ... 8.66e+02
+  500 ... 8.659e+02 ... 1.212e-02 ... 0.00e+00 ... 4.80e-21 ... 1.05e-46 ... 8.66e+02
+ 1000 ... 8.659e+02 ... 2.750e-03 ... 0.00e+00 ... 4.80e-21 ... 3.19e-46 ... 8.66e+02
+ 1500 ... 8.659e+02 ... 1.176e-03 ... 0.00e+00 ... 4.80e-21 ... 6.50e-47 ... 8.66e+02
+ 2000 ... 8.659e+02 ... 6.983e-04 ... 0.00e+00 ... 4.80e-21 ... 2.91e-46 ... 8.66e+02
+ 2500 ... 8.659e+02 ... 5.052e-04 ... 0.00e+00 ... 4.80e-21 ... 1.37e-46 ... 8.66e+02
+ 3000 ... 8.659e+02 ... 4.134e-04 ... 0.00e+00 ... 4.80e-21 ... 4.43e-47 ... 8.66e+02
+ 3500 ... 8.659e+02 ... 3.651e-04 ... 0.00e+00 ... 4.80e-21 ... 7.64e-47 ... 8.66e+02
+ 4000 ... 8.659e+02 ... 3.380e-04 ... 0.00e+00 ... 4.80e-21 ... 3.52e-46 ... 8.66e+02
+ 4500 ... 8.659e+02 ... 3.219e-04 ... 0.00e+00 ... 4.80e-21 ... 1.19e-46 ... 8.66e+02
+optimal m:  [-1.17376481 -0.08690684 59.30675565 -1.27930722]
+As eigvals:  [-30.61101856  -3.00032358   0.29221825   0.58589021]
+0.5 * |tilde{H}_0|_F =  6.59181272445209e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  8.6903989988497e-47
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  0.5241746962662399
+6 Lorenz
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.165e+02 ... 1.124e-01 ... 0.00e+00 ... 4.84e-21 ... 5.35e-48 ... 3.17e+02
+  500 ... 3.165e+02 ... 2.131e-03 ... 0.00e+00 ... 4.84e-21 ... 1.33e-47 ... 3.16e+02
+ 1000 ... 3.165e+02 ... 1.737e-04 ... 0.00e+00 ... 4.84e-21 ... 1.17e-47 ... 3.16e+02
+ 1500 ... 3.165e+02 ... 2.681e-05 ... 0.00e+00 ... 4.84e-21 ... 5.87e-48 ... 3.16e+02
+ 2000 ... 3.165e+02 ... 5.278e-06 ... 0.00e+00 ... 4.84e-21 ... 1.24e-47 ... 3.16e+02
+ 2500 ... 3.165e+02 ... 1.153e-06 ... 0.00e+00 ... 4.84e-21 ... 1.24e-47 ... 3.16e+02
+ 3000 ... 3.165e+02 ... 2.639e-07 ... 0.00e+00 ... 4.84e-21 ... 3.32e-47 ... 3.16e+02
+ 3500 ... 3.165e+02 ... 6.179e-08 ... 0.00e+00 ... 4.84e-21 ... 6.25e-48 ... 3.16e+02
+ 4000 ... 3.165e+02 ... 1.462e-08 ... 0.00e+00 ... 4.84e-21 ... 2.06e-47 ... 3.16e+02
+ 4500 ... 3.165e+02 ... 3.479e-09 ... 0.00e+00 ... 4.84e-21 ... 2.34e-47 ... 3.16e+02
+optimal m:  [-1.13739814 -0.16355052 32.12772604]
+As eigvals:  [-10.7375586   -2.65974856  -0.09815145]
+0.5 * |tilde{H}_0|_F =  3.7827853952426755e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  2.861893069292257e-47
+Estimate of trapping region size, Rm =  873.848633884378
+Local stability size, R_ls=  3892030865276.57
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.9999999997760852
+7 LorenzStenflo
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.804e+01 ... 9.044e-02 ... 0.00e+00 ... 4.80e-21 ... 1.43e-44 ... 3.81e+01
+  500 ... 3.803e+01 ... 7.542e-04 ... 0.00e+00 ... 4.80e-21 ... 1.24e-44 ... 3.80e+01
+ 1000 ... 3.803e+01 ... 9.073e-06 ... 0.00e+00 ... 4.80e-21 ... 1.05e-45 ... 3.80e+01
+ 1500 ... 3.803e+01 ... 1.360e-07 ... 0.00e+00 ... 4.80e-21 ... 1.45e-45 ... 3.80e+01
+ 2000 ... 3.803e+01 ... 2.122e-09 ... 0.00e+00 ... 4.80e-21 ... 2.86e-45 ... 3.80e+01
+optimal m:  [-1.11474271 -0.04783735 25.48108844 -1.38192986]
+As eigvals:  [-2.80926383 -1.81214949 -0.70108373 -0.09893587]
+0.5 * |tilde{H}_0|_F =  2.8108562796879e-13
+0.5 * |tilde{H}_0|_F^2 / beta =  1.5801826050121803e-45
+Estimate of trapping region size, Rm =  182.823615958788
+Local stability size, R_ls=  527966547115.019
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.6999999999863362
+8 LuChen
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 5.085e+03 ... 2.988e-01 ... 0.00e+00 ... 3.82e-21 ... 6.06e-45 ... 5.09e+03
+  500 ... 5.085e+03 ... 1.558e-01 ... 0.00e+00 ... 3.82e-21 ... 1.63e-45 ... 5.09e+03
+ 1000 ... 5.085e+03 ... 1.468e-01 ... 0.00e+00 ... 3.82e-21 ... 2.93e-45 ... 5.09e+03
+ 1500 ... 5.085e+03 ... 1.459e-01 ... 0.00e+00 ... 3.82e-21 ... 2.49e-45 ... 5.09e+03
+ 2000 ... 5.085e+03 ... 1.458e-01 ... 0.00e+00 ... 3.82e-21 ... 7.48e-46 ... 5.09e+03
+ 2500 ... 5.085e+03 ... 1.457e-01 ... 0.00e+00 ... 3.82e-21 ... 2.28e-45 ... 5.09e+03
+ 3000 ... 5.085e+03 ... 1.457e-01 ... 0.00e+00 ... 3.82e-21 ... 1.33e-45 ... 5.09e+03
+ 3500 ... 5.085e+03 ... 1.457e-01 ... 0.00e+00 ... 3.82e-21 ... 8.48e-45 ... 5.09e+03
+ 4000 ... 5.085e+03 ... 1.456e-01 ... 0.00e+00 ... 3.82e-21 ... 1.20e-45 ... 5.09e+03
+ 4500 ... 5.085e+03 ... 1.456e-01 ... 0.00e+00 ... 3.82e-21 ... 4.98e-45 ... 5.09e+03
+optimal m:  [ 4.76055666 -0.05836294 45.5586736 ]
+As eigvals:  [-36.17920789  -2.95058608  16.96224285]
+0.5 * |tilde{H}_0|_F =  2.0824923432435193e-13
+0.5 * |tilde{H}_0|_F^2 / beta =  8.673548719335767e-46
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  18.00000000000098
+9 NoseHoover
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.553e-01 ... 1.511e-05 ... 0.00e+00 ... 7.38e-21 ... 4.42e-50 ... 3.55e-01
+  500 ... 3.553e-01 ... 1.283e-05 ... 0.00e+00 ... 7.38e-21 ... 4.84e-50 ... 3.55e-01
+ 1000 ... 3.553e-01 ... 1.180e-05 ... 0.00e+00 ... 7.38e-21 ... 1.01e-49 ... 3.55e-01
+ 1500 ... 3.553e-01 ... 1.127e-05 ... 0.00e+00 ... 7.38e-21 ... 6.36e-50 ... 3.55e-01
+ 2000 ... 3.553e-01 ... 1.097e-05 ... 0.00e+00 ... 7.38e-21 ... 3.72e-50 ... 3.55e-01
+ 2500 ... 3.553e-01 ... 1.080e-05 ... 0.00e+00 ... 7.38e-21 ... 1.43e-50 ... 3.55e-01
+ 3000 ... 3.553e-01 ... 1.070e-05 ... 0.00e+00 ... 7.38e-21 ... 7.18e-50 ... 3.55e-01
+ 3500 ... 3.553e-01 ... 1.063e-05 ... 0.00e+00 ... 7.38e-21 ... 1.04e-49 ... 3.55e-01
+ 4000 ... 3.553e-01 ... 1.060e-05 ... 0.00e+00 ... 7.38e-21 ... 3.10e-50 ... 3.55e-01
+ 4500 ... 3.553e-01 ... 1.057e-05 ... 0.00e+00 ... 7.38e-21 ... 1.00e-49 ... 3.55e-01
+optimal m:  [-1.18040341 -0.03626448 -1.96664466]
+As eigvals:  [-1.95193637e+00 -6.34967994e-04  6.01785494e-03]
+0.5 * |tilde{H}_0|_F =  1.9315985510389092e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  7.462145924751227e-50
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  5.026970402659932e-14
+10 RayleighBenard
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 4.736e+02 ... 2.635e-01 ... 0.00e+00 ... 4.81e-21 ... 2.02e-46 ... 4.74e+02
+  500 ... 4.736e+02 ... 1.653e-01 ... 0.00e+00 ... 4.81e-21 ... 4.25e-47 ... 4.74e+02
+ 1000 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 2.84e-46 ... 4.74e+02
+ 1500 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 3.67e-46 ... 4.74e+02
+ 2000 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 5.39e-46 ... 4.74e+02
+ 2500 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 2.01e-46 ... 4.74e+02
+ 3000 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 8.20e-46 ... 4.74e+02
+ 3500 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 3.84e-46 ... 4.74e+02
+ 4000 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 3.35e-46 ... 4.74e+02
+ 4500 ... 4.736e+02 ... 1.629e-01 ... 0.00e+00 ... 4.81e-21 ... 8.29e-47 ... 4.74e+02
+optimal m:  [-1.36004462 -0.4931246  30.69902689]
+As eigvals:  [-29.87742988  -4.96506395  17.94837463]
+0.5 * |tilde{H}_0|_F =  8.01209484425821e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  1.28387327586778e-46
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  18.000000000048765
+11 SprottA
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 8.563e-02 ... 1.440e-05 ... 0.00e+00 ... 7.41e-21 ... 7.81e-52 ... 8.56e-02
+  500 ... 8.563e-02 ... 1.212e-05 ... 0.00e+00 ... 7.41e-21 ... 7.62e-52 ... 8.56e-02
+ 1000 ... 8.563e-02 ... 1.110e-05 ... 0.00e+00 ... 7.41e-21 ... 1.70e-51 ... 8.56e-02
+ 1500 ... 8.563e-02 ... 1.058e-05 ... 0.00e+00 ... 7.41e-21 ... 2.38e-52 ... 8.56e-02
+ 2000 ... 8.563e-02 ... 1.029e-05 ... 0.00e+00 ... 7.41e-21 ... 7.94e-52 ... 8.56e-02
+ 2500 ... 8.563e-02 ... 1.012e-05 ... 0.00e+00 ... 7.41e-21 ... 9.80e-52 ... 8.56e-02
+ 3000 ... 8.563e-02 ... 1.002e-05 ... 0.00e+00 ... 7.41e-21 ... 1.96e-52 ... 8.56e-02
+ 3500 ... 8.563e-02 ... 9.965e-06 ... 0.00e+00 ... 7.41e-21 ... 2.33e-52 ... 8.56e-02
+ 4000 ... 8.563e-02 ... 9.930e-06 ... 0.00e+00 ... 7.41e-21 ... 2.69e-52 ... 8.56e-02
+ 4500 ... 8.563e-02 ... 9.908e-06 ... 0.00e+00 ... 7.41e-21 ... 3.12e-52 ... 8.56e-02
+optimal m:  [-1.16627605 -0.04166939 -2.00644624]
+As eigvals:  [-1.99499536e+00 -1.31965762e-03  2.60014085e-04]
+0.5 * |tilde{H}_0|_F =  1.9500018567409494e-16
+0.5 * |tilde{H}_0|_F^2 / beta =  7.6050144825863e-52
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  5.026970402659932e-14
+12 SprottB
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.243e-01 ... 1.385e-04 ... 0.00e+00 ... 4.89e-21 ... 2.90e-50 ... 2.24e-01
+  500 ... 2.243e-01 ... 2.075e-05 ... 0.00e+00 ... 4.89e-21 ... 4.23e-49 ... 2.24e-01
+ 1000 ... 2.243e-01 ... 1.295e-05 ... 0.00e+00 ... 4.89e-21 ... 2.49e-49 ... 2.24e-01
+ 1500 ... 2.243e-01 ... 1.131e-05 ... 0.00e+00 ... 4.89e-21 ... 4.06e-49 ... 2.24e-01
+ 2000 ... 2.243e-01 ... 1.082e-05 ... 0.00e+00 ... 4.89e-21 ... 2.00e-49 ... 2.24e-01
+ 2500 ... 2.243e-01 ... 1.065e-05 ... 0.00e+00 ... 4.89e-21 ... 9.07e-50 ... 2.24e-01
+ 3000 ... 2.243e-01 ... 1.059e-05 ... 0.00e+00 ... 4.89e-21 ... 2.80e-49 ... 2.24e-01
+ 3500 ... 2.243e-01 ... 1.056e-05 ... 0.00e+00 ... 4.89e-21 ... 7.48e-49 ... 2.24e-01
+ 4000 ... 2.243e-01 ... 1.056e-05 ... 0.00e+00 ... 4.89e-21 ... 2.11e-49 ... 2.24e-01
+ 4500 ... 2.243e-01 ... 1.055e-05 ... 0.00e+00 ... 4.89e-21 ... 5.69e-49 ... 2.24e-01
+optimal m:  [-0.00265149 -0.54861087 -0.99291887]
+As eigvals:  [-0.99179034 -0.00207111  0.00730138]
+0.5 * |tilde{H}_0|_F =  4.380830615748643e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  3.838335376776127e-49
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  1.2018911727317128e-16
+13 SprottTorus
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 5.215e-01 ... 2.445e-04 ... 0.00e+00 ... 3.47e-20 ... 3.51e-49 ... 5.22e-01
+  500 ... 5.215e-01 ... 2.536e-05 ... 0.00e+00 ... 3.47e-20 ... 2.20e-48 ... 5.22e-01
+ 1000 ... 5.215e-01 ... 1.460e-05 ... 0.00e+00 ... 3.47e-20 ... 1.85e-48 ... 5.22e-01
+ 1500 ... 5.215e-01 ... 1.118e-05 ... 0.00e+00 ... 3.47e-20 ... 1.96e-48 ... 5.22e-01
+ 2000 ... 5.215e-01 ... 9.610e-06 ... 0.00e+00 ... 3.47e-20 ... 1.68e-48 ... 5.22e-01
+ 2500 ... 5.215e-01 ... 8.769e-06 ... 0.00e+00 ... 3.47e-20 ... 4.39e-48 ... 5.22e-01
+ 3000 ... 5.215e-01 ... 8.279e-06 ... 0.00e+00 ... 3.47e-20 ... 1.22e-48 ... 5.22e-01
+ 3500 ... 5.215e-01 ... 7.978e-06 ... 0.00e+00 ... 3.47e-20 ... 2.09e-48 ... 5.22e-01
+ 4000 ... 5.215e-01 ... 7.787e-06 ... 0.00e+00 ... 3.47e-20 ... 2.82e-48 ... 5.22e-01
+ 4500 ... 5.215e-01 ... 7.664e-06 ... 0.00e+00 ... 3.47e-20 ... 2.88e-48 ... 5.22e-01
+optimal m:  [ 0.87433564 -0.02726229 -2.40346559]
+As eigvals:  [-2.71465246 -1.99391393  0.02315957]
+0.5 * |tilde{H}_0|_F =  8.349218047737442e-15
+0.5 * |tilde{H}_0|_F^2 / beta =  1.3941888401732926e-48
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  7.917916016418615e-09
+14 VallisElNino
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.804e+00 ... 1.149e+00 ... 0.00e+00 ... 4.89e-21 ... 9.44e-47 ... 3.95e+00
+  500 ... 2.807e+00 ... 6.977e-03 ... 0.00e+00 ... 4.91e-21 ... 3.81e-48 ... 2.81e+00
+ 1000 ... 2.804e+00 ... 2.149e-04 ... 0.00e+00 ... 4.89e-21 ... 9.98e-48 ... 2.80e+00
+ 1500 ... 2.804e+00 ... 1.129e-05 ... 0.00e+00 ... 4.89e-21 ... 4.90e-48 ... 2.80e+00
+ 2000 ... 2.804e+00 ... 8.841e-07 ... 0.00e+00 ... 4.89e-21 ... 2.35e-48 ... 2.80e+00
+ 2500 ... 2.804e+00 ... 8.527e-08 ... 0.00e+00 ... 4.89e-21 ... 9.92e-48 ... 2.80e+00
+ 3000 ... 2.804e+00 ... 8.929e-09 ... 0.00e+00 ... 4.89e-21 ... 1.41e-47 ... 2.80e+00
+ 3500 ... 2.804e+00 ... 9.624e-10 ... 0.00e+00 ... 4.89e-21 ... 4.86e-48 ... 2.80e+00
+optimal m:  [ -1.07782701   1.93541481 -96.65378719]
+As eigvals:  [-6.54094629 -0.58118541 -0.09921251]
+0.5 * |tilde{H}_0|_F =  1.735198782758293e-14
+0.5 * |tilde{H}_0|_F^2 / beta =  6.021829631371724e-48
+Estimate of trapping region size, Rm =  2670.66025056228
+Local stability size, R_ls=  8576468200941.01
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.9999999998082626
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_8_1.png" src="../_images/examples_example_dysts_8_1.png" />
+</div>
+</div>
+</section>
+<section id="Verify-explicitly-that-some-of-the-systems-have-unstable-invariant-linear-or-constant-subspaces">
+<h2>Verify explicitly that some of the systems have unstable invariant linear or constant subspaces<a class="headerlink" href="#Verify-explicitly-that-some-of-the-systems-have-unstable-invariant-linear-or-constant-subspaces" title="Link to this heading"></a></h2>
+<p>These systems are not globally stable!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;BurkeShaw&quot;</span><span class="p">,</span> <span class="s2">&quot;NoseHoover&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottA&quot;</span><span class="p">,</span> <span class="s2">&quot;SprottB&quot;</span><span class="p">]:</span>
+    <span class="n">eq</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">flows</span><span class="p">,</span> <span class="n">system</span><span class="p">)()</span>
+    <span class="n">eq</span><span class="o">.</span><span class="n">ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">t_sol</span><span class="p">,</span> <span class="n">sol</span> <span class="o">=</span> <span class="n">eq</span><span class="o">.</span><span class="n">make_trajectory</span><span class="p">(</span>
+        <span class="mi">10000</span><span class="p">,</span>
+        <span class="n">pts_per_period</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">resample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">return_times</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">standardize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;solid&quot;</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;SprottB&quot;</span><span class="p">:</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span>
+
+    <span class="c1"># Show z-component flying off to infinity!</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sol</span><span class="p">,</span> <span class="n">sol</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">style</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">system</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_10_0.png" src="../_images/examples_example_dysts_10_0.png" />
+</div>
+</div>
+</section>
+<section id="Now-repeat-for-locally-stable-models!">
+<h2>Now repeat for locally stable models!<a class="headerlink" href="#Now-repeat-for-locally-stable-models!" title="Link to this heading"></a></h2>
+<p>In practice there will be finite errors in the models that leads to a breaking of the constraint. We also check again that simulated annealing gives a negative definite <span class="math notranslate nohighlight">\(\mathbf{A}^S\)</span> matrix with the SINDy model, not with the analytic model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e2</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">eta</span>  <span class="c1"># default is 1e-2 * eta so this speeds up the code here</span>
+
+<span class="n">stable_systems</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+<span class="n">stable_systems_list</span> <span class="o">=</span> <span class="n">systems_list</span><span class="p">[</span><span class="n">stable_systems</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stable_systems_list</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dimension_list</span><span class="p">[</span><span class="n">stable_systems</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="c1"># make training and testing data</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">all_t_train</span><span class="p">[</span><span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">all_sols_train</span><span class="p">[</span><span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">all_sols_test</span><span class="p">[</span><span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># run trapping SINDy, locally stable variant</span>
+    <span class="c1"># where the constraints are removed and beta &lt;&lt; 1</span>
+    <span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+        <span class="n">_n_tgts</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+        <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+        <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+        <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+        <span class="n">gamma</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">beta</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+        <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="c1"># Check the model coefficients and integrate it</span>
+    <span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">sindy_opt</span><span class="o">.</span><span class="n">PQ_</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">xdot_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">xdot_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+    <span class="n">x_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+    <span class="n">x_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">t</span><span class="p">,</span> <span class="n">integrator_kws</span><span class="o">=</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+    <span class="c1"># Check stability and try simulated annealing with the IDENTIFIED model</span>
+    <span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">PL_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PL_</span>
+    <span class="n">PM_tensor</span> <span class="o">=</span> <span class="n">sindy_opt</span><span class="o">.</span><span class="n">PM_</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PL_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">PM_tensor</span><span class="p">,</span> <span class="n">Xi</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">boundvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmin</span>
+    <span class="n">boundvals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">boundmax</span>
+
+    <span class="c1"># run simulated annealing on the IDENTIFIED system</span>
+    <span class="n">algo_sol</span> <span class="o">=</span> <span class="n">anneal_algo</span><span class="p">(</span>
+        <span class="n">obj_function</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">boundvals</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">r</span><span class="p">)),</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">500</span>
+    <span class="p">)</span>
+    <span class="n">opt_m</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">opt_energy</span> <span class="o">=</span> <span class="n">algo_sol</span><span class="o">.</span><span class="n">fun</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 = &quot;</span><span class="p">,</span>
+        <span class="n">opt_energy</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># print(&#39;Optimal m = &#39;, opt_m, &#39;\n&#39;)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dynamical System: &quot;</span> <span class="o">+</span> <span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test trajectory&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_test_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SINDy model prediction&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_0$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="c1"># Plot the rho_+ and rho_- estimates for the stable systems</span>
+    <span class="n">rhos_minus</span><span class="p">,</span> <span class="n">rhos_plus</span> <span class="o">=</span> <span class="n">make_trap_progress_plots</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">stable_systems_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rhos_plus</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0 Finance 3
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 8.350e-02 ... 1.036e-01 ... 0.00e+00 ... 7.27e-21 ... 1.40e-09 ... 1.87e-01
+optimal m:  [-0.17947889 -5.1825797  -2.00175823]
+As eigvals:  [-1.09368971 -0.26961701 -0.0998202 ]
+0.5 * |tilde{H}_0|_F =  8.222743810419725e-10
+0.5 * |tilde{H}_0|_F^2 / beta =  1.3522703154359178e-09
+Estimate of trapping region size, Rm =  32.5927595697754
+Local stability size, R_ls=  182092827.173459
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.2050042510261198
+1 Hadley 3
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.007e-02 ... 5.441e-02 ... 0.00e+00 ... 9.46e-20 ... 1.38e-10 ... 7.45e-02
+optimal m:  [-1.20597614 -0.06127698 -0.21472452]
+As eigvals:  [-2.30495414 -2.20394559 -0.09975893]
+0.5 * |tilde{H}_0|_F =  2.779835894521266e-10
+0.5 * |tilde{H}_0|_F^2 / beta =  1.5454975200937696e-10
+Estimate of trapping region size, Rm =  21.3885906441414
+Local stability size, R_ls=  538299338.770568
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.20030897126405747
+2 Lorenz 3
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.164e+02 ... 1.124e+00 ... 0.00e+00 ... 4.84e-21 ... 4.06e-02 ... 3.18e+02
+  500 ... 3.164e+02 ... 6.672e-04 ... 0.00e+00 ... 4.84e-21 ... 4.06e-02 ... 3.16e+02
+ 1000 ... 3.164e+02 ... 1.221e-05 ... 0.00e+00 ... 4.84e-21 ... 4.06e-02 ... 3.16e+02
+ 1500 ... 3.164e+02 ... 3.304e-07 ... 0.00e+00 ... 4.84e-21 ... 4.06e-02 ... 3.16e+02
+ 2000 ... 3.164e+02 ... 9.497e-09 ... 0.00e+00 ... 4.84e-21 ... 4.06e-02 ... 3.16e+02
+optimal m:  [-1.1374041  -0.16303714 32.13197377]
+As eigvals:  [-10.73648216  -2.65971766  -0.09925305]
+0.5 * |tilde{H}_0|_F =  4.503532455444971e-06
+0.5 * |tilde{H}_0|_F^2 / beta =  0.04056360915449241
+Estimate of trapping region size, Rm =  888.129989358206
+Local stability size, R_ls=  32170.2699234642
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -1.7636586776092522
+3 LorenzStenflo 4
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 3.803e+01 ... 9.043e-01 ... 0.00e+00 ... 4.80e-21 ... 5.44e-04 ... 3.89e+01
+  500 ... 3.803e+01 ... 1.130e-05 ... 0.00e+00 ... 4.80e-21 ... 5.43e-04 ... 3.80e+01
+optimal m:  [-1.1160715  -0.04781568 25.48248769 -1.38210712]
+As eigvals:  [-2.80868099 -1.81204852 -0.70108156 -0.09957665]
+0.5 * |tilde{H}_0|_F =  5.208971801626378e-07
+0.5 * |tilde{H}_0|_F^2 / beta =  0.0005426677446027752
+Estimate of trapping region size, Rm =  181.774160210473
+Local stability size, R_ls=  286563.840491331
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -0.7378679405609279
+4 VallisElNino 3
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 2.810e+00 ... 1.150e+01 ... 0.00e+00 ... 4.90e-21 ... 8.87e-08 ... 1.43e+01
+  500 ... 2.813e+00 ... 4.376e-03 ... 0.00e+00 ... 4.94e-21 ... 8.34e-08 ... 2.82e+00
+ 1000 ... 2.805e+00 ... 1.595e-04 ... 0.00e+00 ... 4.89e-21 ... 8.36e-08 ... 2.80e+00
+ 1500 ... 2.804e+00 ... 1.990e-05 ... 0.00e+00 ... 4.89e-21 ... 8.40e-08 ... 2.80e+00
+ 2000 ... 2.804e+00 ... 4.455e-06 ... 0.00e+00 ... 4.89e-21 ... 8.42e-08 ... 2.80e+00
+ 2500 ... 2.804e+00 ... 1.347e-06 ... 0.00e+00 ... 4.89e-21 ... 8.44e-08 ... 2.80e+00
+ 3000 ... 2.804e+00 ... 4.832e-07 ... 0.00e+00 ... 4.89e-21 ... 8.45e-08 ... 2.80e+00
+ 3500 ... 2.804e+00 ... 1.919e-07 ... 0.00e+00 ... 4.89e-21 ... 8.45e-08 ... 2.80e+00
+ 4000 ... 2.804e+00 ... 8.134e-08 ... 0.00e+00 ... 4.89e-21 ... 8.46e-08 ... 2.80e+00
+ 4500 ... 2.804e+00 ... 3.594e-08 ... 0.00e+00 ... 4.89e-21 ... 8.46e-08 ... 2.80e+00
+optimal m:  [ -1.1020188    1.6500104  -96.72763406]
+As eigvals:  [-6.47359768 -0.69370013 -0.09821425]
+0.5 * |tilde{H}_0|_F =  6.5056834646047105e-09
+0.5 * |tilde{H}_0|_F^2 / beta =  8.46478346832623e-08
+Estimate of trapping region size, Rm =  2449.14951253509
+Local stability size, R_ls=  22642576.8995530
+Simulated annealing managed to reduce the largest eigenvalue of A^S to eig1 =  -1.1166003019281319
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_1.png" src="../_images/examples_example_dysts_12_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_2.png" src="../_images/examples_example_dysts_12_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_3.png" src="../_images/examples_example_dysts_12_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_4.png" src="../_images/examples_example_dysts_12_4.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_5.png" src="../_images/examples_example_dysts_12_5.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_12_6.png" src="../_images/examples_example_dysts_12_6.png" />
+</div>
+</div>
+</section>
+<section id="Last-demonstration:-building-locally-stable-reduced-order-models-for-the-lid-cavity-flow">
+<h2>Last demonstration: building locally stable reduced-order models for the lid-cavity flow<a class="headerlink" href="#Last-demonstration:-building-locally-stable-reduced-order-models-for-the-lid-cavity-flow" title="Link to this heading"></a></h2>
+<p>First we compute a Galerkin model at different levels of truncation. This is also done in the Example 14 Jupyter notebook so we gloss over the description here.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">loadmat</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="s2">&quot;../data/cavityPOD.mat&quot;</span><span class="p">)</span>
+<span class="n">t_dns</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">a_dns</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+
+<span class="c1"># Downsample the data</span>
+<span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">t_dns</span> <span class="o">=</span> <span class="n">t_dns</span><span class="p">[::</span><span class="n">skip</span><span class="p">]</span>
+<span class="n">a_dns</span> <span class="o">=</span> <span class="n">a_dns</span><span class="p">[::</span><span class="n">skip</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">dt_dns</span> <span class="o">=</span> <span class="n">t_dns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_dns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">singular_vals</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;svs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">GalerkinROM</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="n">model_dict</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">model_dict</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">model_dict</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Q</span> <span class="o">=</span> <span class="n">model_dict</span><span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">r</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+        <span class="c1"># Truncate model as indicated</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">[:</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">[:</span><span class="n">r</span><span class="p">,</span> <span class="p">:</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Q</span><span class="p">[:</span><span class="n">r</span><span class="p">,</span> <span class="p">:</span><span class="n">r</span><span class="p">,</span> <span class="p">:</span><span class="n">r</span><span class="p">]</span>
+
+        <span class="c1"># RHS of POD-Galerkin model, for time integration</span>
+        <span class="n">rhs</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">C</span> <span class="o">+</span> <span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,j,k-&gt;i&#39;</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">x0</span><span class="p">[:</span><span class="n">r</span><span class="p">],</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Simulate Galerkin system at various truncation levels</span>
+<span class="n">galerkin_model</span> <span class="o">=</span> <span class="n">GalerkinROM</span><span class="p">(</span><span class="s1">&#39;../data/cavityGalerkin.mat&#39;</span><span class="p">)</span>
+
+<span class="n">dt_rom</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">t_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">dt_rom</span><span class="p">)</span>
+
+<span class="n">a0</span> <span class="o">=</span> <span class="n">a_dns</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="c1"># Finally, build a r=6 and r=16 Galerkin model</span>
+<span class="n">a_gal6</span> <span class="o">=</span> <span class="n">galerkin_model</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_sim</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">a_gal16</span> <span class="o">=</span> <span class="n">galerkin_model</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">a0</span><span class="p">,</span> <span class="n">t_sim</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Now-try-building-a-locally-stable-trapping-SINDy-model-now">
+<h2>Now try building a locally stable trapping SINDy model now<a class="headerlink" href="#Now-try-building-a-locally-stable-trapping-SINDy-model-now" title="Link to this heading"></a></h2>
+<p>It does not quite achieve the negative definite stability matrix, but it performs remarkably well.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># POD truncation</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">a_dns</span><span class="p">[:,</span> <span class="p">:</span><span class="n">r</span><span class="p">]</span>
+<span class="n">t_train</span> <span class="o">=</span> <span class="n">t_dns</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">reg_weight_lam</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">1.0e10</span>
+<span class="n">alpha_m</span> <span class="o">=</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">eta</span>  <span class="c1"># default is 1e-2 * eta so this speeds up the code here</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">TrappingSR3</span><span class="p">(</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+    <span class="n">_n_tgts</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+    <span class="n">_include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">reg_weight_lam</span><span class="o">=</span><span class="n">reg_weight_lam</span><span class="p">,</span>
+    <span class="n">eta</span><span class="o">=</span><span class="n">eta</span><span class="p">,</span>
+    <span class="n">alpha_m</span><span class="o">=</span><span class="n">alpha_m</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Fit the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_train</span><span class="p">)</span>
+<span class="n">Xi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">check_local_stability</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">sindy_opt</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># Fit a baseline model -- this is almost always an unstable model!</span>
+<span class="n">model_baseline</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">STLSQ</span><span class="p">(</span><span class="n">reg_weight_lam</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">PolynomialLibrary</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">model_baseline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Iter ... |y-Xw|^2 ... |Pw-A|^2/eta ... |w|_1 ... |Qijk|/a ... |Qijk+...|/b ...   Total:
+    0 ... 4.685e-01 ... 1.491e-06 ... 0.00e+00 ... 2.16e-16 ... 2.12e-09 ... 4.69e-01
+   20 ... 4.970e-01 ... 7.515e-03 ... 0.00e+00 ... 2.57e-16 ... 5.11e-09 ... 5.04e-01
+   40 ... 4.743e-01 ... 2.759e-03 ... 0.00e+00 ... 2.44e-16 ... 2.93e-09 ... 4.77e-01
+   60 ... 4.698e-01 ... 1.782e-03 ... 0.00e+00 ... 2.40e-16 ... 2.53e-09 ... 4.72e-01
+   80 ... 4.883e-01 ... 1.071e-03 ... 0.00e+00 ... 2.32e-16 ... 4.74e-09 ... 4.89e-01
+  100 ... 4.752e-01 ... 1.064e-03 ... 0.00e+00 ... 2.33e-16 ... 3.18e-09 ... 4.76e-01
+  120 ... 4.664e-01 ... 9.233e-04 ... 0.00e+00 ... 2.35e-16 ... 2.29e-09 ... 4.67e-01
+  140 ... 4.651e-01 ... 7.966e-04 ... 0.00e+00 ... 2.34e-16 ... 2.22e-09 ... 4.66e-01
+  160 ... 4.653e-01 ... 6.792e-04 ... 0.00e+00 ... 2.32e-16 ... 2.25e-09 ... 4.66e-01
+  180 ... 4.741e-01 ... 6.146e-04 ... 0.00e+00 ... 2.29e-16 ... 3.26e-09 ... 4.75e-01
+optimal m:  [ 4540.90430689  -443.71967335    98.91091791   271.39224319
+  3318.25464249 -4761.20668214]
+As eigvals:  [-2.22238321e+05 -1.43353269e+05 -1.11938690e+05 -3.52084718e+04
+ -1.43329567e+02  4.88031121e+03]
+0.5 * |tilde{H}_0|_F =  4.38893381406104e-07
+0.5 * |tilde{H}_0|_F^2 / beta =  3.852548004841677e-09
+Estimate of trapping region size, Rm =  0
+Local stability size, R_ls=  0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SINDy(differentiation_method=FiniteDifference(),
+      feature_library=PolynomialLibrary(),
+      feature_names=[&#39;x0&#39;, &#39;x1&#39;, &#39;x2&#39;, &#39;x3&#39;, &#39;x4&#39;, &#39;x5&#39;],
+      optimizer=STLSQ(threshold=0.0))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulate the model</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">a_sindy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">[:</span><span class="n">r</span><span class="p">],</span> <span class="n">t_sim</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="s2">&quot;solve_ivp&quot;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">,</span> <span class="s1">&#39; seconds&#39;</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">a_sindy_baseline</span> <span class="o">=</span> <span class="n">model_baseline</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">a0</span><span class="p">[:</span><span class="n">r</span><span class="p">],</span> <span class="n">t_sim</span><span class="p">,</span> <span class="n">integrator</span><span class="o">=</span><span class="s2">&quot;odeint&quot;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">,</span> <span class="s1">&#39; seconds&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+525.7374901771545  seconds
+11.6759774684906  seconds
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rE</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">E_sindy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_sindy</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rE</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">E_sindy_baseline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_sindy_baseline</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rE</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">E_dns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_dns</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rE</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">E_gal6</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_gal6</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rE</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">E_gal16</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_gal16</span><span class="p">[:,</span> <span class="p">:</span><span class="n">rE</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Now-we-plot-the-trajectories-and-energy-as-function-of-time">
+<h2>Now we plot the trajectories and energy as function of time<a class="headerlink" href="#Now-we-plot-the-trajectories-and-energy-as-function-of-time" title="Link to this heading"></a></h2>
+<p>Trapping SINDy model vastly outperforms the Galerkin models!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_dns</span><span class="p">,</span> <span class="n">E_dns</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;DNS&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_gal6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$r=6$&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:dusty rose&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_gal16</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$r=16$&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:brick red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span> <span class="n">E_sindy_baseline</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Naive SINDy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:grass&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_sindy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trapping SINDy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:ocean blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$K$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_dns</span><span class="p">,</span> <span class="n">E_dns</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;DNS&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_gal6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$r=6$&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:dusty rose&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_gal16</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$r=16$&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:brick red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span> <span class="n">E_sindy_baseline</span><span class="p">[:</span><span class="mi">1000</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Naive SINDy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:grass&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span> <span class="n">E_sindy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trapping SINDy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;xkcd:ocean blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$K$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1.3e-2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
+<span class="c1"># plt.gca().set_yticklabels([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;cavity_plot.pdf&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_20_0.png" src="../_images/examples_example_dysts_20_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">r</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_sindy</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SINDy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_dns</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;DNS&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_gal6</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Galerkin r=6&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_gal16</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Galerkin r=16&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4000</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_21_0.png" src="../_images/examples_example_dysts_21_0.png" />
+</div>
+</div>
+</section>
+<section id="Last-check:-Trapping-SINDy-model-reproduces-the-power-spectral-density-of-the-data">
+<h2>Last check: Trapping SINDy model reproduces the power spectral density of the data<a class="headerlink" href="#Last-check:-Trapping-SINDy-model-reproduces-the-power-spectral-density-of-the-data" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic power spectral density estimate using FFT</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">psd_est</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">Ehat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">dt</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">E</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">Ehat</span> <span class="o">=</span> <span class="n">Ehat</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ehat</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Ehat</span><span class="p">)</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>  <span class="c1"># Frequencies in rad/s</span>
+    <span class="k">return</span> <span class="n">Ehat</span><span class="p">,</span> <span class="n">freq</span>
+
+<span class="n">psd</span><span class="p">,</span> <span class="n">freq</span> <span class="o">=</span> <span class="n">psd_est</span><span class="p">(</span><span class="n">E_dns</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">t_dns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_dns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">psd_sim</span><span class="p">,</span> <span class="n">freq_sim</span> <span class="o">=</span> <span class="n">psd_est</span><span class="p">(</span><span class="n">E_sindy</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">t_sim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_sim</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">freq_sim</span><span class="p">,</span> <span class="n">psd_sim</span><span class="p">,</span> <span class="s1">&#39;xkcd:ocean blue&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$\omega$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$\log(E)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_dysts_23_0.png" src="../_images/examples_example_dysts_23_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example.html" class="btn btn-neutral float-left" title="Trapping SINDy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="von_karman_trapping_extended.html" class="btn btn-neutral float-right" title="Variations of the Trapping theorem – different Lyapunov functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mai Peng, Alan Kaptanoglu, Jacob Stevens-Haas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

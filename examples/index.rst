@@ -1,18 +1,13 @@
-pysindy-example documentation
+Trapping Examples
 =============================
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
 
-
-Perhaps list important version information here (python, pysindy?)
-
+Note that these files are provided as both python scripts and notebooks.
 
 .. toctree::
     :maxdepth: 1
     
-    /examples/sample-sindy.ipynb
+    /examples/example.ipynb
+    /examples/example_dysts.ipynb
+    /examples/trapping_extended.ipynb
+    /examples/von_karman_trapping_extended.ipynb
 
-
-.. Note that "/" is relative to docs/source, and examples/ gets copied into
-.. that directory
