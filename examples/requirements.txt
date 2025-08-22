@@ -1,0 +1,5 @@
+scipy
+seaborn
+matplotlib
+numpy
+pysindy[cvxpy] @ "git+https://github.com/dynamicslab/pysindy@d57737f"
