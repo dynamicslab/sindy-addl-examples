@@ -2,4 +2,6 @@ scipy
 matplotlib
 numpy
 dysts
-pysindy==2.0.0rc3
+pysindy[cvxpy]==2.0.0rc3
+sympy
+pymech
