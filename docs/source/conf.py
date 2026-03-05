@@ -11,8 +11,8 @@ from shutil import copy, rmtree, copytree
 
 from sphinx.application import Sphinx
 
-project = 'pysindy-example'
-copyright = '2024, Jacob Stevens-Haas'
+project = 'pde-examples'
+copyright = '2026, Jacob Stevens-Haas'
 author = 'Jacob Stevens-Haas'
 release = '0.1'
 
