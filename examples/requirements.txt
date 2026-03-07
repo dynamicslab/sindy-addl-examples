@@ -39,7 +39,7 @@ pydantic==2.12.5
 pydantic_core==2.41.5
 Pygments==2.19.2
 pyparsing==3.3.2
-pysindy @ file:///home/jake/github/pysindy
+pysindy[cvxpy] @ https://github.com/dynamicslab/pysindy@33ae312
 python-dateutil==2.9.0.post0
 pytz==2026.1.post1
 pyzmq==27.1.0
