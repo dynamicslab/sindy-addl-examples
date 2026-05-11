@@ -1,7 +1,6 @@
-Bayesian SINDy analysis
+Differentiation
 =============================
-This is a demonstration of how to analyze the behavior of bayesian SINDy using
-Arviz.
+Explore the differentiation methods available in PySINDy on pure differentiation problems and as components in the SINDy algorithm.
 
 
 .. toctree::
