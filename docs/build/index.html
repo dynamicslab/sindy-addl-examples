@@ -6,23 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bayesian SINDy analysis &mdash; SBR example 0.1 documentation</title>
+  <title>Greedy Algorithms &mdash; SSr and FROLS example 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=2709fde1"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Bayesian UQ-SINDy" href="examples/example.html" /> 
+    <link rel="next" title="SSR and FROLs (the greedy algorithms!) examples" href="examples/example.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,7 +32,7 @@
           
           
           <a href="#" class="icon icon-home">
-            SBR example
+            SSr and FROLS example
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,7 +43,11 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/example.html">Bayesian UQ-SINDy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html">SSR and FROLs (the greedy algorithms!) examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Define-some-functions-for-plotting-performance-as-the-greedy-algorithms-progress">Define some functions for plotting performance as the greedy algorithms progress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Note-that-the-usage-is-a-bit-different-because-we-save-all-the-sparse-models-and-we-choose-our-favorite-one-afterwards.-Below-we-show-that-we-can-track-the-MSE-between-the-predicted-and-true-derivative-on-a-testing-trajectory-as-the-algorithm-iterates,-and-then-choose-the-model-with-the-minimum-MSE.">Note that the usage is a bit different because we save all the sparse models and we choose our favorite one afterwards. Below we show that we can track the MSE between the predicted and true derivative on a testing trajectory as the algorithm iterates, and then choose the model with the minimum MSE.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Let's-compare-all-three-methods-as-the-noise-steadily-increases,-cross-validated-over-10-noise-instantiations">Let’s compare all three methods as the noise steadily increases, cross-validated over 10 noise instantiations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Summary">Summary</a></li>
 </ul>
 
         </div>
@@ -54,7 +56,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">SBR example</a>
+          <a href="#">SSr and FROLS example</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -62,7 +64,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Bayesian SINDy analysis</li>
+      <li class="breadcrumb-item active">Greedy Algorithms</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,13 +74,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="bayesian-sindy-analysis">
-<h1>Bayesian SINDy analysis<a class="headerlink" href="#bayesian-sindy-analysis" title="Link to this heading"></a></h1>
-<p>This is a demonstration of how to analyze the behavior of bayesian SINDy using
-Arviz.</p>
+  <section id="greedy-algorithms">
+<h1>Greedy Algorithms<a class="headerlink" href="#greedy-algorithms" title="Link to this heading"></a></h1>
+<p>This notebook uses the step-wise sparse regression (SSR) and forward-regression orthogonal least-squares (FROLS) algorithms, which are greedy algorithms that iteratively truncate (or add) one nonzero coefficient at each algorithm iteration.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/example.html">Bayesian UQ-SINDy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html">SSR and FROLs (the greedy algorithms!) examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Define-some-functions-for-plotting-performance-as-the-greedy-algorithms-progress">Define some functions for plotting performance as the greedy algorithms progress</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Note-that-the-usage-is-a-bit-different-because-we-save-all-the-sparse-models-and-we-choose-our-favorite-one-afterwards.-Below-we-show-that-we-can-track-the-MSE-between-the-predicted-and-true-derivative-on-a-testing-trajectory-as-the-algorithm-iterates,-and-then-choose-the-model-with-the-minimum-MSE.">Note that the usage is a bit different because we save all the sparse models and we choose our favorite one afterwards. Below we show that we can track the MSE between the predicted and true derivative on a testing trajectory as the algorithm iterates, and then choose the model with the minimum MSE.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Let's-compare-all-three-methods-as-the-noise-steadily-increases,-cross-validated-over-10-noise-instantiations">Let’s compare all three methods as the noise steadily increases, cross-validated over 10 noise instantiations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/example.html#Summary">Summary</a></li>
 </ul>
 </div>
 </section>
@@ -87,13 +92,13 @@ Arviz.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="examples/example.html" class="btn btn-neutral float-right" title="Bayesian UQ-SINDy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples/example.html" class="btn btn-neutral float-right" title="SSR and FROLs (the greedy algorithms!) examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Mikkel Bukke.</p>
+    <p>&#169; Copyright 2021, Alan Kaptanoglu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

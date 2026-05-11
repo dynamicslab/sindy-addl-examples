@@ -1,3 +1,4 @@
 arviz
 scipy
-pysindy[sbr]
+pysindy
+scikit-learn
