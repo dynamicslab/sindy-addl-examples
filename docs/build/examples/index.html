@@ -6,19 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bayesian SINDy analysis &mdash; SBR example 0.1 documentation</title>
+  <title>SINDyPI &mdash; SINDyPI 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=2709fde1"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -33,7 +31,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            SBR example
+            SINDyPI
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -44,7 +42,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="example.html">Bayesian UQ-SINDy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">SINDy-PI Feature Overview</a></li>
 </ul>
 
         </div>
@@ -53,7 +51,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SBR example</a>
+          <a href="../index.html">SINDyPI</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -61,7 +59,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Bayesian SINDy analysis</li>
+      <li class="breadcrumb-item active">SINDyPI</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -71,13 +69,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="bayesian-sindy-analysis">
-<h1>Bayesian SINDy analysis<a class="headerlink" href="#bayesian-sindy-analysis" title="Link to this heading"></a></h1>
-<p>This is a demonstration of how to analyze the behavior of bayesian SINDy using
-Arviz.</p>
+  <section id="sindypi">
+<h1>SINDyPI<a class="headerlink" href="#sindypi" title="Link to this heading"></a></h1>
+<p>This notebook applies the <cite>SINDyPI</cite> optimizer to a simple implicit ODE and was originally proposed in this paper: Kaheman, Kadierdan, J. Nathan Kutz, and Steven L. Brunton. “SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics.” Proceedings of the Royal Society A 476.2242 (2020): 20200279.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="example.html">Bayesian UQ-SINDy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">SINDy-PI Feature Overview</a></li>
 </ul>
 </div>
 </section>
@@ -90,7 +87,7 @@ Arviz.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Mikkel Bukke.</p>
+    <p>&#169; Copyright 2021, Alan Kaptanoglu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

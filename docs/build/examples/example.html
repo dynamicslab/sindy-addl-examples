@@ -6,24 +6,24 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bayesian UQ-SINDy &mdash; SBR example 0.1 documentation</title>
+  <title>SINDy-PI Feature Overview &mdash; SINDyPI 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=2709fde1"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Bayesian SINDy analysis" href="../index.html" /> 
+    <link rel="prev" title="SINDyPI" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +35,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            SBR example
+            SINDyPI
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -46,10 +46,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Bayesian UQ-SINDy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Lotka-Volterra-Predator-Prey-Model">Lotka-Volterra Predator-Prey Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Bayesian UQ-SINDy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Get-MCMC-diagnostics">Get MCMC diagnostics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SINDy-PI Feature Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Illustration-of-different-ways-to-make-SINDy-PI-feature-libraries">Illustration of different ways to make SINDy-PI feature libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Solve-1D-Michelson-Menten-enzyme-model-as-first-demonstration">Solve 1D Michelson-Menten enzyme model as first demonstration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Okay,-so-how-to-choose-which-model-to-use?">Okay, so how to choose which model to use?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-we-need-to-reformat-all-the-feature-strings-for-conversion-into-symbolic-variables">Now we need to reformat all the feature strings for conversion into symbolic variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Check-all-the-model-fits-produce-sensible-models">Check all the model fits produce sensible models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-we-will:">Now we will:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Solve-high-order-ODE">Solve high-order ODE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Find-complex-PDE-with-SINDy-PI-with-PDE-functionality">Find complex PDE with SINDy-PI with PDE functionality</a></li>
 </ul>
 </li>
 </ul>
@@ -60,7 +65,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SBR example</a>
+          <a href="../index.html">SINDyPI</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -68,7 +73,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Bayesian UQ-SINDy</li>
+      <li class="breadcrumb-item active">SINDy-PI Feature Overview</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/examples/example.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,100 +83,872 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Bayesian-UQ-SINDy">
-<h1>Bayesian UQ-SINDy<a class="headerlink" href="#Bayesian-UQ-SINDy" title="Link to this heading"></a></h1>
+  <section id="SINDy-PI-Feature-Overview">
+<h1>SINDy-PI Feature Overview<a class="headerlink" href="#SINDy-PI-Feature-Overview" title="Link to this heading"></a></h1>
+<p>This notebook provides a simple overview of the basic functionality of SINDy-PI implemented in PySINDy, and is written by Alan Kaptanoglu and Kadierdan Kaheman. SINDy-PI is used to handle generic implicit ODEs (or PDEs) of the form,</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt}\mathbf{x} = \mathbf{f}(\mathbf{x}, \dot{\mathbf{x}}) \approx \mathbf{\Theta}(\mathbf{x}, \dot{\mathbf{x}})\mathbf{\Xi}\]</div>
+<p>This is based off of the paper “Kaheman, K., Kutz, J. N., &amp; Brunton, S. L. (2020). SINDy-PI: a robust algorithm for parallel implicit sparse identification of nonlinear dynamics. Proceedings of the Royal Society A, 476(2242), 20200279.” Youtube description can be found here <a class="reference external" href="https://www.youtube.com/watch?v=sP8JXF9_wAs">https://www.youtube.com/watch?v=sP8JXF9_wAs</a>.</p>
+<p>Building SINDy libraries <span class="math notranslate nohighlight">\(\mathbf{\Theta}(\mathbf{x}, \dot{\mathbf{x}})\)</span> depending on both <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\dot{\mathbf{x}}\)</span> is possible with the PDE or weakPDE libraries using implicit_terms = True and providing a temporal grid for differentiation. In this case, one must be sure to omit the linear <span class="math notranslate nohighlight">\(\dot{\mathbf{x}}\)</span> term in the library (since then the SINDy model will just fit <span class="math notranslate nohighlight">\(\dot{\mathbf{x}} = \dot{\mathbf{x}}\)</span>) and otherwise be careful about the matrix
+conditioning, and this is what the SINDyPI optimizer class is for.</p>
+<p>The benefit of not using the SINDy-PI functionality is that you can avoid using SymPy (see below).</p>
+<p>An interactive version of this notebook is available on binder <a class="reference external" href="https://mybinder.org/v2/gh/dynamicslab/pysindy/v1.7.3?filepath=examples/9_sindypi_with_sympy.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
-
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pysindy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.differentiation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FiniteDifference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pysindy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">enzyme</span><span class="p">,</span> <span class="n">bacterial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="c1"># For reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">integrator_keywords</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;rtol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-12</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LSODA&#39;</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;atol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-12</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<section id="Illustration-of-different-ways-to-make-SINDy-PI-feature-libraries">
+<h2>Illustration of different ways to make SINDy-PI feature libraries<a class="headerlink" href="#Illustration-of-different-ways-to-make-SINDy-PI-feature-libraries" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set seed for reproducibility</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">987</span><span class="p">)</span>
-</pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Functions to be applied to the data x</span>
+<span class="n">functions</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)]</span>
+
+<span class="c1"># Functions to be applied to the data x_dot</span>
+<span class="n">x_dot_functions</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="n">lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPILibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">functions</span><span class="p">,</span>
+    <span class="n">x_dot_library_functions</span><span class="o">=</span><span class="n">x_dot_functions</span><span class="p">,</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Without function names: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Function names includes both the x and x_dot functions</span>
+<span class="n">function_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;exp(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="s2">&quot;sin(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPILibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">functions</span><span class="p">,</span>
+    <span class="n">x_dot_library_functions</span><span class="o">=</span><span class="n">x_dot_functions</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">function_names</span><span class="p">,</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With function names: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># SINDyPILibrary is now deprecated,</span>
+<span class="c1"># use the PDE or WeakPDE library instead.</span>
+<span class="n">function_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;exp(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="s2">&quot;sin(&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PDELibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">functions</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">function_names</span><span class="p">,</span>
+    <span class="n">temporal_grid</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">derivative_order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With function names: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Repeat with the weak form library</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">WeakPDELibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">functions</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">function_names</span><span class="p">,</span>
+    <span class="n">spatiotemporal_grid</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">K</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">derivative_order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With function names: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<br/></pre></div>
 </div>
 </div>
-<section id="Lotka-Volterra-Predator-Prey-Model">
-<h2>Lotka-Volterra Predator-Prey Model<a class="headerlink" href="#Lotka-Volterra-Predator-Prey-Model" title="Link to this heading"></a></h2>
-<p>In this example, we generate the data using the Lotka-Volterra equations, which is a simplified model of Predator-Prey interactions. They specify a system of Ordinary Differential Equations (ODEs): <span class="math">\begin{align}
-\frac{dP}{dt} &= a P - b P Q\\
-\frac{dQ}{dt} &= c P Q - d Q
-\end{align}</span> where <span class="math notranslate nohighlight">\(P\)</span> is the concentration of prey, <span class="math notranslate nohighlight">\(Q\)</span> is the concentration of predators, <span class="math notranslate nohighlight">\(a\)</span> is the birth rate of prey, <span class="math notranslate nohighlight">\(b\)</span> is the death rate of prey, <span class="math notranslate nohighlight">\(c\)</span> is the birth rate of predators and <span class="math notranslate nohighlight">\(d\)</span> is the death rate of predators.</p>
-<p>For more details, see e.g. Rockwood L. L. and Witt J. W. (2015). <em>Introduction to population ecology</em>. Wiley Blackwell, Chichester, West Sussex, UK, 2nd edition</p>
-<div class="nbinput nblast docutils container">
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Without function names:
+[&#39;f0(x0)&#39;, &#39;f0(x1)&#39;, &#39;f1(x0,x1)&#39;, &#39;f_dot0(x0_dot)&#39;, &#39;f_dot0(x1_dot)&#39;, &#39;f0(x0)f_dot0(x0_dot)&#39;, &#39;f0(x1)f_dot0(x0_dot)&#39;, &#39;f1(x0,x1)f_dot0(x0_dot)&#39;, &#39;f0(x0)f_dot0(x1_dot)&#39;, &#39;f0(x1)f_dot0(x1_dot)&#39;, &#39;f1(x0,x1)f_dot0(x1_dot)&#39;]
+
+With function names:
+[&#39;exp(x0)&#39;, &#39;exp(x1)&#39;, &#39;sin(x0x1)&#39;, &#39;x0_dot&#39;, &#39;x1_dot&#39;, &#39;exp(x0)x0_dot&#39;, &#39;exp(x1)x0_dot&#39;, &#39;sin(x0x1)x0_dot&#39;, &#39;exp(x0)x1_dot&#39;, &#39;exp(x1)x1_dot&#39;, &#39;sin(x0x1)x1_dot&#39;]
+
+With function names:
+[&#39;exp(x0)&#39;, &#39;exp(x1)&#39;, &#39;sin(x0x1)&#39;, &#39;x0_t&#39;, &#39;x1_t&#39;, &#39;exp(x0)x0_t&#39;, &#39;exp(x0)x1_t&#39;, &#39;exp(x1)x0_t&#39;, &#39;exp(x1)x1_t&#39;, &#39;sin(x0x1)x0_t&#39;, &#39;sin(x0x1)x1_t&#39;]
+
+With function names:
+[&#39;exp(x0)&#39;, &#39;exp(x1)&#39;, &#39;sin(x0x1)&#39;, &#39;x0_t&#39;, &#39;x1_t&#39;, &#39;exp(x0)x0_t&#39;, &#39;exp(x0)x1_t&#39;, &#39;exp(x1)x0_t&#39;, &#39;exp(x1)x1_t&#39;, &#39;sin(x0x1)x0_t&#39;, &#39;sin(x0x1)x1_t&#39;]
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/zack/pysindy/pysindy/feature_library/sindy_pi_library.py:161: UserWarning: This library is deprecated in PySINDy versions &gt; 1.7. Please use the PDE or WeakPDE libraries instead.
+  warnings.warn(
+</pre></div></div>
+</div>
+</section>
+<section id="Solve-1D-Michelson-Menten-enzyme-model-as-first-demonstration">
+<h2>Solve 1D Michelson-Menten enzyme model as first demonstration<a class="headerlink" href="#Solve-1D-Michelson-Menten-enzyme-model-as-first-demonstration" title="Link to this heading"></a></h2>
+<p>The Michelson-Menten enzyme model is,</p>
+<div class="math notranslate nohighlight">
+\[\dot{x} = 0.6 - \frac{1.5 x}{0.3 + x}.\]</div>
+<p>Note that, instead of dealing with fractional terms, it can be rearranged into</p>
+<div class="math notranslate nohighlight">
+\[\dot{x} = \frac{3}{5} -3 x - \frac{10}{3} x\dot{x},\]</div>
+<p>which is an implicit ODE, since the right-hand-side now depends on <span class="math notranslate nohighlight">\(\dot{x}\)</span>! In order to handle this scenario, SINDy-PI builds a candidate library with terms depending on both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(\dot{x}\)</span>, and solves the optimization problem,</p>
+<div class="math notranslate nohighlight">
+\[\|\Theta(x, \dot{x}) - \Theta(x, \dot{x})\Xi\|_2 + \lambda\|\Xi\|_1, \quad s.t. \text{diag}(\Xi) = 0.\]</div>
+<p>This reason this modified optimization is required is that linear terms in <span class="math notranslate nohighlight">\(\dot{x}\)</span> are no longer guaranteed, so every candidate library term is fit with a different model to find the best combination of implicit terms. Note <span class="math notranslate nohighlight">\(\text{diag}(\Xi) = 0\)</span> is required because without this, the model would just fit every candidate library term with itself, <span class="math notranslate nohighlight">\(\dot{x} = \dot{x}\)</span>, <span class="math notranslate nohighlight">\(x\dot{x} = x\dot{x}\)</span>, <span class="math notranslate nohighlight">\(x^2\dot{x} = x^2\dot{x}\)</span>, and so on.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up a class that defines the Lotka-Volterra equations</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PredatorPreyModel</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-        <span class="c1"># internalise the model parameters.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">c</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">x0_train</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.55</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">enzyme</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0_train</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">dydx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Lotka-Volterra Model model, see e.g. https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations.}</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="c1"># Initialize custom SINDy library so that we can have x_dot inside it.</span>
+<span class="n">library_functions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">w</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">x_dot_library_functions</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># solve the system of ODEs.</span>
-        <span class="k">return</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="c1"># library function names includes both</span>
+<span class="c1"># the x_library_functions and x_dot_library_functions names</span>
+<span class="n">library_function_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Need to pass time base to the library so can build the x_dot library from x</span>
+<span class="n">sindy_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPILibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+    <span class="n">x_dot_library_functions</span><span class="o">=</span><span class="n">x_dot_library_functions</span><span class="p">,</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+    <span class="n">include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPI</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
+    <span class="n">thresholder</span><span class="o">=</span><span class="s2">&quot;l1&quot;</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+
+<span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model  0
+Model  1
+Model  2
+Model  3
+Solver failed on model  3 , setting coefs to zeros
+Model  4
+Model  5
+Model  6
+Model  7
+Model  8
+Model  9
+1 = 5.000 x0 + 1.667 x0_dot + 5.556 x0x0_dot
+x0 = 0.200 1 + -0.333 x0_dot + -1.111 x0x0_dot
+x0x0 = 0.198 x0 + 0.007 x0x0x0 + -0.338 x0x0_dot + -1.099 x0x0x0_dot
+x0x0x0 = 0.000
+x0x0x0x0 = -0.001 1 + 0.363 x0x0x0 + 0.041 x0x0_dot + -1.205 x0x0x0x0x0_dot
+x0_dot = 0.600 1 + -3.000 x0 + -3.333 x0x0_dot
+x0x0_dot = 0.180 1 + -0.900 x0 + -0.300 x0_dot
+x0x0x0_dot = -0.004 1 + 0.136 x0 + -0.508 x0x0 + -0.344 x0x0x0 + -0.102 x0x0_dot + -0.219 x0x0x0x0x0_dot
+x0x0x0x0_dot = 0.003 1 + 0.001 x0 + -0.391 x0x0x0 + -0.247 x0x0x0x0 + -0.108 x0x0_dot
+x0x0x0x0x0_dot = 0.001 1 + -0.670 x0x0x0x0 + -0.005 x0_dot + 0.029 x0x0_dot + -0.271 x0x0x0_dot
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;1&#39;,
+ &#39;x0&#39;,
+ &#39;x0x0&#39;,
+ &#39;x0x0x0&#39;,
+ &#39;x0x0x0x0&#39;,
+ &#39;x0_dot&#39;,
+ &#39;x0x0_dot&#39;,
+ &#39;x0x0x0_dot&#39;,
+ &#39;x0x0x0x0_dot&#39;,
+ &#39;x0x0x0x0x0_dot&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set some hyperparameters.</span>
-<span class="n">t_span</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
-<span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
-<span class="n">max_step</span> <span class="o">=</span> <span class="mf">0.1</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">library_function_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">z</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span>
+<span class="p">]</span>
 
-<span class="c1"># initialise the model and solve.</span>
-<span class="n">my_model</span> <span class="o">=</span> <span class="n">PredatorPreyModel</span><span class="p">()</span>
-<span class="n">sol</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">t_span</span><span class="o">=</span><span class="n">t_span</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="n">y0</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="n">max_step</span><span class="p">)</span>
+<span class="n">sindy_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">WeakPDELibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+    <span class="n">spatiotemporal_grid</span><span class="o">=</span><span class="n">t</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+    <span class="n">include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">derivative_order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model  0
+Model  1
+Model  2
+Model  3
+Model  4
+Model  5
+Model  6
+Model  7
+Model  8
+Model  9
+1 = 5.000 x0 + 1.667 x0_t + 5.555 x0x0_t
+x0 = 0.200 1 + 0.010 x0x0 + -0.334 x0_t + -1.097 x0x0_t
+x0x0 = 0.019 1 + 0.080 x0 + 0.627 x0x0x0 + -0.669 x0x0_t
+x0x0x0 = -0.008 1 + 0.373 x0x0 + 0.823 x0x0x0x0 + 0.033 x0_t
+x0x0x0x0 = -0.006 1 + 0.893 x0x0x0 + -0.021 x0_t + 0.305 x0x0_t
+x0_t = 0.597 1 + -2.991 x0 + 0.031 x0x0 + -3.279 x0x0_t
+x0x0_t = 0.174 1 + -0.863 x0 + -0.029 x0x0 + -0.285 x0_t
+x0x0x0_t = 0.013 1 + -0.247 x0x0 + -0.405 x0x0x0 + -0.043 x0_t
+x0x0x0x0_t = 0.010 x0 + -0.143 x0x0x0 + -0.501 x0x0x0x0 + -0.006 x0_t
+x0x0x0x0x0_t = 0.001 1 + -0.479 x0x0x0x0 + 0.005 x0_t + -0.060 x0x0_t
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;1&#39;,
+ &#39;x0&#39;,
+ &#39;x0x0&#39;,
+ &#39;x0x0x0&#39;,
+ &#39;x0x0x0x0&#39;,
+ &#39;x0_t&#39;,
+ &#39;x0x0_t&#39;,
+ &#39;x0x0x0_t&#39;,
+ &#39;x0x0x0x0_t&#39;,
+ &#39;x0x0x0x0x0_t&#39;]
+</pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the noise level.</span>
-<span class="n">noise</span> <span class="o">=</span> <span class="mf">0.1</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sindy_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PDELibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+    <span class="n">temporal_grid</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+    <span class="n">include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">derivative_order</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
 
-<span class="c1"># extract the timesteps and perturb the solution with noise.</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">t</span>
-<span class="n">P</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="n">Q</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+    <span class="n">differentiation_method</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">drop_endpoints</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model  0
+Model  1
+Model  2
+Model  3
+Solver failed on model  3 , setting coefs to zeros
+Model  4
+Model  5
+Model  6
+Model  7
+Model  8
+Model  9
+1 = 5.000 x0 + 1.667 x0_t + 5.556 x0x0_t
+x0 = 0.200 1 + -0.333 x0_t + -1.111 x0x0_t
+x0x0 = 0.198 x0 + 0.007 x0x0x0 + -0.338 x0x0_t + -1.099 x0x0x0_t
+x0x0x0 = 0.000
+x0x0x0x0 = -0.001 1 + 0.363 x0x0x0 + 0.041 x0x0_t + -1.205 x0x0x0x0x0_t
+x0_t = 0.600 1 + -3.000 x0 + -3.333 x0x0_t
+x0x0_t = 0.180 1 + -0.900 x0 + -0.300 x0_t
+x0x0x0_t = -0.004 1 + 0.136 x0 + -0.508 x0x0 + -0.344 x0x0x0 + -0.102 x0x0_t + -0.219 x0x0x0x0x0_t
+x0x0x0x0_t = 0.003 1 + 0.001 x0 + -0.391 x0x0x0 + -0.247 x0x0x0x0 + -0.108 x0x0_t
+x0x0x0x0x0_t = 0.001 1 + -0.670 x0x0x0x0 + -0.005 x0_t + 0.029 x0x0_t + -0.271 x0x0x0_t
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;1&#39;,
+ &#39;x0&#39;,
+ &#39;x0x0&#39;,
+ &#39;x0x0x0&#39;,
+ &#39;x0x0x0x0&#39;,
+ &#39;x0_t&#39;,
+ &#39;x0x0_t&#39;,
+ &#39;x0x0x0_t&#39;,
+ &#39;x0x0x0x0_t&#39;,
+ &#39;x0x0x0x0x0_t&#39;]
+</pre></div></div>
+</div>
+</section>
+<section id="Okay,-so-how-to-choose-which-model-to-use?">
+<h2>Okay, so how to choose which model to use?<a class="headerlink" href="#Okay,-so-how-to-choose-which-model-to-use?" title="Link to this heading"></a></h2>
+<p>So SINDy-PI has generated a different dynamical model for each of the candidate library terms, but how do we choose which one to use? This can be decided in many ways, but an easy choice is picking the model that minimizes the mean-squared error of the <span class="math notranslate nohighlight">\(\dot{x}\)</span> testing data. There are many other ways to choose, and the SINDy-PI paper noted that bad models tend to also be less sparse, so sparsity is another metric for selection. Below, we simply integrate forward all the models and on this
+testing trajectory, they basically all perform fine.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the solution.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Prey&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predators&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the fit of the derivative</span>
+<span class="n">x_dot_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">x_dot_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)[:,</span> <span class="mi">5</span><span class="p">]</span>  <span class="c1"># will default to d/dt of all the features</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_dot_train</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_dot_train_pred</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;matplotlib.lines.Line2D at 0x7fa2bf8153d0&gt;]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_9_1.png" src="../_images/examples_example_9_1.png" />
+</div>
+</div>
+</section>
+<section id="Now-we-need-to-reformat-all-the-feature-strings-for-conversion-into-symbolic-variables">
+<h2>Now we need to reformat all the feature strings for conversion into symbolic variables<a class="headerlink" href="#Now-we-need-to-reformat-all-the-feature-strings-for-conversion-into-symbolic-variables" title="Link to this heading"></a></h2>
+<p>So we have all these nice models but these are implicit ODEs, and the default Python solvers (solve_ivp and odeint) cannot solve implicit ODEs. There are two options although we only illustrate the first option below; we must convert the equations into symbolic variables and then either (1) use SymPy to symbolically solve the equation for <span class="math notranslate nohighlight">\(\dot{x}\)</span>, after which the equation is no longer implicit and can be solved with the default Python solves, or (2) convert the equations into a symbolic
+differential algebraic equation (DAE), which can be numerically solved with the diffeqpy Python package (but requires Julia to be installed).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">features_copy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+<span class="n">nfeatures</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="n">features_formatted</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># Need to put multiplication between terms for sympy</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nfeatures</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="c1"># Overkill to make sure all the x0, x1, etc. get replaced</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_string</span>
+    <span class="n">features_formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_string</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">features_copy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">features_formatted</span><span class="p">)</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coefficients</span><span class="p">()</span>
+<span class="n">sym_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+<span class="n">sym_theta</span> <span class="o">=</span> <span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;1&#39;, &#39;x0&#39;, &#39;x0x0&#39;, &#39;x0x0x0&#39;, &#39;x0x0x0x0&#39;, &#39;x0_t&#39;, &#39;x0x0_t&#39;, &#39;x0x0x0_t&#39;, &#39;x0x0x0x0_t&#39;, &#39;x0x0x0x0x0_t&#39;]
+[&#39;1&#39;, &#39;x0&#39;, &#39;x0 * x0&#39;, &#39;x0 * x0 * x0&#39;, &#39;x0 * x0 * x0 * x0&#39;, &#39;x0_t&#39;, &#39;x0 * x0_t&#39;, &#39;x0 * x0 * x0_t&#39;, &#39;x0 * x0 * x0 * x0_t&#39;, &#39;x0 * x0 * x0 * x0 * x0_t&#39;]
+</pre></div></div>
+</div>
+</section>
+<section id="Check-all-the-model-fits-produce-sensible-models">
+<h2>Check all the model fits produce sensible models<a class="headerlink" href="#Check-all-the-model-fits-produce-sensible-models" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sym_equations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sym_equations_rounded</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nfeatures</span><span class="p">):</span>
+    <span class="n">sym_equations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">sp</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">sym_theta</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sym_theta</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">coefs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">sym_features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">sym_equations_rounded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">sp</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">sym_theta</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sym_theta</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">coefs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">sym_features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sym_theta</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot; = &quot;</span><span class="p">,</span> <span class="n">sym_equations_rounded</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1  =  5.0*x0 + 1.67*x0_t + 5.56*x0x0_t
+x0  =  0.2*1 - 0.33*x0_t - 1.11*x0x0_t
+x0x0  =  0.2*x0 - 0.34*x0x0_t + 0.01*x0x0x0 - 1.1*x0x0x0_t
+x0x0x0  =  0
+x0x0x0x0  =  0.04*x0x0_t + 0.36*x0x0x0 - 1.21*x0x0x0x0x0_t
+x0_t  =  0.6*1 - 3.0*x0 - 3.33*x0x0_t
+x0x0_t  =  0.18*1 - 0.9*x0 - 0.3*x0_t
+x0x0x0_t  =  0.14*x0 - 0.51*x0x0 - 0.1*x0x0_t - 0.34*x0x0x0 - 0.22*x0x0x0x0x0_t
+x0x0x0x0_t  =  -0.11*x0x0_t - 0.39*x0x0x0 - 0.25*x0x0x0x0
+x0x0x0x0x0_t  =  -0.01*x0_t + 0.03*x0x0_t - 0.27*x0x0x0_t - 0.67*x0x0x0x0
+</pre></div></div>
+</div>
+</section>
+<section id="Now-we-will:">
+<h2>Now we will:<a class="headerlink" href="#Now-we-will:" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>reformat all the equations</p></li>
+<li><p>solve symbolically for x_dot</p></li>
+<li><p>integrate and plot the new equations for x_dot</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the ODE symbol variables</span>
+<span class="n">t_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;t_sym&quot;</span><span class="p">)</span>
+<span class="n">x_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x:</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span>
+<span class="n">x_dot_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;x:</span><span class="si">%d</span><span class="s2">_t&quot;</span> <span class="o">%</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="c1"># Need to format the above equations so that there are space between x0 * x0, x0 * x_dot0, and so on.</span>
+<span class="n">sym_equations_formatted</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sym_equations_rounded_formatted</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nfeatures</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="c1"># Overkill to make sure all the x0, x1, etc. get replaced</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym_equations</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span>
+        <span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_string</span> <span class="o">=</span> <span class="n">temp_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span><span class="p">)</span>
+        <span class="n">temp_rounded_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym_equations_rounded</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span>
+        <span class="p">)</span>
+        <span class="n">temp_rounded_string</span> <span class="o">=</span> <span class="n">temp_rounded_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span>
+        <span class="p">)</span>
+        <span class="n">temp_rounded_string</span> <span class="o">=</span> <span class="n">temp_rounded_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span>
+        <span class="p">)</span>
+        <span class="n">temp_rounded_string</span> <span class="o">=</span> <span class="n">temp_rounded_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; * x&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sym_equations_formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_string</span><span class="p">)</span>
+        <span class="n">sym_equations_rounded_formatted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_rounded_string</span><span class="p">)</span>
+
+<span class="c1"># Now that the equations are mathematically formatted,</span>
+<span class="c1"># solve for x_dot0 in the algebraic equation.</span>
+<span class="n">sym_equations_simplified</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sym_equations_rounded_simplified</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nfeatures</span><span class="p">):</span>
+    <span class="n">sym_equations_simplified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">sp</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+                <span class="n">sp</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">sym_equations_formatted</span><span class="p">)[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                <span class="o">-</span><span class="n">sp</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">features_formatted</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+            <span class="p">),</span>
+            <span class="n">x_dot_sym</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">rounded</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span>
+            <span class="n">sp</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">sym_equations_rounded_formatted</span><span class="p">)[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="o">-</span><span class="n">sp</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">features_formatted</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+        <span class="p">),</span>
+        <span class="n">x_dot_sym</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">rounded_temp</span> <span class="o">=</span> <span class="n">rounded</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">sp</span><span class="o">.</span><span class="n">preorder_traversal</span><span class="p">(</span><span class="n">rounded</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">Float</span><span class="p">):</span>
+                <span class="n">rounded_temp</span> <span class="o">=</span> <span class="n">rounded_temp</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">sym_equations_rounded_simplified</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rounded_temp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sym_equations_rounded_simplified</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+<span class="c1"># Plot the results for each of the models</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">x0_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">enzyme</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0_test</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nfeatures</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">nfeatures</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sym_equations_simplified</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ODE_Func</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">([</span><span class="n">t_sym</span><span class="p">,</span> <span class="n">x_sym</span><span class="p">],</span> <span class="n">sym_equations_simplified</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Now simulate the system we identified</span>
+        <span class="n">x_test_sim</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">ODE_Func</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">x0_test</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x_test_sim</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e3</span>
+            <span class="ow">and</span> <span class="n">sym_equations_rounded_simplified</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                <span class="n">t</span><span class="p">,</span>
+                <span class="n">x_test_sim</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">sympify</span><span class="p">(</span><span class="n">features_formatted</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="o">+</span> <span class="s2">&quot; = &quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym_equations_rounded_simplified</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+            <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fa2a43c3ca0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_15_1.png" src="../_images/examples_example_15_1.png" />
+</div>
+</div>
+</section>
+<section id="Solve-high-order-ODE">
+<h2>Solve high-order ODE<a class="headerlink" href="#Solve-high-order-ODE" title="Link to this heading"></a></h2>
+<p>In general, high order ODEs can always be transformed into an equivalent (but higher-dimensional) set of 1st-order ODEs. However, this means that the user would have to provide the data for <span class="math notranslate nohighlight">\(\mathbf x\)</span>, <span class="math notranslate nohighlight">\(\dot{\mathbf x}\)</span>, <span class="math notranslate nohighlight">\(\ddot{\mathbf x}\)</span>, … and then the weak formulation cannot be easily used for computing these derivative terms. Here we show how a high-order ODE (which is long-time unstable in general)</p>
+<div class="math notranslate nohighlight">
+\[x_{tt} = (1-x_{t}^2)x_t - x\]</div>
+<p>can be identified directly with the PDE or WeakPDE libraries, without rewriting the equation as a system of 1st order ODEs and directly providing data for all <span class="math notranslate nohighlight">\(\mathbf x\)</span>, …, <span class="math notranslate nohighlight">\(\mathbf x_{ttt}\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">Rayleigh_osc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="c1"># Generate measurement data</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.005</span>
+<span class="n">t_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_train_span</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_train</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">x0_train</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">Rayleigh_osc</span><span class="p">,</span> <span class="n">t_train_span</span><span class="p">,</span> <span class="n">x0_train</span><span class="p">,</span>
+                    <span class="n">t_eval</span><span class="o">=</span><span class="n">t_train</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Only train on the data for x, chop the other variable!</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_train</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Define custom functions up to quadratic terms</span>
+<span class="n">library_functions</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">library_function_names</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="c1"># Define PDELibrary which generates up to first order temporal derivatives</span>
+<span class="n">sindy_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PDELibrary</span><span class="p">(</span>
+    <span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+    <span class="n">temporal_grid</span><span class="o">=</span><span class="n">t_train</span><span class="p">,</span>
+    <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+    <span class="n">include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">derivative_order</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="n">lib</span> <span class="o">=</span> <span class="n">sindy_library</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With function names: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPI</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">thresholder</span><span class="o">=</span><span class="s2">&quot;l1&quot;</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span>
+    <span class="c1">#normalize_columns=True</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">,</span>
+    <span class="n">feature_library</span><span class="o">=</span><span class="n">sindy_library</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_train</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">x_dot_true</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">differentiate</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t_train</span><span class="p">)</span>
+<span class="n">x_dot_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>  <span class="c1"># default returns d/dt of all 15 features!</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_dot_true</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_dot_pred</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">sindy_library</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+With function names:
+[&#39;1&#39;, &#39;x0&#39;, &#39;x0x0&#39;, &#39;x0_t&#39;, &#39;x0_tt&#39;, &#39;x0x0_t&#39;, &#39;x0x0x0_t&#39;, &#39;x0x0_tt&#39;, &#39;x0x0x0_tt&#39;]
+
+Model  0
+Model  1
+Model  2
+Model  3
+Model  4
+Model  5
+Model  6
+Model  7
+Model  8
+1 = -0.1382 x0 + 0.4765 x0x0 + -0.1960 x0_t + -0.6506 x0_tt + -0.0672 x0x0_t + 0.1022 x0x0x0_t + 0.2143 x0x0_tt + 0.1200 x0x0x0_tt
+x0 = -0.1552 1 + 0.0666 x0x0 + -0.5516 x0_t + -2.0918 x0_tt + -0.0028 x0x0_t + 0.3800 x0x0x0_t + 0.0347 x0x0_tt + 0.2490 x0x0x0_tt
+x0x0 = 0.9765 1 + 0.1214 x0 + 0.2244 x0_t + 0.7622 x0_tt + 0.2479 x0x0_t + -0.1173 x0x0x0_t + -0.7475 x0x0_tt + -0.1505 x0x0x0_tt
+x0_t = -0.2122 1 + -0.5318 x0 + 0.1186 x0x0 + -2.1258 x0_tt + -0.0104 x0x0_t + 0.5020 x0x0x0_t + 0.0729 x0x0_tt + 0.3673 x0x0x0_tt
+x0_tt = -0.0728 1 + -0.2083 x0 + 0.0416 x0x0 + -0.2196 x0_t + -0.0027 x0x0_t + 0.1229 x0x0x0_t + 0.0268 x0x0_tt + 0.1885 x0x0x0_tt
+x0x0_t = -0.3108 1 + -0.0117 x0 + 0.5599 x0x0 + -0.0444 x0_t + -0.1129 x0_tt + -0.0114 x0x0x0_t + 0.5707 x0x0_tt + 0.0271 x0x0x0_tt
+x0x0x0_t = 0.3159 1 + 1.0459 x0 + -0.1769 x0x0 + 1.4333 x0_t + 3.3961 x0_tt + -0.0076 x0x0_t + -0.1070 x0x0_tt + -0.5141 x0x0x0_tt
+x0x0_tt = 0.5818 1 + 0.0840 x0 + -0.9904 x0x0 + 0.1828 x0_t + 0.6501 x0_tt + 0.3348 x0x0_t + -0.0940 x0x0x0_t + -0.1393 x0x0x0_tt
+x0x0x0_tt = 0.3282 1 + 0.6064 x0 + -0.2009 x0x0 + 0.9278 x0_t + 4.6082 x0_tt + 0.0160 x0x0_t + -0.4548 x0x0x0_t + -0.1403 x0x0_tt
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;1&#39;,
+ &#39;x0&#39;,
+ &#39;x0x0&#39;,
+ &#39;x0_t&#39;,
+ &#39;x0_tt&#39;,
+ &#39;x0x0_t&#39;,
+ &#39;x0x0x0_t&#39;,
+ &#39;x0x0_tt&#39;,
+ &#39;x0x0x0_tt&#39;]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_17_2.png" src="../_images/examples_example_17_2.png" />
+</div>
+</div>
+</section>
+<section id="Find-complex-PDE-with-SINDy-PI-with-PDE-functionality">
+<h2>Find complex PDE with SINDy-PI with PDE functionality<a class="headerlink" href="#Find-complex-PDE-with-SINDy-PI-with-PDE-functionality" title="Link to this heading"></a></h2>
+<p>So far, we have focused on implicit, complex ODEs that require SINDy-PI for identification. There are also complex PDEs that can only be adequately identified with SINDy-PI, and here we show how to do so. We will consider the modified KdV equation used in the Youtube lecture (see link at the beginning of this notebook):</p>
+<div class="math notranslate nohighlight">
+\[u_t = -u_{xxx} + 6uu_x - 0.1 u + \frac{2}{1+u}.\]</div>
+<p>Thanks to the (1+u) term in the denominator, it will be difficult to identify this PDE unless the functional dependence is already known. But we can instead use the typical polynomial + derivatives library if using SINDy-PI, where we multiply both sides by (1+u) and instead solve for the equation:</p>
+<div class="math notranslate nohighlight">
+\[u_t = -u_{xxx}(1+u) + 6u(1+u)u_x - 0.1 u(1+u) + 2 - uu_t.\]</div>
+<p>We can generate the required terms using a PDELibrary class with both spatial and temporal derivatives up to third order, and up to quadratic polynomial terms.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">integrator_keywords</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;rtol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Radau&#39;</span>
+<span class="n">integrator_keywords</span><span class="p">[</span><span class="s1">&#39;atol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-8</span>
+
+<span class="n">dt</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">201</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">=</span><span class="mi">768</span>
+<span class="n">L</span><span class="o">=</span><span class="mi">90</span>
+<span class="n">g</span><span class="o">=</span><span class="mf">0.01</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mkdv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">nx</span><span class="p">):</span>
+    <span class="n">ux</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">_differentiate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
+    <span class="n">uxxx</span><span class="o">=</span><span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">_differentiate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">L</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">uxxx</span><span class="o">-</span><span class="mf">6.0</span><span class="o">*</span><span class="n">u</span><span class="o">*</span><span class="n">ux</span> <span class="o">-</span><span class="mf">0.1</span><span class="o">*</span><span class="n">u</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">u</span><span class="p">)</span>
+
+<span class="n">c1</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">c2</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">t0</span><span class="o">=</span><span class="mi">42</span>
+<span class="n">x0</span><span class="o">=</span><span class="mi">24</span>
+<span class="n">X</span><span class="o">=</span> <span class="o">-</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span><span class="o">*</span><span class="n">L</span><span class="o">/</span><span class="n">nx</span>
+<span class="n">x1</span><span class="o">=</span><span class="n">X</span><span class="o">+</span><span class="n">c1</span><span class="o">*</span><span class="n">t0</span><span class="o">-</span><span class="n">x0</span>
+<span class="n">x2</span><span class="o">=</span><span class="n">X</span><span class="o">+</span><span class="n">c2</span><span class="o">*</span><span class="n">t0</span><span class="o">-</span><span class="n">x0</span>
+<span class="n">u0</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">c1</span><span class="o">-</span><span class="n">c2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">c1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">c2</span><span class="o">**</span><span class="mf">0.5</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">c2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">c1</span><span class="o">**</span><span class="mf">0.5</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">c1</span><span class="o">**</span><span class="mf">0.5</span><span class="o">-</span><span class="n">c2</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">((</span><span class="n">c1</span><span class="o">**</span><span class="mf">0.5</span><span class="o">*</span><span class="n">x1</span><span class="o">+</span><span class="n">c2</span><span class="o">**</span><span class="mf">0.5</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">c1</span><span class="o">**</span><span class="mf">0.5</span><span class="o">+</span><span class="n">c2</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">((</span><span class="n">c1</span><span class="o">**</span><span class="mf">0.5</span><span class="o">*</span><span class="n">x1</span><span class="o">-</span><span class="n">c2</span><span class="o">**</span><span class="mf">0.5</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">sol_mkdv</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">mkdv</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">y0</span><span class="o">=</span><span class="n">u0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">nx</span><span class="p">),</span><span class="o">**</span><span class="n">integrator_keywords</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="mi">128</span><span class="p">:</span><span class="o">-</span><span class="mi">128</span><span class="p">]</span>
+<span class="n">u</span><span class="o">=</span><span class="n">sol_mkdv</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">128</span><span class="p">:</span><span class="o">-</span><span class="mi">128</span><span class="p">,:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">t</span><span class="o">=</span><span class="n">sol_mkdv</span><span class="o">.</span><span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dt</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ux</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_differentiate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">uxx</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_differentiate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+<span class="n">uxxx</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">FiniteDifference</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_differentiate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># Plot derivative results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u(x, t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">ux</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u_</span><span class="si">{x}</span><span class="s1">(x, t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">uxx</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u_</span><span class="si">{xx}</span><span class="s1">(x, t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">uxxx</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u_</span><span class="si">{xxx}</span><span class="s1">(x, t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -180,932 +957,295 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_example_7_0.png" src="../_images/examples_example_7_0.png" />
-</div>
-</div>
-</section>
-<section id="id1">
-<h2>Bayesian UQ-SINDy<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>Here we recover the governing equations using UQ-SINDy. For more details on the theory of the method, see Hirsh, S. M., Barajas-Solano, D. A., &amp; Kutz, J. N. (2021). <em>Sparsifying Priors for Bayesian Uncertainty Quantification in Model Discovery</em> (arXiv:2107.02107). arXiv. http://arxiv.org/abs/2107.02107</p>
-<p>Note that the current implementation differs from the method described in Hirsh et al. (2021) by imposing the error model directly on the derivatives, rather than on the states, circumventing the need to integrate the equation to evaluate the posterior density. One consequence of this is that the noise standard deviation “sigma” is with respect to the derivatives instead of the states and hence should not be interpreted.</p>
-<p>The underlying code used to find the posterior distribution of model parameters is <code class="docutils literal notranslate"><span class="pre">numpyro.infer.MCMC</span></code> using the <code class="docutils literal notranslate"><span class="pre">numpyro.infer.NUTS</span></code> kernel. Note that all keyword arguments passed to <code class="docutils literal notranslate"><span class="pre">pysindy.optimizers.SBR</span></code> are sent forward to the <a class="reference external" href="https://num.pyro.ai/en/stable/mcmc.html">MCMC sampler</a>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set sampler hyperparameters</span>
-<span class="n">sampling_seed</span> <span class="o">=</span> <span class="mi">123</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;testing&quot;</span><span class="p">:</span>
-    <span class="n">num_warmup</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="n">num_chains</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">num_warmup</span> <span class="o">=</span> <span class="mi">500</span>
-    <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">2000</span>
-    <span class="n">num_chains</span> <span class="o">=</span> <span class="mi">2</span>
-</pre></div>
+<img alt="../_images/examples_example_20_0.png" src="../_images/examples_example_20_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialise the Sparse bayesian Regression optimizer.</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SBR</span><span class="p">(</span><span class="n">num_warmup</span><span class="o">=</span><span class="n">num_warmup</span><span class="p">,</span>
-                              <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span>
-                              <span class="n">mcmc_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">sampling_seed</span><span class="p">,</span>
-                                           <span class="s2">&quot;num_chains&quot;</span><span class="p">:</span> <span class="n">num_chains</span><span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define PDE library that is quadratic in u, and</span>
+<span class="c1"># third-order in spatial derivatives of u.</span>
+<span class="n">spatiotemporal_grid</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mi">201</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">spatiotemporal_grid</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">x</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">spatiotemporal_grid</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span>
 
-<span class="c1"># use the standard polynomial features.</span>
-<span class="n">feature_library</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">feature_library</span><span class="o">.</span><span class="n">polynomial_library</span><span class="o">.</span><span class="n">PolynomialLibrary</span><span class="p">(</span><span class="n">include_interaction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">library_functions</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">library_function_names</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># initialise SINDy and fit to the data.</span>
-<span class="n">sindy</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">feature_library</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">])</span>
-<span class="n">sindy</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">],</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">pde_lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PDELibrary</span><span class="p">(</span><span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+                        <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+                        <span class="n">derivative_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">spatial_grid</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                        <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Fit the model with different optimizers.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SR3 model: &#39;</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SR3</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span>
+                   <span class="n">thresholder</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">normalize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span><span class="n">feature_library</span><span class="o">=</span><span class="n">pde_lib</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SR3 model:
+(x0)&#39; = 0.166 x0 + -0.920 x0x0 + -0.107 x0_1 + 0.267 x0_11 + -0.893 x0_111 + -5.226 x0x0_1 + -0.323 x0x0x0_1 + -1.643 x0x0_11
+score 0.9377333950547101
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multiindices</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">pde_lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">PDELibrary</span><span class="p">(</span><span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+                        <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+                        <span class="n">derivative_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">spatial_grid</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">temporal_grid</span><span class="o">=</span><span class="n">t</span><span class="p">,</span>
+                        <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">multiindices</span><span class="o">=</span><span class="n">multiindices</span><span class="p">)</span>
+
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPI</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
+    <span class="n">thresholder</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">normalize_columns</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span><span class="n">feature_library</span><span class="o">=</span><span class="n">pde_lib</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model  0
+Model  1
+Model  2
+Model  3
+Model  4
+Model  5
+Model  6
+Model  7
+Model  8
+Model  9
+Model  10
+Model  11
+Model  12
+Solver failed on model  12 , setting coefs to zeros
+Model  13
+x0 = 5.800 x0x0 + 0.843 x0_t + -4.165 x0_1 + -0.157 x0_11 + 5.866 x0_111 + 36.264 x0x0_t + 63.961 x0x0_1 + 8.435 x0x0x0_1 + 2.056 x0x0_11
+x0x0 = 0.170 x0 + -0.348 x0_t + 0.038 x0_1 + 0.031 x0_11 + -0.385 x0_111 + -2.340 x0x0_t + -4.298 x0x0_1 + -1.032 x0x0_11 + 0.105 x0x0_111
+x0_t = 0.109 x0 + -0.582 x0x0 + -0.544 x0_1 + 0.227 x0_11 + -0.365 x0_111 + 2.512 x0x0_t + -1.449 x0x0_11
+x0_1 = -0.023 x0 + 0.149 x0x0 + -0.143 x0_t + 0.063 x0_11 + 0.670 x0_111 + 1.995 x0x0_t + 7.580 x0x0_1 + -0.130 x0x0_11 + 0.759 x0x0_111
+x0_11 = -0.009 x0 + 0.076 x0x0 + 0.147 x0_t + 0.144 x0_1 + 0.032 x0_111 + 5.806 x0x0_11 + -7.664 x0x0x0_11 + -0.036 x0x0_111
+x0_111 = 0.031 x0 + -0.172 x0x0 + -0.181 x0_t + 0.315 x0_1 + -0.162 x0x0_t + -3.851 x0x0_1 + -0.181 x0x0_11 + 0.885 x0x0_111
+x0x0_t = 0.007 x0 + -0.044 x0x0 + 0.071 x0_t + -0.040 x0_1 + 0.022 x0_11 + 0.090 x0_111 + -0.120 x0x0_1 + 0.039 x0x0_11 + 0.121 x0x0_111
+x0x0x0_t = 0.001 x0 + -0.009 x0x0 + 0.016 x0_t + -0.001 x0_1 + 0.010 x0_11 + 0.045 x0_111 + 0.021 x0x0_11 + 0.082 x0x0_111
+x0x0_1 = 0.002 x0 + -0.011 x0x0 + -0.023 x0_t + 0.112 x0_1 + -0.158 x0_111 + -0.065 x0x0_t
+x0x0x0_1 = -0.010 x0_t + 0.010 x0_1 + -0.059 x0_111 + -0.065 x0x0_111
+x0x0_11 = 0.006 x0 + -0.043 x0x0 + -0.007 x0_t + -0.007 x0_1 + 0.140 x0_11 + 1.274 x0x0x0_11
+x0x0x0_11 = -0.013 x0_11 + 0.423 x0x0_11
+x0x0_111 = 0.000
+x0x0x0_111 = 0.005 x0_1 + 0.368 x0x0_111
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs_actual</span><span class="o">=</span><span class="n">pde_lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="n">lhs_predict</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+
+<span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">r2_score</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">lhs_actual</span><span class="p">[:,:,</span><span class="n">ind</span><span class="p">],(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">lhs_actual</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))),</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">lhs_predict</span><span class="p">[:,:,</span><span class="n">ind</span><span class="p">],(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">lhs_actual</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lhs_predict</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span><span class="s1">&#39;bo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">order</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pde_lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()[</span><span class="n">ind</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">equations</span><span class="p">()[</span><span class="n">ind</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, score=&#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">ind</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_example_23_0.png" src="../_images/examples_example_23_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+x0x0_1=0.002 x0 + -0.011 x0x0 + -0.023 x0_t + 0.112 x0_1 + -0.158 x0_111 + -0.065 x0x0_t, score=0.9927185976382383
+x0x0_11=0.006 x0 + -0.043 x0x0 + -0.007 x0_t + -0.007 x0_1 + 0.140 x0_11 + 1.274 x0x0x0_11, score=0.9904594725824555
+x0_1=-0.023 x0 + 0.149 x0x0 + -0.143 x0_t + 0.063 x0_11 + 0.670 x0_111 + 1.995 x0x0_t + 7.580 x0x0_1 + -0.130 x0x0_11 + 0.759 x0x0_111, score=0.9862037161025783
+x0x0_t=0.007 x0 + -0.044 x0x0 + 0.071 x0_t + -0.040 x0_1 + 0.022 x0_11 + 0.090 x0_111 + -0.120 x0x0_1 + 0.039 x0x0_11 + 0.121 x0x0_111, score=0.9759556862567057
+x0x0x0_1=-0.010 x0_t + 0.010 x0_1 + -0.059 x0_111 + -0.065 x0x0_111, score=0.9743061078646337
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pde_lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">WeakPDELibrary</span><span class="p">(</span><span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+                        <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+                        <span class="n">derivative_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">spatiotemporal_grid</span><span class="o">=</span><span class="n">spatiotemporal_grid</span><span class="p">,</span>
+                        <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Fit the model with different optimizers.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SR3 model: &#39;</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SR3</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span>
+                   <span class="n">thresholder</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">normalize_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span><span class="n">feature_library</span><span class="o">=</span><span class="n">pde_lib</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SR3 model:
+(x0)&#39; = 0.240 x0 + -1.452 x0x0 + -0.360 x0_1 + 0.774 x0_11 + -0.744 x0_111 + -27.896 x0x0x0_1 + -6.532 x0x0_11 + 4.097 x0x0x0_11 + -2.706 x0x0_111 + -5.826 x0x0x0_111
+score 0.9722231960831601
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multiindices</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">sindy_opt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDyPI</span><span class="p">(</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-14</span><span class="p">,</span>
+    <span class="n">thresholder</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">normalize_columns</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">pde_lib</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">WeakPDELibrary</span><span class="p">(</span><span class="n">library_functions</span><span class="o">=</span><span class="n">library_functions</span><span class="p">,</span>
+                        <span class="n">function_names</span><span class="o">=</span><span class="n">library_function_names</span><span class="p">,</span>
+                        <span class="n">derivative_order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">spatiotemporal_grid</span><span class="o">=</span><span class="n">spatiotemporal_grid</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span><span class="n">H_xt</span><span class="o">=</span><span class="p">[</span><span class="mi">60</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="o">/</span><span class="mi">10</span><span class="p">],</span>
+                        <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">implicit_terms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">multiindices</span><span class="o">=</span><span class="n">multiindices</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">SINDy</span><span class="p">(</span><span class="n">feature_library</span><span class="o">=</span><span class="n">pde_lib</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">sindy_opt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Model  0
+Model  1
+Model  2
+Solver failed on model  2 , setting coefs to zeros
+Model  3
+Model  4
+Model  5
+</pre></div></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-sample: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2500/2500 [00:02&lt;00:00, 882.55it/s, 63 steps of size 3.62e-02. acc. prob=0.91]
-sample: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2500/2500 [00:01&lt;00:00, 1556.08it/s, 63 steps of size 4.94e-02. acc. prob=0.88]
+/Users/zack/opt/anaconda3/envs/pysindy_env/lib/python3.9/site-packages/cvxpy/problems/problem.py:1294: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
 </pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<style>#sk-container-id-1 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-1 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 pre {
-  padding: 0;
-}
-
-#sk-container-id-1 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-1 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-1 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-1 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-1 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-1 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-1 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-1 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-1 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>SINDy(differentiation_method=FiniteDifference(),
-      feature_library=PolynomialLibrary(), feature_names=[&#x27;P&#x27;, &#x27;Q&#x27;],
-      optimizer=SBR(mcmc_kwargs={&#x27;num_chains&#x27;: 2, &#x27;seed&#x27;: 123},
-                    num_samples=2000, num_warmup=500))</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;SINDy<span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>SINDy(differentiation_method=FiniteDifference(),
-      feature_library=PolynomialLibrary(), feature_names=[&#x27;P&#x27;, &#x27;Q&#x27;],
-      optimizer=SBR(mcmc_kwargs={&#x27;num_chains&#x27;: 2, &#x27;seed&#x27;: 123},
-                    num_samples=2000, num_warmup=500))</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">feature_library: PolynomialLibrary</label><div class="sk-toggleable__content fitted"><pre>PolynomialLibrary()</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">PolynomialLibrary</label><div class="sk-toggleable__content fitted"><pre>PolynomialLibrary()</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">optimizer: SBR</label><div class="sk-toggleable__content fitted"><pre>SBR(mcmc_kwargs={&#x27;num_chains&#x27;: 2, &#x27;seed&#x27;: 123}, num_samples=2000,
-    num_warmup=500)</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">SBR</label><div class="sk-toggleable__content fitted"><pre>SBR(mcmc_kwargs={&#x27;num_chains&#x27;: 2, &#x27;seed&#x27;: 123}, num_samples=2000,
-    num_warmup=500)</pre></div> </div></div></div></div></div></div></div></div></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up a new differential equation that uses the Bayesian SINDy predictions.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">surrogate_dydt</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span>
-    <span class="k">return</span> <span class="n">sindy</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">_y</span><span class="p">)</span>
-
-<span class="c1"># solve using the Bayesian SINDy equations.</span>
-<span class="n">surrogate_sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">surrogate_dydt</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="n">t_span</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="n">y0</span><span class="p">,</span> <span class="n">max_step</span><span class="o">=</span><span class="n">max_step</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the surrogate solution.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">surrogate_sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">surrogate_sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Prey&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">surrogate_sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">surrogate_sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predators&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_example_12_0.png" src="../_images/examples_example_12_0.png" />
-</div>
-</div>
-</section>
-<section id="Get-MCMC-diagnostics">
-<h2>Get MCMC diagnostics<a class="headerlink" href="#Get-MCMC-diagnostics" title="Link to this heading"></a></h2>
-<p>We can inspect the posterior samples in more detail using <code class="docutils literal notranslate"><span class="pre">arviz</span></code>. Note that this is not included as a dependency of <code class="docutils literal notranslate"><span class="pre">pysindy</span></code> and must be installed separately.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import arviz.</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">arviz</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">az</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert the numpyro samples to an arviz.InferenceData object.</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_numpyro</span><span class="p">(</span><span class="n">sindy</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">mcmc_</span><span class="p">)</span>
-
-<span class="c1"># have a look at the summray.</span>
-<span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>mean</th>
-      <th>sd</th>
-      <th>hdi_3%</th>
-      <th>hdi_97%</th>
-      <th>mcse_mean</th>
-      <th>mcse_sd</th>
-      <th>ess_bulk</th>
-      <th>ess_tail</th>
-      <th>r_hat</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>beta[0, 0]</th>
-      <td>0.013</td>
-      <td>0.087</td>
-      <td>-0.136</td>
-      <td>0.218</td>
-      <td>0.003</td>
-      <td>0.002</td>
-      <td>1446.0</td>
-      <td>1099.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[0, 1]</th>
-      <td>0.988</td>
-      <td>0.044</td>
-      <td>0.905</td>
-      <td>1.075</td>
-      <td>0.001</td>
-      <td>0.001</td>
-      <td>1361.0</td>
-      <td>1500.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[0, 2]</th>
-      <td>0.006</td>
-      <td>0.036</td>
-      <td>-0.060</td>
-      <td>0.083</td>
-      <td>0.001</td>
-      <td>0.001</td>
-      <td>1468.0</td>
-      <td>1217.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[0, 3]</th>
-      <td>-0.001</td>
-      <td>0.004</td>
-      <td>-0.010</td>
-      <td>0.007</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>1327.0</td>
-      <td>1372.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[0, 4]</th>
-      <td>-0.296</td>
-      <td>0.008</td>
-      <td>-0.311</td>
-      <td>-0.281</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>2196.0</td>
-      <td>2365.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[0, 5]</th>
-      <td>-0.003</td>
-      <td>0.007</td>
-      <td>-0.016</td>
-      <td>0.009</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>1452.0</td>
-      <td>1313.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 0]</th>
-      <td>0.005</td>
-      <td>0.104</td>
-      <td>-0.198</td>
-      <td>0.218</td>
-      <td>0.003</td>
-      <td>0.002</td>
-      <td>1208.0</td>
-      <td>1029.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 1]</th>
-      <td>0.004</td>
-      <td>0.032</td>
-      <td>-0.060</td>
-      <td>0.071</td>
-      <td>0.001</td>
-      <td>0.001</td>
-      <td>1908.0</td>
-      <td>1612.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 2]</th>
-      <td>-1.018</td>
-      <td>0.065</td>
-      <td>-1.145</td>
-      <td>-0.900</td>
-      <td>0.002</td>
-      <td>0.001</td>
-      <td>1491.0</td>
-      <td>1391.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 3]</th>
-      <td>0.000</td>
-      <td>0.004</td>
-      <td>-0.006</td>
-      <td>0.007</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>2073.0</td>
-      <td>1916.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 4]</th>
-      <td>0.197</td>
-      <td>0.008</td>
-      <td>0.182</td>
-      <td>0.213</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>3131.0</td>
-      <td>2822.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>beta[1, 5]</th>
-      <td>0.005</td>
-      <td>0.009</td>
-      <td>-0.012</td>
-      <td>0.024</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>1725.0</td>
-      <td>1779.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>c_sq</th>
-      <td>7.399</td>
-      <td>15.595</td>
-      <td>0.706</td>
-      <td>17.835</td>
-      <td>0.420</td>
-      <td>0.297</td>
-      <td>2372.0</td>
-      <td>1559.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 0]</th>
-      <td>1.486</td>
-      <td>3.908</td>
-      <td>0.011</td>
-      <td>4.060</td>
-      <td>0.100</td>
-      <td>0.071</td>
-      <td>1288.0</td>
-      <td>1643.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 1]</th>
-      <td>60.751</td>
-      <td>418.580</td>
-      <td>1.177</td>
-      <td>117.117</td>
-      <td>15.763</td>
-      <td>11.150</td>
-      <td>1150.0</td>
-      <td>1432.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 2]</th>
-      <td>0.968</td>
-      <td>2.549</td>
-      <td>0.005</td>
-      <td>2.656</td>
-      <td>0.059</td>
-      <td>0.042</td>
-      <td>1683.0</td>
-      <td>1618.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 3]</th>
-      <td>0.459</td>
-      <td>1.057</td>
-      <td>0.001</td>
-      <td>1.496</td>
-      <td>0.021</td>
-      <td>0.015</td>
-      <td>1762.0</td>
-      <td>1359.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 4]</th>
-      <td>8.941</td>
-      <td>40.849</td>
-      <td>0.499</td>
-      <td>18.798</td>
-      <td>1.084</td>
-      <td>0.767</td>
-      <td>1221.0</td>
-      <td>1528.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[0, 5]</th>
-      <td>0.506</td>
-      <td>0.922</td>
-      <td>0.002</td>
-      <td>1.550</td>
-      <td>0.017</td>
-      <td>0.012</td>
-      <td>2300.0</td>
-      <td>1339.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 0]</th>
-      <td>2.346</td>
-      <td>13.657</td>
-      <td>0.010</td>
-      <td>4.729</td>
-      <td>0.444</td>
-      <td>0.314</td>
-      <td>1185.0</td>
-      <td>1052.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 1]</th>
-      <td>0.921</td>
-      <td>2.250</td>
-      <td>0.004</td>
-      <td>2.634</td>
-      <td>0.041</td>
-      <td>0.029</td>
-      <td>1737.0</td>
-      <td>1487.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 2]</th>
-      <td>45.249</td>
-      <td>174.998</td>
-      <td>0.876</td>
-      <td>111.618</td>
-      <td>4.758</td>
-      <td>3.365</td>
-      <td>1416.0</td>
-      <td>1621.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 3]</th>
-      <td>0.504</td>
-      <td>2.617</td>
-      <td>0.001</td>
-      <td>1.384</td>
-      <td>0.068</td>
-      <td>0.048</td>
-      <td>1804.0</td>
-      <td>1330.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 4]</th>
-      <td>6.285</td>
-      <td>24.940</td>
-      <td>0.311</td>
-      <td>14.417</td>
-      <td>0.752</td>
-      <td>0.532</td>
-      <td>1218.0</td>
-      <td>1386.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>lambda[1, 5]</th>
-      <td>0.677</td>
-      <td>3.369</td>
-      <td>0.003</td>
-      <td>1.792</td>
-      <td>0.054</td>
-      <td>0.038</td>
-      <td>2035.0</td>
-      <td>2015.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>sigma</th>
-      <td>0.773</td>
-      <td>0.022</td>
-      <td>0.734</td>
-      <td>0.817</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>2770.0</td>
-      <td>2315.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>tau</th>
-      <td>0.084</td>
-      <td>0.057</td>
-      <td>0.009</td>
-      <td>0.186</td>
-      <td>0.002</td>
-      <td>0.001</td>
-      <td>955.0</td>
-      <td>1537.0</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
+<div class="highlight"><pre>
+Model  6
+Model  7
+Model  8
+Model  9
+Solver failed on model  9 , setting coefs to zeros
+Model  10
+Model  11
+Model  12
+Model  13
+x0 = 5.909 x0x0 + 0.733 x0_t + -3.821 x0_1 + -0.476 x0_11 + 4.420 x0_111 + 39.603 x0x0_t + 63.589 x0x0_1 + 3.577 x0x0_11
+x0x0 = 0.164 x0 + -0.569 x0_t + -0.333 x0_1 + 0.107 x0_11 + -0.066 x0_111 + -0.850 x0x0_1 + -2.673 x0x0_11
+x0_t = 0.000
+x0_1 = 0.003 x0 + -0.109 x0_t + 0.054 x0_11 + 0.219 x0_111 + 5.887 x0x0_1 + 1.113 x0x0_111
+x0_11 = -0.023 x0 + 0.128 x0x0 + 0.298 x0_t + 0.286 x0_1 + 0.246 x0_111 + 3.337 x0x0_11 + -2.516 x0x0x0_11 + -0.656 x0x0_111
+x0_111 = 0.005 x0x0 + -0.030 x0_t + -0.079 x0_1 + 0.071 x0_11 + 2.437 x0x0_111
+x0x0_t = 0.012 x0 + -0.075 x0x0 + 0.041 x0_t + -0.096 x0_1 + 0.001 x0_11 + 0.034 x0_111
+x0x0x0_t = 0.003 x0 + -0.021 x0x0 + -0.026 x0_1
+x0x0_1 = 0.001 x0 + -0.007 x0x0 + -0.004 x0_t + 0.149 x0_1 + -0.076 x0_111
+x0x0x0_1 = 0.000
+x0x0_11 = 0.030 x0 + -0.195 x0x0 + -0.095 x0_t + -0.081 x0_1 + 0.122 x0_11 + 0.124 x0x0x0_11
+x0x0x0_11 = 0.004 x0 + -0.026 x0x0 + 0.219 x0x0_11
+x0x0_111 = 0.003 x0_t + -0.026 x0_1 + -0.019 x0_11 + 0.142 x0_111
+x0x0x0_111 = 0.001 x0x0 + -0.013 x0_1 + -0.003 x0_11 + 0.004 x0_111
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the traces.</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">divergences</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lhs_actual</span><span class="o">=</span><span class="n">pde_lib</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="n">lhs_predict</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+
+<span class="n">scores</span><span class="o">=</span><span class="p">[</span><span class="n">r2_score</span><span class="p">(</span><span class="n">lhs_actual</span><span class="p">[:,</span><span class="n">ind</span><span class="p">],</span><span class="n">lhs_predict</span><span class="p">[:,</span><span class="n">ind</span><span class="p">])</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lhs_predict</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span><span class="s1">&#39;bo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">order</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pde_lib</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()[</span><span class="n">ind</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;=&#39;</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">equations</span><span class="p">()[</span><span class="n">ind</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, score=&#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">ind</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-[]
-</pre></div></div>
+<img alt="../_images/examples_example_26_0.png" src="../_images/examples_example_26_0.png" />
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_example_16_1.png" src="../_images/examples_example_16_1.png" />
+<div class="highlight"><pre>
+x0=5.909 x0x0 + 0.733 x0_t + -3.821 x0_1 + -0.476 x0_11 + 4.420 x0_111 + 39.603 x0x0_t + 63.589 x0x0_1 + 3.577 x0x0_11, score=0.9953057986757462
+x0x0_1=0.001 x0 + -0.007 x0x0 + -0.004 x0_t + 0.149 x0_1 + -0.076 x0_111, score=0.9850831961703617
+x0_1=0.003 x0 + -0.109 x0_t + 0.054 x0_11 + 0.219 x0_111 + 5.887 x0x0_1 + 1.113 x0x0_111, score=0.9849180811666087
+x0x0=0.164 x0 + -0.569 x0_t + -0.333 x0_1 + 0.107 x0_11 + -0.066 x0_111 + -0.850 x0x0_1 + -2.673 x0x0_11, score=0.9818802436997973
+x0x0_t=0.012 x0 + -0.075 x0x0 + 0.041 x0_t + -0.096 x0_1 + 0.001 x0_11 + 0.034 x0_111, score=0.9585367216019443
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </section>
@@ -1115,13 +1255,13 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="Bayesian SINDy analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="SINDyPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Mikkel Bukke.</p>
+    <p>&#169; Copyright 2021, Alan Kaptanoglu.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
