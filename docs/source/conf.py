@@ -11,7 +11,7 @@ from shutil import copy, rmtree, copytree
 
 from sphinx.application import Sphinx
 
-project = 'SBR example'
+project = 'Differentiation Example'
 copyright = '2021, Alan Kaptanoglu'
 author = 'Alan Kaptanoglu'
 release = '0.1'

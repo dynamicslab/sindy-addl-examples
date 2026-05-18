@@ -1,3 +1,3 @@
-# SBR Example
+# Differentiators in PySINDy
 
-Templated from github.com/dynamicslab/pysindy-example
+This tutorial requires Python 3.11.
