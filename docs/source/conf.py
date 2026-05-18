@@ -11,7 +11,7 @@ from shutil import copy, rmtree, copytree
 
 from sphinx.application import Sphinx
 
-project = 'SSr and FROLS example'
+project = 'SSR and FROLS example'
 copyright = '2021, Alan Kaptanoglu'
 author = 'Alan Kaptanoglu'
 release = '0.1'
