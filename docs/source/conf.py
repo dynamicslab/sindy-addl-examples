@@ -11,7 +11,7 @@ from shutil import copy, rmtree, copytree
 
 from sphinx.application import Sphinx
 
-project = 'pysindy-example'
+project = 'plasma-example'
 copyright = '2023, Alan Kaptanoglu, Brian De Silva'
 author = 'Alan Kaptanoglu, Brian De Silva'
 release = '0.1'
